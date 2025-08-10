@@ -1,4 +1,8 @@
 // Bitcoin Liquidity Map - Graph data definitions
+// Link text property can be:
+// - null/undefined: No text displayed
+// - string: Static text displayed
+// - function: Custom function that returns text (receives link object as parameter)
 class GraphData {
     static getSampleGraph() {
         return {
@@ -52,94 +56,94 @@ class GraphData {
             ],
             links: [
                 // Central connections
-                { source: "bitcoin-001", target: "btc-000", value: 3, type: "central" },
+                { source: "bitcoin-001", target: "btc-000", value: 3, type: "central", text: "Core" },
                 
                 // Bridge connections from BTC
-                { source: "btc-000", target: "babylon-002", value: 2, type: "bridge" },
-                { source: "btc-000", target: "bitgo-003", value: 2, type: "bridge" },
-                { source: "btc-000", target: "coinbase-005", value: 2, type: "bridge" },
-                { source: "btc-000", target: "internet-computer-027", value: 2, type: "bridge" },
-                { source: "btc-000", target: "nomic-022", value: 2, type: "bridge" },
-                { source: "btc-000", target: "enzobtc-lorenzo", value: 2, type: "bridge" },
-                { source: "btc-000", target: "renbtc", value: 2, type: "bridge" },
+                { source: "btc-000", target: "babylon-002", value: 2, type: "bridge", text: "Babylon Bridge" },
+                { source: "btc-000", target: "bitgo-003", value: 2, type: "bridge", text: null },
+                { source: "btc-000", target: "coinbase-005", value: 2, type: "bridge", text: null },
+                { source: "btc-000", target: "internet-computer-027", value: 2, type: "bridge", text: null },
+                { source: "btc-000", target: "nomic-022", value: 2, type: "bridge", text: null },
+                { source: "btc-000", target: "enzobtc-lorenzo", value: 2, type: "bridge", text: null },
+                { source: "btc-000", target: "renbtc", value: 2, type: "bridge", text: null },
                 
                 // Bridge to wrapped tokens
-                { source: "babylon-002", target: "lbtc-016", value: 1, type: "bridge" },
-                { source: "babylon-002", target: "pumpbtc-018", value: 1, type: "bridge" },
-                { source: "babylon-002", target: "unibtc-020", value: 1, type: "bridge" },
-                { source: "babylon-002", target: "persistence-024", value: 1, type: "bridge" },
-                { source: "babylon-002", target: "solvbtc-bbn-032", value: 1, type: "bridge" },
-                { source: "babylon-002", target: "stbtc-lorenzo", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "lbtc-016", value: 1, type: "bridge", text: null },
+                { source: "babylon-002", target: "pumpbtc-018", value: 1, type: "bridge", text: null },
+                { source: "babylon-002", target: "unibtc-020", value: 1, type: "bridge", text: null },
+                { source: "babylon-002", target: "persistence-024", value: 1, type: "bridge", text: null },
+                { source: "babylon-002", target: "solvbtc-bbn-032", value: 1, type: "bridge", text: null },
+                { source: "babylon-002", target: "stbtc-lorenzo", value: 1, type: "bridge", text: null },
                 
-                { source: "bitgo-003", target: "wbtc-eth-004", value: 1, type: "bridge" },
-                { source: "bitgo-003", target: "wbtc-osmosis-021", value: 1, type: "bridge" },
-                { source: "bitgo-003", target: "wbtc-arbitrum", value: 1, type: "bridge" },
+                { source: "bitgo-003", target: "wbtc-eth-004", value: 1, type: "bridge", text: null },
+                { source: "bitgo-003", target: "wbtc-osmosis-021", value: 1, type: "bridge", text: null },
+                { source: "bitgo-003", target: "wbtc-arbitrum", value: 1, type: "bridge", text: null },
                 
-                { source: "coinbase-005", target: "tbtc-011", value: 1, type: "bridge" },
+                { source: "coinbase-005", target: "tbtc-011", value: 1, type: "bridge", text: null },
                 
                 // Ethereum ecosystem
-                { source: "ethereum-006", target: "lido-007", value: 1, type: "ecosystem" },
-                { source: "lido-007", target: "ebtc-009", value: 1, type: "ecosystem" },
-                { source: "wbtc-eth-004", target: "solvbtc-012", value: 1, type: "ecosystem" },
-                { source: "wbtc-eth-004", target: "axelar-026", value: 1, type: "ecosystem" },
-                { source: "wbtc-eth-004", target: "symbiotic-037", value: 1, type: "ecosystem" },
+                { source: "ethereum-006", target: "lido-007", value: 1, type: "ecosystem", text: null },
+                { source: "lido-007", target: "ebtc-009", value: 1, type: "ecosystem", text: null },
+                { source: "wbtc-eth-004", target: "solvbtc-012", value: 1, type: "ecosystem", text: null },
+                { source: "wbtc-eth-004", target: "axelar-026", value: 1, type: "ecosystem", text: null },
+                { source: "wbtc-eth-004", target: "symbiotic-037", value: 1, type: "ecosystem", text: null },
                 
                 // Cross-chain connections
-                { source: "tbtc-011", target: "solvbtc-012", value: 1, type: "cross-chain" },
-                { source: "cbbtc-010", target: "solvbtc-012", value: 1, type: "cross-chain" },
-                { source: "fbtc-013", target: "solvbtc-012", value: 1, type: "cross-chain" },
-                { source: "cbbtc-010", target: "btcn-014", value: 1, type: "cross-chain" },
-                { source: "wbtc-eth-004", target: "btcn-014", value: 1, type: "cross-chain" },
+                { source: "tbtc-011", target: "solvbtc-012", value: 1, type: "cross-chain", text: null },
+                { source: "cbbtc-010", target: "solvbtc-012", value: 1, type: "cross-chain", text: null },
+                { source: "fbtc-013", target: "solvbtc-012", value: 1, type: "cross-chain", text: null },
+                { source: "cbbtc-010", target: "btcn-014", value: 1, type: "cross-chain", text: null },
+                { source: "wbtc-eth-004", target: "btcn-014", value: 1, type: "cross-chain", text: null },
                 
                 // Osmosis ecosystem
-                { source: "wbtc-osmosis-021", target: "allbtc-023", value: 1, type: "ecosystem" },
-                { source: "internet-computer-027", target: "ckbtc-osmosis-028", value: 1, type: "ecosystem" },
-                { source: "ckbtc-osmosis-028", target: "allbtc-023", value: 1, type: "ecosystem" },
-                { source: "nbtc-029", target: "allbtc-023", value: 1, type: "ecosystem" },
-                { source: "allbtc-023", target: "allbtc-030", value: 1, type: "ecosystem" },
+                { source: "wbtc-osmosis-021", target: "allbtc-023", value: 1, type: "ecosystem", text: null },
+                { source: "internet-computer-027", target: "ckbtc-osmosis-028", value: 1, type: "ecosystem", text: null },
+                { source: "ckbtc-osmosis-028", target: "allbtc-023", value: 1, type: "ecosystem", text: null },
+                { source: "nbtc-029", target: "allbtc-023", value: 1, type: "ecosystem", text: null },
+                { source: "allbtc-023", target: "allbtc-030", value: 1, type: "ecosystem", text: null },
                 
                 // Axelar bridge
-                { source: "axelar-026", target: "wbtc-eth-axl", value: 1, type: "bridge" },
-                { source: "wbtc-eth-axl", target: "allbtc-023", value: 1, type: "bridge" },
+                { source: "axelar-026", target: "wbtc-eth-axl", value: 1, type: "bridge", text: null },
+                { source: "wbtc-eth-axl", target: "allbtc-023", value: 1, type: "bridge", text: null },
                 
                 // DeFi connections
-                { source: "lbtc-016", target: "pendle-031", value: 1, type: "defi" },
-                { source: "ebtc-009", target: "pendle-031", value: 1, type: "defi" },
-                { source: "pumpbtc-018", target: "pendle-031", value: 1, type: "defi" },
-                { source: "unibtc-020", target: "pendle-031", value: 1, type: "defi" },
-                { source: "solvbtc-bbn-032", target: "pendle-031", value: 1, type: "defi" },
-                { source: "stbtc-lorenzo", target: "pendle-031", value: 1, type: "defi" },
+                { source: "lbtc-016", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "ebtc-009", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "pumpbtc-018", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "unibtc-020", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "solvbtc-bbn-032", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "stbtc-lorenzo", target: "pendle-031", value: 1, type: "defi", text: null },
                 
                 // Zerolend connections
-                { source: "ebtc-009", target: "zerolend-036", value: 1, type: "defi" },
-                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi" },
+                { source: "ebtc-009", target: "zerolend-036", value: 1, type: "defi", text: null },
+                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi", text: null },
                 
                 // Corn connections
-                { source: "ebtc-009", target: "corn-035", value: 1, type: "defi" },
-                { source: "pumpbtc-018", target: "corn-035", value: 1, type: "defi" },
-                { source: "unibtc-020", target: "corn-035", value: 1, type: "defi" },
-                { source: "lbtc-016", target: "corn-035", value: 1, type: "defi" },
-                { source: "solvbtc-bbn-032", target: "corn-035", value: 1, type: "defi" },
-                { source: "corn-035", target: "pendle-031", value: 1, type: "defi" },
-                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi" },
+                { source: "ebtc-009", target: "corn-035", value: 1, type: "defi", text: null },
+                { source: "pumpbtc-018", target: "corn-035", value: 1, type: "defi", text: null },
+                { source: "unibtc-020", target: "corn-035", value: 1, type: "defi", text: null },
+                { source: "lbtc-016", target: "corn-035", value: 1, type: "defi", text: null },
+                { source: "solvbtc-bbn-032", target: "corn-035", value: 1, type: "defi", text: null },
+                { source: "corn-035", target: "pendle-031", value: 1, type: "defi", text: null },
+                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi", text: null },
                 
                 // Nomic to BTCN (dashed connection)
-                { source: "corn-035", target: "btcn-014", value: 1, type: "dashed" },
-                { source: "solvbtc-bbn-032", target: "solvbtc-012", value: 1, type: "dashed" },
+                { source: "corn-035", target: "btcn-014", value: 1, type: "dashed", text: null },
+                { source: "solvbtc-bbn-032", target: "solvbtc-012", value: 1, type: "dashed", text: null },
                 
                 // Weighted connections (with specific values)
-                { source: "btc-000", target: "tbtc-011", value: 5, type: "weighted" },
-                { source: "wbtc-eth-004", target: "symbiotic-037", value: 14, type: "weighted" },
-                { source: "tbtc-011", target: "symbiotic-037", value: 7.3, type: "weighted" },
-                { source: "lbtc-016", target: "symbiotic-037", value: 16.5, type: "weighted" },
-                { source: "pumpbtc-018", target: "symbiotic-037", value: 16.5, type: "weighted" },
+                { source: "btc-000", target: "tbtc-011", value: 5, type: "weighted", text: (link) => `High Value: ${link.value}` },
+                { source: "wbtc-eth-004", target: "symbiotic-037", value: 14, type: "weighted", text: (link) => `Max Value: ${link.value}` },
+                { source: "tbtc-011", target: "symbiotic-037", value: 7.3, type: "weighted", text: (link) => `${link.type}: ${link.value}` },
+                { source: "lbtc-016", target: "symbiotic-037", value: 16.5, type: "defi", text: null },
+                { source: "pumpbtc-018", target: "symbiotic-037", value: 16.5, type: "defi", text: null },
                 
                 // Additional connections
-                { source: "persistence-024", target: "ybtc-025", value: 1, type: "bridge" },
-                { source: "dbtc-034", target: "dolomite-033", value: 1, type: "bridge" },
-                { source: "wbtc-arbitrum", target: "dolomite-033", value: 1, type: "bridge" },
-                { source: "dolomite-033", target: "dbtc-034", value: 1, type: "bridge" },
-                { source: "solvbtc-bbn-032", target: "dolomite-033", value: 1, type: "bridge" }
+                { source: "persistence-024", target: "ybtc-025", value: 1, type: "bridge", text: null },
+                { source: "dbtc-034", target: "dolomite-033", value: 1, type: "bridge", text: null },
+                { source: "wbtc-arbitrum", target: "dolomite-033", value: 1, type: "bridge", text: null },
+                { source: "dolomite-033", target: "dbtc-034", value: 1, type: "bridge", text: null },
+                { source: "solvbtc-bbn-032", target: "dolomite-033", value: 1, type: "bridge", text: null }
             ]
         };
     }

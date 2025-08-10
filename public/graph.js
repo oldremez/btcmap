@@ -99,6 +99,29 @@ class GraphVisualization {
         link.append('title')
             .text(d => `Connection: ${d.source.name || d.source} → ${d.target.name || d.target}\nType: ${d.type}\nValue: ${d.value}`);
 
+        // Create link labels
+        const linkLabels = this.mainGroup.append('g')
+            .selectAll('text')
+            .data(this.links)
+            .enter().append('text')
+            .attr('class', 'link-label')
+            .attr('text-anchor', 'middle')
+            .attr('font-size', '9px')
+            .attr('fill', '#666')
+            .attr('pointer-events', 'none')
+            .text(d => {
+                // Handle different text types: null (no text), string (static text), or function (custom text)
+                if (d.text === null || d.text === undefined) {
+                    return ''; // No text
+                } else if (typeof d.text === 'string') {
+                    return d.text; // Static text
+                } else if (typeof d.text === 'function') {
+                    return d.text(d); // Custom function
+                } else {
+                    return ''; // Fallback to no text
+                }
+            });
+
         // Create nodes
         const node = this.mainGroup.append('g')
             .selectAll('g')
@@ -141,6 +164,11 @@ class GraphVisualization {
                 .attr('y1', d => d.source.y)
                 .attr('x2', d => d.target.x)
                 .attr('y2', d => d.target.y);
+
+            // Update link label positions (center of each link)
+            linkLabels
+                .attr('x', d => (d.source.x + d.target.x) / 2)
+                .attr('y', d => (d.source.y + d.target.y) / 2);
 
             node
                 .attr('transform', d => `translate(${d.x},${d.y})`);
