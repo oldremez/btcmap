@@ -1,0 +1,16 @@
+{
+  "name": "btcmap-d3-graph",
+  "version": "1.0.0",
+  "description": "Minimal web server rendering D3.js graph",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": ["d3", "graph", "web-server"],
+  "author": "",
+  "license": "MIT"
+}
