@@ -5,68 +5,32 @@
 // - function: Custom function that returns text (receives link object as parameter)
 // - async function: Async function that can query external data (blockchain, APIs, etc.)
 
-// Utility functions for blockchain data
-const BlockchainUtils = {
-    // Query ERC20 total supply
-    async getERC20TotalSupply(contractAddress, rpcUrl = 'https://eth.llamarpc.com') {
-        try {
-            const totalSupplySignature = '0x18160ddd';
-            const response = await fetch(rpcUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    jsonrpc: '2.0',
-                    method: 'eth_call',
-                    params: [{
-                        to: contractAddress,
-                        data: totalSupplySignature
-                    }, 'latest'],
-                    id: 1
-                })
-            });
-            
-            const data = await response.json();
-            if (data.result) {
-                return parseInt(data.result, 16);
-            }
-            return null;
-        } catch (error) {
-            console.error('Error fetching ERC20 supply:', error);
-            return null;
+// Utility function to query link labels from backend
+async function getLinkLabel(linkType, source, target, linkData = {}) {
+    try {
+        const response = await fetch('/api/link-label', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                linkType,
+                source,
+                target,
+                linkData
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            return data.label;
         }
-    },
-
-    // Query ERC20 balance for a specific address
-    async getERC20Balance(contractAddress, walletAddress, rpcUrl = 'https://eth.llamarpc.com') {
-        try {
-            const balanceOfSignature = '0x70a08231';
-            const paddedAddress = '000000000000000000000000' + walletAddress.slice(2);
-            
-            const response = await fetch(rpcUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    jsonrpc: '2.0',
-                    method: 'eth_call',
-                    params: [{
-                        to: contractAddress,
-                        data: balanceOfSignature + paddedAddress
-                    }, 'latest'],
-                    id: 1
-                })
-            });
-            
-            const data = await response.json();
-            if (data.result) {
-                return parseInt(data.result, 16);
-            }
-            return null;
-        } catch (error) {
-            console.error('Error fetching ERC20 balance:', error);
-            return null;
-        }
+        return null;
+    } catch (error) {
+        console.error('Error fetching link label:', error);
+        return null;
     }
-};
+}
 
 class GraphData {
     static getSampleGraph() {
@@ -151,28 +115,7 @@ class GraphData {
             links: [
                 // Central connections
                 { source: "bitcoin", target: "btc", value: 3, type: "central", text: async (link) => {
-                    try {
-                        // Query Bitcoin supply from a reliable API
-                        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true');
-                        const data = await response.json();
-                        
-                        if (data.bitcoin && data.bitcoin.usd) {
-                            // Bitcoin supply is approximately 19.5M+ (as of 2024)
-                            // We can also get this from the API if available
-                            const btcPrice = data.bitcoin.usd;
-                            const btcMarketCap = data.bitcoin.usd_market_cap;
-                            
-                            // Calculate approximate supply from market cap and price
-                            const approximateSupply = Math.round(btcMarketCap / btcPrice);
-                            
-                            return `BTC Supply: ~${approximateSupply.toLocaleString()}`;
-                        }
-                        
-                        return 'BTC Supply: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching BTC supply:', error);
-                        return 'BTC Supply: ~19.5M+';
-                    }
+                    return await getLinkLabel('btc-supply', link.source, link.target);
                 }},
                 
                 // Bridge connections from BTC
@@ -193,68 +136,15 @@ class GraphData {
                 { source: "babylon", target: "stbtc-lorenzo", value: 1, type: "bridge", text: null },
                 
                 { source: "bitgo", target: "wbtc-eth", value: 1, type: "bridge", text: async (link) => {
-                    try {
-                        const wbtcAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
-                        const totalSupply = await BlockchainUtils.getERC20TotalSupply(wbtcAddress);
-                        
-                        if (totalSupply !== null) {
-                            // WBTC has 8 decimals
-                            const wbtcSupply = totalSupply / 100000000;
-                            return `WBTC Supply: ${wbtcSupply.toLocaleString()}`;
-                        }
-                        
-                        return 'WBTC Supply: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching WBTC supply:', error);
-                        return 'WBTC Supply: Error';
-                    }
+                    return await getLinkLabel('wbtc-supply', link.source, link.target);
                 }},
                 { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: null },
                 { source: "bitgo", target: "wbtc-solana", value: 1, type: "bridge", text: async (link) => {
-                    try {
-                        // Query Solana token supply - implement your preferred API here
-                        const response = await fetch('https://api.mainnet-beta.solana.com', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                jsonrpc: '2.0',
-                                method: 'getTokenSupply',
-                                params: ['5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ'],
-                                id: 1
-                            })
-                        });
-                        
-                        const data = await response.json();
-                        if (data.result && data.result.value) {
-                            const supply = data.result.value.amount;
-                            const decimals = data.result.value.decimals;
-                            const tokenSupply = supply / Math.pow(10, decimals);
-                            return `WBTC Supply: ${tokenSupply.toLocaleString()}`;
-                        }
-                        
-                        return 'WBTC Supply: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching Solana WBTC supply:', error);
-                        return 'WBTC Supply: Error';
-                    }
+                    return await getLinkLabel('solana-wbtc-supply', link.source, link.target);
                 }},
                 
                 { source: "coinbase", target: "cbbtc", value: 1, type: "bridge", text: async (link) => {
-                    try {
-                        const contractAddress = '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf';
-                        const totalSupply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
-                        
-                        if (totalSupply !== null) {
-                            // Assuming 18 decimals for most ERC20 tokens
-                            const tokenSupply = totalSupply / 100000000;
-                            return `cbBTC Supply: ${tokenSupply.toLocaleString()}`;
-                        }
-                        
-                        return 'cbBTC Supply: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching cbBTC supply:', error);
-                        return 'cbBTC Supply: Error';
-                    }
+                    return await getLinkLabel('cbbtc-supply', link.source, link.target);
                 }},
                 
                 // Ethereum ecosystem
@@ -262,22 +152,7 @@ class GraphData {
                 { source: "lido", target: "ebtc", value: 1, type: "ecosystem", text: null },
                 { source: "wbtc-eth", target: "solvbtc", value: 1, type: "ecosystem", text: null },
                 { source: "wbtc-eth", target: "axelar", value: 1, type: "ecosystem", text: async (link) => {
-                    try {
-                        const wbtcContractAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'; // WBTC contract
-                        const targetContractAddress = '0x4F4495243837681061C4743b74B3eEdf548D56A5'; // Axelar contract
-                        const balance = await BlockchainUtils.getERC20Balance(wbtcContractAddress, targetContractAddress);
-                        
-                        if (balance !== null) {
-                            // WBTC has 8 decimals
-                            const wbtcBalance = balance / 100000000;
-                            return `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
-                        }
-                        
-                        return 'WBTC Balance: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching WBTC balance:', error);
-                        return 'WBTC Balance: Error';
-                    }
+                    return await getLinkLabel('wbtc-balance', link.source, link.target);
                 }},
                 { source: "wbtc-eth", target: "symbiotic", value: 1, type: "ecosystem", text: null },
                 
@@ -296,28 +171,7 @@ class GraphData {
                 
                 // Axelar bridge
                 { source: "axelar", target: "wbtc-eth-axl", value: 1, type: "bridge", text: async (link) => {
-                    try {
-                        // Query Osmosis IBC token supply
-                        const response = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F');
-                        
-                        if (!response.ok) {
-                            throw new Error(`HTTP ${response.status}`);
-                        }
-                        
-                        const data = await response.json();
-                        if (data.supply && data.supply.amount) {
-                            const supply = data.supply.amount;
-                            const denom = data.supply.denom;
-                            // Convert to readable format (assuming 6 decimals for IBC tokens)
-                            const tokenSupply = supply / 1000000;
-                            return `IBC Supply: ${tokenSupply.toLocaleString()}`;
-                        }
-                        
-                        return 'IBC Supply: Loading...';
-                    } catch (error) {
-                        console.error('Error fetching Osmosis IBC supply:', error);
-                        return 'IBC Supply: Error';
-                    }
+                    return await getLinkLabel('osmosis-ibc-supply', link.source, link.target);
                 }},
                 { source: "wbtc-eth-axl", target: "allbtc", value: 1, type: "bridge", text: null },
                 
@@ -347,9 +201,15 @@ class GraphData {
                 { source: "solvbtc-bbn", target: "solvbtc", value: 1, type: "dashed", text: null },
                 
                 // Weighted connections (with specific values)
-                { source: "btc", target: "tbtc", value: 5, type: "weighted", text: (link) => `High Value: ${link.value}` },
-                { source: "wbtc-eth", target: "symbiotic", value: 14, type: "weighted", text: (link) => `Max Value: ${link.value}` },
-                { source: "tbtc", target: "symbiotic", value: 7.3, type: "weighted", text: (link) => `${link.type}: ${link.value}` },
+                { source: "btc", target: "tbtc", value: 5, type: "weighted", text: async (link) => {
+                    return await getLinkLabel('function', link.source, link.target, { type: 'High Value', value: link.value });
+                }},
+                { source: "wbtc-eth", target: "symbiotic", value: 14, type: "weighted", text: async (link) => {
+                    return await getLinkLabel('function', link.source, link.target, { type: 'Max Value', value: link.value });
+                }},
+                { source: "tbtc", target: "symbiotic", value: 7.3, type: "weighted", text: async (link) => {
+                    return await getLinkLabel('function', link.source, link.target, { type: link.type, value: link.value });
+                }},
                 { source: "lbtc", target: "symbiotic", value: 16.5, type: "defi", text: null },
                 { source: "pumpbtc", target: "symbiotic", value: 16.5, type: "defi", text: null },
                 
