@@ -102,7 +102,9 @@ class GraphData {
                 }},
                 
                 // Bridge connections from BTC
-                { source: "btc", target: "babylon", value: 2, type: "bridge", text: "Babylon Bridge" },
+                { source: "btc", target: "babylon", value: 2, type: "bridge", text: async (link) => {
+                    return await getLinkLabel('babylon-staked-btc', link.source, link.target);
+                }},
                 { source: "btc", target: "bitgo", value: 2, type: "bridge", text: null },
                 { source: "btc", target: "coinbase", value: 2, type: "bridge", text: null },
                 { source: "btc", target: "internet-computer", value: 2, type: "bridge", text: null },

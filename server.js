@@ -205,6 +205,35 @@ app.post('/api/link-label', async (req, res) => {
                 }
                 break;
                 
+            case 'babylon-staked-btc':
+                // Query amount of BTC staked with Babylon using the working API endpoint
+                try {
+                    const babylonResponse = await fetch('https://babylon-api.polkachu.com/babylon/btcstaking/v1/btc_delegations/ACTIVE');
+                    
+                    if (babylonResponse.ok) {
+                        const babylonData = await babylonResponse.json();
+                        if (babylonData.btc_delegations && Array.isArray(babylonData.btc_delegations)) {
+                            // Sum up all staked amounts in satoshis
+                            const totalSats = babylonData.btc_delegations.reduce((sum, delegation) => {
+                                const stakedAmountSats = parseInt(delegation.total_sat) || 0;
+                                return sum + stakedAmountSats;
+                            }, 0);
+                            
+                            // Convert satoshis to BTC (1 BTC = 100,000,000 satoshis)
+                            const stakedAmount = totalSats / 100000000;
+                            label = `Staked: ${stakedAmount.toLocaleString()} BTC`;
+                        } else {
+                            label = 'Staked: 0 BTC';
+                        }
+                    } else {
+                        label = 'Staked: Error';
+                    }
+                } catch (error) {
+                    console.error('Error fetching Babylon staking data:', error);
+                    label = 'Staked: Error';
+                }
+                break;
+                
             case 'static':
                 // Return static text if provided
                 label = linkData?.text || null;
