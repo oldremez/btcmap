@@ -71,6 +71,32 @@ const BlockchainUtils = {
 class GraphData {
     static getSampleGraph() {
         return {
+            frames: [
+                {
+                    id: "ethereum-frame",
+                    label: "Ethereum",
+                    nodes: ["wbtc-eth-004", "tbtc-011", "ethereum-006", "lido-007", "ebtc-009", "solvbtc-012", "symbiotic-037", "btcn-014", "wbtc-arbitrum", "dolomite-033", "dbtc-034"],
+                    color: "#4ecdc4",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "osmosis-frame", 
+                    label: "Osmosis",
+                    nodes: ["wbtc-osmosis-021", "ckbtc-osmosis-028", "allbtc-023", "allbtc-030", "nbtc-029", "wbtc-eth-axl"],
+                    color: "#45b7d1",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "bitcoin-frame", 
+                    label: "Bitcoin",
+                    nodes: ["btc-000", "bitcoin-001"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                }
+            ],
             nodes: [
                 // Central Bitcoin nodes
                 { id: "btc-000", name: "BTC 000", group: 1, size: 30, type: "central", x: 400, y: 400 },
@@ -94,18 +120,18 @@ class GraphData {
                 { id: "lbtc-016", name: "LBTC 016", group: 3, size: 20, type: "wrapped", x: 200, y: 250 },
                 { id: "pumpbtc-018", name: "pumpBTC 018", group: 3, size: 20, type: "wrapped", x: 350, y: 150 },
                 { id: "unibtc-020", name: "uniBTC 020", group: 3, size: 20, type: "wrapped", x: 450, y: 150 },
-                { id: "wbtc-osmosis-021", name: "WBTC (Osmosis) 021", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
+                { id: "wbtc-osmosis-021", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "nomic-022", name: "Nomic 022", group: 3, size: 20, type: "wrapped", x: 650, y: 650 },
                 { id: "allbtc-023", name: "allBTC 023", group: 3, size: 20, type: "wrapped", x: 950, y: 650 },
                 { id: "persistence-024", name: "Persistence 024", group: 3, size: 20, type: "wrapped", x: 200, y: 400 },
                 { id: "ybtc-025", name: "yBTC 025", group: 3, size: 20, type: "wrapped", x: 50, y: 400 },
-                { id: "axelar-026", name: "Axelar 026", group: 3, size: 20, type: "wrapped", x: 800, y: 350 },
-                { id: "internet-computer-027", name: "Internet Computer 027", group: 3, size: 20, type: "wrapped", x: 650, y: 700 },
-                { id: "ckbtc-osmosis-028", name: "ckBTC (Osmosis) 028", group: 3, size: 20, type: "wrapped", x: 800, y: 750 },
+                { id: "axelar-026", name: "Axelar 026", group: 3, size: 20, type: "wrapped", x: 800, y: 450 },
+                { id: "internet-computer-027", name: "Internet Computer", group: 3, size: 20, type: "wrapped", x: 650, y: 700 },
+                { id: "ckbtc-osmosis-028", name: "ckBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 750 },
                 { id: "nbtc-029", name: "nBTC 029", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "allbtc-030", name: "allBTC 030", group: 3, size: 20, type: "wrapped", x: 1100, y: 600 },
                 { id: "pendle-031", name: "Pendle 031", group: 3, size: 20, type: "wrapped", x: 500, y: 50 },
-                { id: "solvbtc-bbn-032", name: "SolvBTC.BBN 032", group: 3, size: 20, type: "wrapped", x: 500, y: 100 },
+                { id: "solvbtc-bbn-032", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 500, y: 100 },
                 { id: "dolomite-033", name: "Dolomite 033", group: 3, size: 20, type: "wrapped", x: 750, y: 50 },
                 { id: "dbtc-034", name: "dBTC 034", group: 3, size: 20, type: "wrapped", x: 650, y: 50 },
                 { id: "corn-035", name: "Corn 035", group: 3, size: 20, type: "wrapped", x: 350, y: 50 },
@@ -237,7 +263,8 @@ class GraphData {
     static getEmptyGraph() {
         return {
             nodes: [],
-            links: []
+            links: [],
+            frames: []
         };
     }
 }

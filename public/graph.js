@@ -40,12 +40,14 @@ class GraphVisualization {
         const graphData = GraphData.getSampleGraph();
         this.nodes = graphData.nodes;
         this.links = graphData.links;
+        this.frames = graphData.frames;
     }
 
     generateRandomGraph() {
         const graphData = GraphData.generateRandomGraph();
         this.nodes = graphData.nodes;
         this.links = graphData.links;
+        this.frames = graphData.frames;
         this.render();
     }
 
@@ -55,6 +57,57 @@ class GraphVisualization {
 
         // Color scale for groups
         const color = d3.scaleOrdinal(d3.schemeCategory10);
+
+        // Create frames first (so they appear behind nodes)
+        if (this.frames && this.frames.length > 0) {
+            this.frames.forEach(frame => {
+                // Find the nodes that belong to this frame
+                const frameNodes = this.nodes.filter(node => frame.nodes.includes(node.id));
+                
+                if (frameNodes.length > 0) {
+                    // Calculate frame bounds
+                    const xCoords = frameNodes.map(n => n.x || 0);
+                    const yCoords = frameNodes.map(n => n.y || 0);
+                    
+                    const minX = Math.min(...xCoords) - frame.padding;
+                    const maxX = Math.max(...xCoords) + frame.padding;
+                    const minY = Math.min(...yCoords) - frame.padding;
+                    const maxY = Math.max(...yCoords) + frame.padding;
+                    
+                    const width = maxX - minX;
+                    const height = maxY - minY;
+                    
+                    // Create frame rectangle
+                    const frameGroup = this.mainGroup.append('g')
+                        .attr('class', 'frame')
+                        .attr('data-frame-id', frame.id);
+                    
+                    // Add rounded rectangle
+                    frameGroup.append('rect')
+                        .attr('x', minX)
+                        .attr('y', minY)
+                        .attr('width', width)
+                        .attr('height', height)
+                        .attr('rx', 15) // Rounded corners
+                        .attr('ry', 15)
+                        .attr('fill', 'none')
+                        .attr('stroke', frame.color)
+                        .attr('stroke-width', frame.strokeWidth)
+                        .attr('stroke-dasharray', '5,5')
+                        .attr('opacity', 0.6);
+                    
+                    // Add frame label
+                    frameGroup.append('text')
+                        .attr('x', minX + 10)
+                        .attr('y', minY - 5)
+                        .attr('font-size', '12px')
+                        .attr('font-weight', 'bold')
+                        .attr('fill', frame.color)
+                        .attr('background-color', 'white')
+                        .text(frame.label);
+                }
+            });
+        }
 
         // Set initial positions for nodes that have coordinates
         this.nodes.forEach(node => {
@@ -187,6 +240,38 @@ class GraphVisualization {
 
             node
                 .attr('transform', d => `translate(${d.x},${d.y})`);
+
+            // Update frame positions
+            if (this.frames && this.frames.length > 0) {
+                this.frames.forEach(frame => {
+                    const frameNodes = this.nodes.filter(node => frame.nodes.includes(node.id));
+                    
+                    if (frameNodes.length > 0) {
+                        const xCoords = frameNodes.map(n => n.x || 0);
+                        const yCoords = frameNodes.map(n => n.y || 0);
+                        
+                        const minX = Math.min(...xCoords) - frame.padding;
+                        const maxX = Math.max(...xCoords) + frame.padding;
+                        const minY = Math.min(...yCoords) - frame.padding;
+                        const maxY = Math.max(...yCoords) + frame.padding;
+                        
+                        const width = maxX - minX;
+                        const height = maxY - minY;
+                        
+                        // Update frame rectangle
+                        this.mainGroup.select(`[data-frame-id="${frame.id}"] rect`)
+                            .attr('x', minX)
+                            .attr('y', minY)
+                            .attr('width', width)
+                            .attr('height', height);
+                        
+                        // Update frame label
+                        this.mainGroup.select(`[data-frame-id="${frame.id}"] text`)
+                            .attr('x', minX + 10)
+                            .attr('y', minY - 5);
+                    }
+                });
+            }
         });
     }
 
@@ -207,7 +292,23 @@ class GraphVisualization {
         const graphData = GraphData.getEmptyGraph();
         this.nodes = graphData.nodes;
         this.links = graphData.links;
+        this.frames = graphData.frames;
         this.render();
+    }
+
+    addFrame(frame) {
+        if (!this.frames) {
+            this.frames = [];
+        }
+        this.frames.push(frame);
+        this.render();
+    }
+
+    removeFrame(frameId) {
+        if (this.frames) {
+            this.frames = this.frames.filter(f => f.id !== frameId);
+            this.render();
+        }
     }
 }
 
@@ -228,5 +329,25 @@ function generateRandomGraph() {
 function clearGraph() {
     if (graph) {
         graph.clearGraph();
+    }
+}
+
+function addCustomFrame() {
+    if (graph) {
+        const customFrame = {
+            id: "custom-frame",
+            label: "Custom Group",
+            nodes: ["btc-000", "bitcoin-001"],
+            color: "#ff6b35",
+            strokeWidth: 3,
+            padding: 25
+        };
+        graph.addFrame(customFrame);
+    }
+}
+
+function removeCustomFrame() {
+    if (graph) {
+        graph.removeFrame("custom-frame");
     }
 }
