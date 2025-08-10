@@ -153,7 +153,7 @@ app.post('/api/link-label', async (req, res) => {
                 const tbtcSupply = await BlockchainUtils.getERC20TotalSupply(tbtcContractAddress);
                 
                 if (tbtcSupply !== null) {
-                    const tokenSupply = tbtcSupply / 100000000; // Assuming 8 decimals for tBTC
+                    const tokenSupply = tbtcSupply / 100000000000000000; 
                     label = `tBTC Supply: ${tokenSupply.toLocaleString()}`;
                 } else {
                     label = 'tBTC Supply: Loading...';
