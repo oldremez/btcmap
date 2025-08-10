@@ -99,17 +99,19 @@ class GraphData {
             ],
             nodes: [
                 // Central Bitcoin nodes
-                { id: "btc", name: "BTC", group: 1, size: 30, type: "central", x: 400, y: 400 },
+                { id: "btc", name: "BTC", group: 1, size: 30, type: "central", x: 400, y: 500 },
                 { id: "bitcoin", name: "Bitcoin", group: 1, size: 25, type: "central", x: 300, y: 600 },
                 
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge", x: 250, y: 300 },
                 { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 550, y: 400 },
+
                 { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 550, y: 200 },
                 { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 1100, y: 400 },
                 { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 1100, y: 300 },
-                { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
+                { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped", x: 800, y: 900 },
+
                 { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 600, y: 500 },
                 { id: "ethereum", name: "Ethereum", group: 2, size: 22, type: "bridge", x: 200, y: 200 },
                 { id: "lido", name: "Lido", group: 2, size: 22, type: "bridge", x: 200, y: 100 },
@@ -208,6 +210,34 @@ class GraphData {
                     }
                 }},
                 { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: null },
+                { source: "bitgo", target: "wbtc-solana", value: 1, type: "bridge", text: async (link) => {
+                    try {
+                        // Query Solana token supply - implement your preferred API here
+                        const response = await fetch('https://api.mainnet-beta.solana.com', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                jsonrpc: '2.0',
+                                method: 'getTokenSupply',
+                                params: ['5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ'],
+                                id: 1
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        if (data.result && data.result.value) {
+                            const supply = data.result.value.amount;
+                            const decimals = data.result.value.decimals;
+                            const tokenSupply = supply / Math.pow(10, decimals);
+                            return `WBTC Supply: ${tokenSupply.toLocaleString()}`;
+                        }
+                        
+                        return 'WBTC Supply: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching Solana WBTC supply:', error);
+                        return 'WBTC Supply: Error';
+                    }
+                }},
                 
                 { source: "coinbase", target: "cbbtc", value: 1, type: "bridge", text: async (link) => {
                     try {
@@ -265,7 +295,30 @@ class GraphData {
                 { source: "nbtc", target: "allbtc", value: 1, type: "ecosystem", text: null },
                 
                 // Axelar bridge
-                { source: "axelar", target: "wbtc-eth-axl", value: 1, type: "bridge", text: null },
+                { source: "axelar", target: "wbtc-eth-axl", value: 1, type: "bridge", text: async (link) => {
+                    try {
+                        // Query Osmosis IBC token supply
+                        const response = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F');
+                        
+                        if (!response.ok) {
+                            throw new Error(`HTTP ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        if (data.supply && data.supply.amount) {
+                            const supply = data.supply.amount;
+                            const denom = data.supply.denom;
+                            // Convert to readable format (assuming 6 decimals for IBC tokens)
+                            const tokenSupply = supply / 1000000;
+                            return `IBC Supply: ${tokenSupply.toLocaleString()}`;
+                        }
+                        
+                        return 'IBC Supply: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching Osmosis IBC supply:', error);
+                        return 'IBC Supply: Error';
+                    }
+                }},
                 { source: "wbtc-eth-axl", target: "allbtc", value: 1, type: "bridge", text: null },
                 
                 // DeFi connections
