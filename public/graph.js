@@ -95,11 +95,7 @@ class GraphVisualization {
         const node = this.mainGroup.append('g')
             .selectAll('g')
             .data(this.nodes)
-            .enter().append('g')
-            .call(d3.drag()
-                .on('start', this.dragstarted.bind(this))
-                .on('drag', this.dragged.bind(this))
-                .on('end', this.dragended.bind(this)));
+            .enter().append('g');
 
         // Add circles to nodes
         node.append('circle')
@@ -143,11 +139,7 @@ class GraphVisualization {
         });
     }
 
-    dragstarted(event, d) {
-        if (!event.active) this.simulation.alphaTarget(0.3).restart();
-        d.fx = d.x;
-        d.fy = d.y;
-    }
+
 
     dragged(event, d) {
         d.fx = event.x;
