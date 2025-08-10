@@ -209,7 +209,23 @@ class GraphData {
                 }},
                 { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: null },
                 
-                { source: "coinbase", target: "tbtc", value: 1, type: "bridge", text: null },
+                { source: "coinbase", target: "cbbtc", value: 1, type: "bridge", text: async (link) => {
+                    try {
+                        const contractAddress = '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf';
+                        const totalSupply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
+                        
+                        if (totalSupply !== null) {
+                            // Assuming 18 decimals for most ERC20 tokens
+                            const tokenSupply = totalSupply / 100000000;
+                            return `cbBTC Supply: ${tokenSupply.toLocaleString()}`;
+                        }
+                        
+                        return 'cbBTC Supply: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching cbBTC supply:', error);
+                        return 'cbBTC Supply: Error';
+                    }
+                }},
                 
                 // Ethereum ecosystem
                 { source: "ethereum", target: "lido", value: 1, type: "ecosystem", text: null },
