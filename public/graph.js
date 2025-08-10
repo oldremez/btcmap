@@ -56,6 +56,14 @@ class GraphVisualization {
         // Color scale for groups
         const color = d3.scaleOrdinal(d3.schemeCategory10);
 
+        // Set initial positions for nodes that have coordinates
+        this.nodes.forEach(node => {
+            if (node.x !== undefined && node.y !== undefined) {
+                node.fx = node.x;
+                node.fy = node.y;
+            }
+        });
+
         // Create force simulation
         this.simulation = d3.forceSimulation(this.nodes)
             .force('link', d3.forceLink(this.links).id(d => d.id).distance(80))
