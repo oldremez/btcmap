@@ -7,6 +7,7 @@ class GraphVisualization {
         this.links = [];
         this.simulation = null;
         this.svg = null;
+        this.devMode = true; // Enable dev mode by default
         this.init();
     }
 
@@ -31,9 +32,131 @@ class GraphVisualization {
 
         this.svg.call(zoom);
 
+        // Add dev mode controls if enabled
+        if (this.devMode) {
+            this.addDevControls();
+        }
+
         // Initialize with a simple graph
         this.generateSampleGraph();
         this.render();
+    }
+
+    addDevControls() {
+        // Create a control panel above the graph
+        const controls = d3.select('#graph')
+            .insert('div', 'svg')
+            .attr('class', 'dev-controls')
+            .style('position', 'absolute')
+            .style('top', '10px')
+            .style('left', '10px')
+            .style('z-index', '1000')
+            .style('background', 'rgba(255, 255, 255, 0.9)')
+            .style('padding', '10px')
+            .style('border-radius', '5px')
+            .style('border', '1px solid #ccc')
+            .style('font-family', 'Arial, sans-serif')
+            .style('font-size', '12px');
+
+        // Add dev mode indicator
+        controls.append('div')
+            .style('font-weight', 'bold')
+            .style('color', '#4ecdc4')
+            .style('margin-bottom', '5px')
+            .text('DEV MODE');
+
+        // Add export button
+        controls.append('button')
+            .text('Export Node Positions')
+            .style('background', '#4ecdc4')
+            .style('color', 'white')
+            .style('border', 'none')
+            .style('padding', '5px 10px')
+            .style('border-radius', '3px')
+            .style('cursor', 'pointer')
+            .style('margin-right', '5px')
+            .on('click', () => this.exportNodePositions());
+
+        // Add toggle button
+        controls.append('button')
+            .text('Toggle Dev Mode')
+            .style('background', '#f49c13')
+            .style('color', 'white')
+            .style('border', 'none')
+            .style('padding', '5px 10px')
+            .style('border-radius', '3px')
+            .style('cursor', 'pointer')
+            .on('click', () => this.toggleDevMode());
+    }
+
+    exportNodePositions() {
+        const positions = this.nodes.map(node => ({
+            id: node.id,
+            name: node.name,
+            x: Math.round(node.x || node.fx || 0),
+            y: Math.round(node.y || node.fy || 0)
+        }));
+
+        const dataStr = JSON.stringify(positions, null, 2);
+        const dataBlob = new Blob([dataStr], { type: 'application/json' });
+        
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(dataBlob);
+        link.download = 'node-positions.json';
+        link.click();
+        
+        console.log('Node positions exported:', positions);
+    }
+
+    toggleDevMode() {
+        this.devMode = !this.devMode;
+        if (this.devMode) {
+            // Re-enable dragging
+            this.enableDragging();
+            d3.select('.dev-controls').style('display', 'block');
+        } else {
+            // Disable dragging
+            this.disableDragging();
+            d3.select('.dev-controls').style('display', 'none');
+        }
+    }
+
+    enableDragging() {
+        if (this.nodeGroups) {
+            this.nodeGroups.call(d3.drag()
+                .on('start', this.dragstarted.bind(this))
+                .on('drag', this.dragged.bind(this))
+                .on('end', this.dragended.bind(this)));
+        }
+    }
+
+    disableDragging() {
+        if (this.nodeGroups) {
+            this.nodeGroups.on('.drag', null);
+        }
+    }
+
+    dragstarted(event, d) {
+        if (!event.active) this.simulation.alphaTarget(0.3).restart();
+        d.fx = d.x;
+        d.fy = d.y;
+    }
+
+    dragged(event, d) {
+        d.fx = event.x;
+        d.fy = event.y;
+    }
+
+    dragended(event, d) {
+        if (!event.active) this.simulation.alphaTarget(0);
+        // Keep the fixed position for dev mode
+        if (this.devMode) {
+            d.fx = d.x;
+            d.fy = d.y;
+        } else {
+            d.fx = null;
+            d.fy = null;
+        }
     }
 
     generateSampleGraph() {
@@ -191,10 +314,20 @@ class GraphVisualization {
         });
 
         // Create nodes
-        const node = this.mainGroup.append('g')
+        this.nodeGroups = this.mainGroup.append('g')
             .selectAll('g')
             .data(this.nodes)
             .enter().append('g');
+
+        // Enable dragging in dev mode
+        if (this.devMode) {
+            this.nodeGroups.call(d3.drag()
+                .on('start', this.dragstarted.bind(this))
+                .on('drag', this.dragged.bind(this))
+                .on('end', this.dragended.bind(this)));
+        }
+
+        const node = this.nodeGroups;
 
         // Add circles to nodes
         node.append('circle')
@@ -238,7 +371,7 @@ class GraphVisualization {
                 .attr('x', d => (d.source.x + d.target.x) / 2)
                 .attr('y', d => (d.source.y + d.target.y) / 2);
 
-            node
+            this.nodeGroups
                 .attr('transform', d => `translate(${d.x},${d.y})`);
 
             // Update frame positions
@@ -276,17 +409,6 @@ class GraphVisualization {
     }
 
 
-
-    dragged(event, d) {
-        d.fx = event.x;
-        d.fy = event.y;
-    }
-
-    dragended(event, d) {
-        if (!event.active) this.simulation.alphaTarget(0);
-        d.fx = null;
-        d.fy = null;
-    }
 
     clearGraph() {
         const graphData = GraphData.getEmptyGraph();

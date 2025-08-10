@@ -68,9 +68,9 @@ class GraphData {
                 
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge", x: 250, y: 300 },
-                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 550, y: 400 },
+                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 450, y: 450 },
 
-                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 550, y: 200 },
+                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 500, y: 350 },
                 { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 1100, y: 400 },
                 { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 1100, y: 300 },
@@ -79,7 +79,7 @@ class GraphData {
                 { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 600, y: 500 },
                 
                 // Wrapped BTC Tokens
-                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped", x: 700, y: 400 },
+                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped", x: 600, y: 350 },
                 { id: "tbtc", name: "tBTC", group: 3, size: 20, type: "wrapped", x: 400, y: 350 },
                 { id: "solvbtc", name: "SolvBTC", group: 3, size: 20, type: "wrapped", x: 800, y: 200 },
                 { id: "fbtc", name: "FBTC", group: 3, size: 20, type: "wrapped", x: 750, y: 500 },
