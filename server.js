@@ -160,6 +160,19 @@ app.post('/api/link-label', async (req, res) => {
                 }
                 break;
                 
+            case 'fbtc-supply':
+                // Query FBTC supply from the specified ERC20 contract
+                const fbtcContractAddress = '0xc96de26018a54d51c097160568752c4e3bd6c364';
+                const fbtcSupply = await BlockchainUtils.getERC20TotalSupply(fbtcContractAddress);
+                
+                if (fbtcSupply !== null) {
+                    const tokenSupply = fbtcSupply / 100000000; // Assuming 8 decimals for FBTC
+                    label = `FBTC Supply: ${tokenSupply.toLocaleString()}`;
+                } else {
+                    label = 'FBTC Supply: Loading...';
+                }
+                break;
+                
             case 'wbtc-balance':
                 // Query WBTC balance for Axelar contract
                 const wbtcContractAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
