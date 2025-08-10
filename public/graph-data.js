@@ -92,7 +92,6 @@ class GraphData {
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 447, y: 124 },
                 
                 // Special nodes
-                { id: "renbtc", name: "renBTC", group: 4, size: 18, type: "special", x: 574, y: 351 },
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 }
             ],
             links: [
@@ -108,7 +107,6 @@ class GraphData {
                 { source: "btc", target: "bitgo", value: 2, type: "bridge", text: null },
                 { source: "btc", target: "coinbase", value: 2, type: "bridge", text: null },
                 { source: "btc", target: "internet-computer", value: 2, type: "bridge", text: null },
-                { source: "btc", target: "renbtc", value: 2, type: "bridge", text: null },
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "solvbtc-bbn", value: 1, type: "bridge", text: null },
