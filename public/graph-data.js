@@ -75,7 +75,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "ethereum", "lido", "ebtc", "solvbtc", "symbiotic", "btcn", "wbtc-arbitrum", "dolomite", "dbtc"],
+                    nodes: ["wbtc-eth", "tbtc", "ethereum", "lido", "ebtc", "solvbtc", "symbiotic", "btcn", "dolomite", "dbtc"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -104,8 +104,12 @@ class GraphData {
                 
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge", x: 250, y: 300 },
-                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 550, y: 300 },
+                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 550, y: 400 },
                 { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 550, y: 200 },
+                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
+                { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 1100, y: 400 },
+                { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 1100, y: 300 },
+                { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 600, y: 500 },
                 { id: "ethereum", name: "Ethereum", group: 2, size: 22, type: "bridge", x: 200, y: 200 },
                 { id: "lido", name: "Lido", group: 2, size: 22, type: "bridge", x: 200, y: 100 },
@@ -120,7 +124,6 @@ class GraphData {
                 { id: "lbtc", name: "LBTC", group: 3, size: 20, type: "wrapped", x: 200, y: 250 },
                 { id: "pumpbtc", name: "pumpBTC", group: 3, size: 20, type: "wrapped", x: 350, y: 150 },
                 { id: "unibtc", name: "uniBTC", group: 3, size: 20, type: "wrapped", x: 450, y: 150 },
-                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
                 { id: "nomic", name: "Nomic", group: 3, size: 20, type: "wrapped", x: 650, y: 650 },
                 { id: "allbtc", name: "allBTC", group: 3, size: 20, type: "wrapped", x: 950, y: 650 },
                 { id: "persistence", name: "Persistence", group: 3, size: 20, type: "wrapped", x: 200, y: 400 },
@@ -128,7 +131,7 @@ class GraphData {
                 { id: "axelar", name: "Axelar", group: 3, size: 20, type: "wrapped", x: 800, y: 450 },
                 { id: "internet-computer", name: "Internet Computer", group: 3, size: 20, type: "wrapped", x: 650, y: 700 },
                 { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 750 },
-                { id: "nbtc", name: "nBTC", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
+                { id: "nbtc", name: "nBTC", group: 3, size: 20, type: "wrapped", x: 900, y: 550 },
                 { id: "pendle", name: "Pendle", group: 3, size: 20, type: "wrapped", x: 500, y: 50 },
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 500, y: 100 },
                 { id: "dolomite", name: "Dolomite", group: 3, size: 20, type: "wrapped", x: 750, y: 50 },
@@ -141,12 +144,34 @@ class GraphData {
                 { id: "stbtc-lorenzo", name: "stBTC (Lorenzo)", group: 4, size: 18, type: "special", x: 150, y: 300 },
                 { id: "enzobtc-lorenzo", name: "enzoBTC (Lorenzo)", group: 4, size: 18, type: "special", x: 50, y: 550 },
                 { id: "renbtc", name: "renBTC", group: 4, size: 18, type: "special", x: 650, y: 800 },
-                { id: "wbtc-arbitrum", name: "WBTC (Arbitrum)", group: 4, size: 18, type: "special", x: 850, y: 100 },
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 800, y: 550 }
             ],
             links: [
                 // Central connections
-                { source: "bitcoin", target: "btc", value: 3, type: "central", text: "Core" },
+                { source: "bitcoin", target: "btc", value: 3, type: "central", text: async (link) => {
+                    try {
+                        // Query Bitcoin supply from a reliable API
+                        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true');
+                        const data = await response.json();
+                        
+                        if (data.bitcoin && data.bitcoin.usd) {
+                            // Bitcoin supply is approximately 19.5M+ (as of 2024)
+                            // We can also get this from the API if available
+                            const btcPrice = data.bitcoin.usd;
+                            const btcMarketCap = data.bitcoin.usd_market_cap;
+                            
+                            // Calculate approximate supply from market cap and price
+                            const approximateSupply = Math.round(btcMarketCap / btcPrice);
+                            
+                            return `BTC Supply: ~${approximateSupply.toLocaleString()}`;
+                        }
+                        
+                        return 'BTC Supply: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching BTC supply:', error);
+                        return 'BTC Supply: ~19.5M+';
+                    }
+                }},
                 
                 // Bridge connections from BTC
                 { source: "btc", target: "babylon", value: 2, type: "bridge", text: "Babylon Bridge" },
@@ -183,7 +208,6 @@ class GraphData {
                     }
                 }},
                 { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: null },
-                { source: "bitgo", target: "wbtc-arbitrum", value: 1, type: "bridge", text: null },
                 
                 { source: "coinbase", target: "tbtc", value: 1, type: "bridge", text: null },
                 
@@ -246,7 +270,6 @@ class GraphData {
                 // Additional connections
                 { source: "persistence", target: "ybtc", value: 1, type: "bridge", text: null },
                 { source: "dbtc", target: "dolomite", value: 1, type: "bridge", text: null },
-                { source: "wbtc-arbitrum", target: "dolomite", value: 1, type: "bridge", text: null },
                 { source: "dolomite", target: "dbtc", value: 1, type: "bridge", text: null },
                 { source: "solvbtc-bbn", target: "dolomite", value: 1, type: "bridge", text: null }
             ]
