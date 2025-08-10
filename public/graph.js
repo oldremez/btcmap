@@ -20,16 +20,16 @@ class GraphVisualization {
             .attr('width', this.width)
             .attr('height', this.height);
 
-        // Add zoom behavior
+        // Create main group for zooming
+        this.mainGroup = this.svg.append('g');
+
+        // Add zoom behavior to the main group
         const zoom = d3.zoom()
             .on('zoom', (event) => {
-                this.svg.selectAll('g').attr('transform', event.transform);
+                this.mainGroup.attr('transform', event.transform);
             });
 
         this.svg.call(zoom);
-
-        // Create main group for zooming
-        this.svg = this.svg.append('g');
 
         // Initialize with a simple graph
         this.generateSampleGraph();
@@ -50,8 +50,8 @@ class GraphVisualization {
     }
 
     render() {
-        // Clear existing elements
-        this.svg.selectAll('*').remove();
+        // Clear existing elements from the main group
+        this.mainGroup.selectAll('*').remove();
 
         // Color scale for groups
         const color = d3.scaleOrdinal(d3.schemeCategory10);
@@ -64,7 +64,7 @@ class GraphVisualization {
             .force('collision', d3.forceCollide().radius(d => d.size + 5));
 
         // Create links
-        const link = this.svg.append('g')
+        const link = this.mainGroup.append('g')
             .selectAll('line')
             .data(this.links)
             .enter().append('line')
@@ -73,7 +73,7 @@ class GraphVisualization {
             .attr('stroke-width', d => Math.sqrt(d.value) * 2);
 
         // Create nodes
-        const node = this.svg.append('g')
+        const node = this.mainGroup.append('g')
             .selectAll('g')
             .data(this.nodes)
             .enter().append('g')
