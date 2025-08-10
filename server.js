@@ -147,6 +147,19 @@ app.post('/api/link-label', async (req, res) => {
                 }
                 break;
                 
+            case 'tbtc-supply':
+                // Query tBTC supply from the specified ERC20 contract
+                const tbtcContractAddress = '0x18084fba666a33d37592fa2633fd49a74dd93a88';
+                const tbtcSupply = await BlockchainUtils.getERC20TotalSupply(tbtcContractAddress);
+                
+                if (tbtcSupply !== null) {
+                    const tokenSupply = tbtcSupply / 100000000; // Assuming 8 decimals for tBTC
+                    label = `tBTC Supply: ${tokenSupply.toLocaleString()}`;
+                } else {
+                    label = 'tBTC Supply: Loading...';
+                }
+                break;
+                
             case 'wbtc-balance':
                 // Query WBTC balance for Axelar contract
                 const wbtcContractAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';

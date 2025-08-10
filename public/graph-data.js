@@ -68,32 +68,32 @@ class GraphData {
                 
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge", x: 250, y: 300 },
-                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 450, y: 450 },
+                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 397, y: 423 },
 
-                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 500, y: 350 },
-                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 600 },
-                { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 1100, y: 400 },
-                { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 1100, y: 300 },
+                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 397, y: 334 },
+                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 797, y: 657 },
+                { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 93, y: 350 },
+                { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 97, y: 466 },
                 { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped", x: 800, y: 900 },
 
-                { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 600, y: 500 },
+                { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 687, y: 429 },
                 
                 // Wrapped BTC Tokens
-                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped", x: 600, y: 350 },
-                { id: "tbtc", name: "tBTC", group: 3, size: 20, type: "wrapped", x: 400, y: 350 },
-                { id: "solvbtc", name: "SolvBTC", group: 3, size: 20, type: "wrapped", x: 800, y: 200 },
-                { id: "fbtc", name: "FBTC", group: 3, size: 20, type: "wrapped", x: 750, y: 500 },
-                { id: "btcn", name: "BTCN", group: 3, size: 20, type: "wrapped", x: 900, y: 250 },
-                { id: "allbtc", name: "allBTC", group: 3, size: 20, type: "wrapped", x: 950, y: 650 },
-                { id: "axelar", name: "Axelar", group: 3, size: 20, type: "wrapped", x: 800, y: 450 },
+                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped", x: 681, y: 352 },
+                { id: "tbtc", name: "tBTC", group: 3, size: 20, type: "wrapped", x: 493, y: 348 },
+                { id: "solvbtc", name: "SolvBTC", group: 3, size: 20, type: "wrapped", x: 452, y: 222 },
+                { id: "fbtc", name: "FBTC", group: 3, size: 20, type: "wrapped", x: 818, y: 348 },
+                { id: "btcn", name: "BTCN", group: 3, size: 20, type: "wrapped", x: 619, y: 212 },
+                { id: "allbtc", name: "allBTC", group: 3, size: 20, type: "wrapped", x: 950, y: 657 },
+                { id: "axelar", name: "Axelar", group: 3, size: 20, type: "wrapped", x: 587, y: 547 },
                 { id: "internet-computer", name: "Internet Computer", group: 3, size: 20, type: "wrapped", x: 650, y: 700 },
                 { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 750 },
                 { id: "nbtc", name: "nBTC", group: 3, size: 20, type: "wrapped", x: 900, y: 550 },
-                { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 500, y: 100 },
+                { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 447, y: 124 },
                 
                 // Special nodes
-                { id: "renbtc", name: "renBTC", group: 4, size: 18, type: "special", x: 650, y: 800 },
-                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 800, y: 550 }
+                { id: "renbtc", name: "renBTC", group: 4, size: 18, type: "special", x: 574, y: 351 },
+                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 }
             ],
             links: [
                 // Central connections
@@ -150,7 +150,7 @@ class GraphData {
                 
                 // Weighted connections (with specific values)
                 { source: "btc", target: "tbtc", value: 5, type: "weighted", text: async (link) => {
-                    return await getLinkLabel('function', link.source, link.target, { type: 'High Value', value: link.value });
+                    return await getLinkLabel('tbtc-supply', link.source, link.target);
                 }},
                 
                 // Additional connections
