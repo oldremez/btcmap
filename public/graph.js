@@ -109,18 +109,33 @@ class GraphVisualization {
             .attr('font-size', '9px')
             .attr('fill', '#666')
             .attr('pointer-events', 'none')
-            .text(d => {
-                // Handle different text types: null (no text), string (static text), or function (custom text)
-                if (d.text === null || d.text === undefined) {
-                    return ''; // No text
-                } else if (typeof d.text === 'string') {
-                    return d.text; // Static text
-                } else if (typeof d.text === 'function') {
-                    return d.text(d); // Custom function
-                } else {
-                    return ''; // Fallback to no text
+            .text('Loading...'); // Initial text while async functions load
+
+        // Process link text asynchronously
+        this.links.forEach(async (link, index) => {
+            if (typeof link.text === 'function') {
+                try {
+                    const result = await link.text(link);
+                    if (result && typeof result === 'string') {
+                        // Update the specific label with the result
+                        linkLabels.filter((d, i) => i === index)
+                            .text(result);
+                    }
+                } catch (error) {
+                    console.error('Error processing link text:', error);
+                    linkLabels.filter((d, i) => i === index)
+                        .text('Error');
                 }
-            });
+            } else if (typeof link.text === 'string') {
+                // Update static text immediately
+                linkLabels.filter((d, i) => i === index)
+                    .text(link.text);
+            } else {
+                // No text
+                linkLabels.filter((d, i) => i === index)
+                    .text('');
+            }
+        });
 
         // Create nodes
         const node = this.mainGroup.append('g')

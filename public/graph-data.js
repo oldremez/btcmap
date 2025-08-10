@@ -3,6 +3,71 @@
 // - null/undefined: No text displayed
 // - string: Static text displayed
 // - function: Custom function that returns text (receives link object as parameter)
+// - async function: Async function that can query external data (blockchain, APIs, etc.)
+
+// Utility functions for blockchain data
+const BlockchainUtils = {
+    // Query ERC20 total supply
+    async getERC20TotalSupply(contractAddress, rpcUrl = 'https://eth.llamarpc.com') {
+        try {
+            const totalSupplySignature = '0x18160ddd';
+            const response = await fetch(rpcUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'eth_call',
+                    params: [{
+                        to: contractAddress,
+                        data: totalSupplySignature
+                    }, 'latest'],
+                    id: 1
+                })
+            });
+            
+            const data = await response.json();
+            if (data.result) {
+                return parseInt(data.result, 16);
+            }
+            return null;
+        } catch (error) {
+            console.error('Error fetching ERC20 supply:', error);
+            return null;
+        }
+    },
+
+    // Query ERC20 balance for a specific address
+    async getERC20Balance(contractAddress, walletAddress, rpcUrl = 'https://eth.llamarpc.com') {
+        try {
+            const balanceOfSignature = '0x70a08231';
+            const paddedAddress = '0x000000000000000000000000' + walletAddress.slice(2);
+            
+            const response = await fetch(rpcUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'eth_call',
+                    params: [{
+                        to: contractAddress,
+                        data: balanceOfSignature + paddedAddress
+                    }, 'latest'],
+                    id: 1
+                })
+            });
+            
+            const data = await response.json();
+            if (data.result) {
+                return parseInt(data.result, 16);
+            }
+            return null;
+        } catch (error) {
+            console.error('Error fetching ERC20 balance:', error);
+            return null;
+        }
+    }
+};
+
 class GraphData {
     static getSampleGraph() {
         return {
@@ -75,7 +140,23 @@ class GraphData {
                 { source: "babylon-002", target: "solvbtc-bbn-032", value: 1, type: "bridge", text: null },
                 { source: "babylon-002", target: "stbtc-lorenzo", value: 1, type: "bridge", text: null },
                 
-                { source: "bitgo-003", target: "wbtc-eth-004", value: 1, type: "bridge", text: null },
+                { source: "bitgo-003", target: "wbtc-eth-004", value: 1, type: "bridge", text: async (link) => {
+                    try {
+                        const wbtcAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
+                        const totalSupply = await BlockchainUtils.getERC20TotalSupply(wbtcAddress);
+                        
+                        if (totalSupply !== null) {
+                            // WBTC has 8 decimals
+                            const wbtcSupply = totalSupply / 100000000;
+                            return `WBTC Supply: ${wbtcSupply.toLocaleString()}`;
+                        }
+                        
+                        return 'WBTC Supply: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching WBTC supply:', error);
+                        return 'WBTC Supply: Error';
+                    }
+                }},
                 { source: "bitgo-003", target: "wbtc-osmosis-021", value: 1, type: "bridge", text: null },
                 { source: "bitgo-003", target: "wbtc-arbitrum", value: 1, type: "bridge", text: null },
                 
