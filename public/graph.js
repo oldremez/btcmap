@@ -58,19 +58,38 @@ class GraphVisualization {
 
         // Create force simulation
         this.simulation = d3.forceSimulation(this.nodes)
-            .force('link', d3.forceLink(this.links).id(d => d.id).distance(100))
-            .force('charge', d3.forceManyBody().strength(-300))
+            .force('link', d3.forceLink(this.links).id(d => d.id).distance(80))
+            .force('charge', d3.forceManyBody().strength(-200))
             .force('center', d3.forceCenter(this.width / 2, this.height / 2))
-            .force('collision', d3.forceCollide().radius(d => d.size + 5));
+            .force('collision', d3.forceCollide().radius(d => d.size + 8))
+            .force('x', d3.forceX(this.width / 2).strength(0.1))
+            .force('y', d3.forceY(this.height / 2).strength(0.1));
 
         // Create links
         const link = this.mainGroup.append('g')
             .selectAll('line')
             .data(this.links)
             .enter().append('line')
-            .attr('stroke', '#999')
-            .attr('stroke-opacity', 0.6)
-            .attr('stroke-width', d => Math.sqrt(d.value) * 2);
+            .attr('stroke', d => {
+                // Different colors for different connection types
+                switch(d.type) {
+                    case 'central': return '#ff6b35';      // Orange for central connections
+                    case 'bridge': return '#4ecdc4';       // Teal for bridge connections
+                    case 'ecosystem': return '#45b7d1';    // Blue for ecosystem connections
+                    case 'cross-chain': return '#96ceb4';  // Green for cross-chain
+                    case 'defi': return '#feca57';         // Yellow for DeFi
+                    case 'weighted': return '#ff9ff3';     // Pink for weighted connections
+                    case 'dashed': return '#54a0ff';       // Blue for dashed connections
+                    default: return '#999';
+                }
+            })
+            .attr('stroke-opacity', 0.8)
+            .attr('stroke-width', d => Math.sqrt(d.value) * 2)
+            .attr('stroke-dasharray', d => d.type === 'dashed' ? '5,5' : 'none');
+
+        // Add tooltips to links
+        link.append('title')
+            .text(d => `Connection: ${d.source.name || d.source} → ${d.target.name || d.target}\nType: ${d.type}\nValue: ${d.value}`);
 
         // Create nodes
         const node = this.mainGroup.append('g')
@@ -85,7 +104,16 @@ class GraphVisualization {
         // Add circles to nodes
         node.append('circle')
             .attr('r', d => d.size)
-            .attr('fill', d => color(d.group))
+            .attr('fill', d => {
+                // Different colors for different node types
+                switch(d.type) {
+                    case 'central': return '#ff6b35';      // Orange for central Bitcoin nodes
+                    case 'bridge': return '#4ecdc4';       // Teal for bridge protocols
+                    case 'wrapped': return '#45b7d1';      // Blue for wrapped tokens
+                    case 'special': return '#feca57';      // Yellow for special nodes
+                    default: return color(d.group);
+                }
+            })
             .attr('stroke', '#fff')
             .attr('stroke-width', 2);
 
@@ -94,9 +122,13 @@ class GraphVisualization {
             .text(d => d.name)
             .attr('text-anchor', 'middle')
             .attr('dy', '.35em')
-            .attr('font-size', '12px')
+            .attr('font-size', '10px')
             .attr('fill', '#333')
             .attr('font-weight', 'bold');
+
+        // Add tooltips
+        node.append('title')
+            .text(d => `${d.name}\nType: ${d.type}\nGroup: ${d.group}`);
 
         // Update positions on simulation tick
         this.simulation.on('tick', () => {

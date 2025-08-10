@@ -1,59 +1,152 @@
-// Graph data definitions
+// Bitcoin Liquidity Map - Graph data definitions
 class GraphData {
     static getSampleGraph() {
         return {
             nodes: [
-                { id: 0, name: "Node A", group: 1, size: 20 },
-                { id: 1, name: "Node B", group: 1, size: 15 },
-                { id: 2, name: "Node C", group: 2, size: 25 },
-                { id: 3, name: "Node D", group: 2, size: 18 },
-                { id: 4, name: "Node E", group: 3, size: 22 },
-                { id: 5, name: "Node F", group: 3, size: 16 },
-                { id: 6, name: "Node G", group: 1, size: 19 },
-                { id: 7, name: "Node H", group: 2, size: 21 }
+                // Central Bitcoin nodes
+                { id: "btc-000", name: "BTC 000", group: 1, size: 30, type: "central" },
+                { id: "bitcoin-001", name: "Bitcoin 001", group: 1, size: 25, type: "central" },
+                
+                // Major Bridge Protocols
+                { id: "babylon-002", name: "Babylon 002", group: 2, size: 22, type: "bridge" },
+                { id: "bitgo-003", name: "BitGo 003", group: 2, size: 22, type: "bridge" },
+                { id: "wbtc-eth-004", name: "WBTC (Ethereum) 004", group: 2, size: 22, type: "bridge" },
+                { id: "coinbase-005", name: "Coinbase 005", group: 2, size: 22, type: "bridge" },
+                { id: "ethereum-006", name: "Ethereum 006", group: 2, size: 22, type: "bridge" },
+                { id: "lido-007", name: "Lido 007", group: 2, size: 22, type: "bridge" },
+                
+                // Wrapped BTC Tokens
+                { id: "ebtc-009", name: "eBTC 009", group: 3, size: 20, type: "wrapped" },
+                { id: "cbbtc-010", name: "cbBTC 010", group: 3, size: 20, type: "wrapped" },
+                { id: "tbtc-011", name: "tBTC 011", group: 3, size: 20, type: "wrapped" },
+                { id: "solvbtc-012", name: "SolvBTC 012", group: 3, size: 20, type: "wrapped" },
+                { id: "fbtc-013", name: "FBTC 013", group: 3, size: 20, type: "wrapped" },
+                { id: "btcn-014", name: "BTCN 014", group: 3, size: 20, type: "wrapped" },
+                { id: "lbtc-016", name: "LBTC 016", group: 3, size: 20, type: "wrapped" },
+                { id: "pumpbtc-018", name: "pumpBTC 018", group: 3, size: 20, type: "wrapped" },
+                { id: "unibtc-020", name: "uniBTC 020", group: 3, size: 20, type: "wrapped" },
+                { id: "wbtc-osmosis-021", name: "WBTC (Osmosis) 021", group: 3, size: 20, type: "wrapped" },
+                { id: "nomic-022", name: "Nomic 022", group: 3, size: 20, type: "wrapped" },
+                { id: "allbtc-023", name: "allBTC 023", group: 3, size: 20, type: "wrapped" },
+                { id: "persistence-024", name: "Persistence 024", group: 3, size: 20, type: "wrapped" },
+                { id: "ybtc-025", name: "yBTC 025", group: 3, size: 20, type: "wrapped" },
+                { id: "axelar-026", name: "Axelar 026", group: 3, size: 20, type: "wrapped" },
+                { id: "internet-computer-027", name: "Internet Computer 027", group: 3, size: 20, type: "wrapped" },
+                { id: "ckbtc-osmosis-028", name: "ckBTC (Osmosis) 028", group: 3, size: 20, type: "wrapped" },
+                { id: "nbtc-029", name: "nBTC 029", group: 3, size: 20, type: "wrapped" },
+                { id: "allbtc-030", name: "allBTC 030", group: 3, size: 20, type: "wrapped" },
+                { id: "pendle-031", name: "Pendle 031", group: 3, size: 20, type: "wrapped" },
+                { id: "solvbtc-bbn-032", name: "SolvBTC.BBN 032", group: 3, size: 20, type: "wrapped" },
+                { id: "dolomite-033", name: "Dolomite 033", group: 3, size: 20, type: "wrapped" },
+                { id: "dbtc-034", name: "dBTC 034", group: 3, size: 20, type: "wrapped" },
+                { id: "corn-035", name: "Corn 035", group: 3, size: 20, type: "wrapped" },
+                { id: "zerolend-036", name: "Zerolend 036", group: 3, size: 20, type: "wrapped" },
+                { id: "symbiotic-037", name: "Symbiotic 037", group: 3, size: 20, type: "wrapped" },
+                
+                // Special nodes
+                { id: "stbtc-lorenzo", name: "stBTC (Lorenzo)", group: 4, size: 18, type: "special" },
+                { id: "enzobtc-lorenzo", name: "enzoBTC (Lorenzo)", group: 4, size: 18, type: "special" },
+                { id: "renbtc", name: "renBTC", group: 4, size: 18, type: "special" },
+                { id: "wbtc-arbitrum", name: "WBTC (Arbitrum)", group: 4, size: 18, type: "special" },
+                { id: "wbtc-eth-axl", name: "WBTC.eth.axl 026", group: 4, size: 18, type: "special" }
             ],
             links: [
-                { source: 0, target: 1, value: 1 },
-                { source: 0, target: 2, value: 2 },
-                { source: 1, target: 3, value: 1 },
-                { source: 2, target: 4, value: 3 },
-                { source: 3, target: 5, value: 2 },
-                { source: 4, target: 6, value: 1 },
-                { source: 5, target: 7, value: 2 },
-                { source: 6, target: 0, value: 1 },
-                { source: 7, target: 1, value: 1 }
+                // Central connections
+                { source: "bitcoin-001", target: "btc-000", value: 3, type: "central" },
+                
+                // Bridge connections from BTC
+                { source: "btc-000", target: "babylon-002", value: 2, type: "bridge" },
+                { source: "btc-000", target: "bitgo-003", value: 2, type: "bridge" },
+                { source: "btc-000", target: "coinbase-005", value: 2, type: "bridge" },
+                { source: "btc-000", target: "internet-computer-027", value: 2, type: "bridge" },
+                { source: "btc-000", target: "nomic-022", value: 2, type: "bridge" },
+                { source: "btc-000", target: "enzobtc-lorenzo", value: 2, type: "bridge" },
+                { source: "btc-000", target: "renbtc", value: 2, type: "bridge" },
+                
+                // Bridge to wrapped tokens
+                { source: "babylon-002", target: "lbtc-016", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "pumpbtc-018", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "unibtc-020", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "persistence-024", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "solvbtc-bbn-032", value: 1, type: "bridge" },
+                { source: "babylon-002", target: "stbtc-lorenzo", value: 1, type: "bridge" },
+                
+                { source: "bitgo-003", target: "wbtc-eth-004", value: 1, type: "bridge" },
+                { source: "bitgo-003", target: "wbtc-osmosis-021", value: 1, type: "bridge" },
+                { source: "bitgo-003", target: "wbtc-arbitrum", value: 1, type: "bridge" },
+                
+                { source: "coinbase-005", target: "tbtc-011", value: 1, type: "bridge" },
+                
+                // Ethereum ecosystem
+                { source: "ethereum-006", target: "lido-007", value: 1, type: "ecosystem" },
+                { source: "lido-007", target: "ebtc-009", value: 1, type: "ecosystem" },
+                { source: "wbtc-eth-004", target: "solvbtc-012", value: 1, type: "ecosystem" },
+                { source: "wbtc-eth-004", target: "axelar-026", value: 1, type: "ecosystem" },
+                { source: "wbtc-eth-004", target: "symbiotic-037", value: 1, type: "ecosystem" },
+                
+                // Cross-chain connections
+                { source: "tbtc-011", target: "solvbtc-012", value: 1, type: "cross-chain" },
+                { source: "cbbtc-010", target: "solvbtc-012", value: 1, type: "cross-chain" },
+                { source: "fbtc-013", target: "solvbtc-012", value: 1, type: "cross-chain" },
+                { source: "cbbtc-010", target: "btcn-014", value: 1, type: "cross-chain" },
+                { source: "wbtc-eth-004", target: "btcn-014", value: 1, type: "cross-chain" },
+                
+                // Osmosis ecosystem
+                { source: "wbtc-osmosis-021", target: "allbtc-023", value: 1, type: "ecosystem" },
+                { source: "internet-computer-027", target: "ckbtc-osmosis-028", value: 1, type: "ecosystem" },
+                { source: "ckbtc-osmosis-028", target: "allbtc-023", value: 1, type: "ecosystem" },
+                { source: "nbtc-029", target: "allbtc-023", value: 1, type: "ecosystem" },
+                { source: "allbtc-023", target: "allbtc-030", value: 1, type: "ecosystem" },
+                
+                // Axelar bridge
+                { source: "axelar-026", target: "wbtc-eth-axl", value: 1, type: "bridge" },
+                { source: "wbtc-eth-axl", target: "allbtc-023", value: 1, type: "bridge" },
+                
+                // DeFi connections
+                { source: "lbtc-016", target: "pendle-031", value: 1, type: "defi" },
+                { source: "ebtc-009", target: "pendle-031", value: 1, type: "defi" },
+                { source: "pumpbtc-018", target: "pendle-031", value: 1, type: "defi" },
+                { source: "unibtc-020", target: "pendle-031", value: 1, type: "defi" },
+                { source: "solvbtc-bbn-032", target: "pendle-031", value: 1, type: "defi" },
+                { source: "stbtc-lorenzo", target: "pendle-031", value: 1, type: "defi" },
+                
+                // Zerolend connections
+                { source: "ebtc-009", target: "zerolend-036", value: 1, type: "defi" },
+                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi" },
+                
+                // Corn connections
+                { source: "ebtc-009", target: "corn-035", value: 1, type: "defi" },
+                { source: "pumpbtc-018", target: "corn-035", value: 1, type: "defi" },
+                { source: "unibtc-020", target: "corn-035", value: 1, type: "defi" },
+                { source: "lbtc-016", target: "corn-035", value: 1, type: "defi" },
+                { source: "solvbtc-bbn-032", target: "corn-035", value: 1, type: "defi" },
+                { source: "corn-035", target: "pendle-031", value: 1, type: "defi" },
+                { source: "zerolend-036", target: "pendle-031", value: 1, type: "defi" },
+                
+                // Nomic to BTCN (dashed connection)
+                { source: "corn-035", target: "btcn-014", value: 1, type: "dashed" },
+                { source: "solvbtc-bbn-032", target: "solvbtc-012", value: 1, type: "dashed" },
+                
+                // Weighted connections (with specific values)
+                { source: "btc-000", target: "tbtc-011", value: 5, type: "weighted" },
+                { source: "wbtc-eth-004", target: "symbiotic-037", value: 14, type: "weighted" },
+                { source: "tbtc-011", target: "symbiotic-037", value: 7.3, type: "weighted" },
+                { source: "lbtc-016", target: "symbiotic-037", value: 16.5, type: "weighted" },
+                { source: "pumpbtc-018", target: "symbiotic-037", value: 16.5, type: "weighted" },
+                
+                // Additional connections
+                { source: "persistence-024", target: "ybtc-025", value: 1, type: "bridge" },
+                { source: "dbtc-034", target: "dolomite-033", value: 1, type: "bridge" },
+                { source: "wbtc-arbitrum", target: "dolomite-033", value: 1, type: "bridge" },
+                { source: "dolomite-033", target: "dbtc-034", value: 1, type: "bridge" },
+                { source: "solvbtc-bbn-032", target: "dolomite-033", value: 1, type: "bridge" }
             ]
         };
     }
 
     static generateRandomGraph() {
-        const numNodes = Math.floor(Math.random() * 15) + 8;
-        const numLinks = Math.floor(numNodes * 1.5);
-
-        // Generate random nodes
-        const nodes = Array.from({ length: numNodes }, (_, i) => ({
-            id: i,
-            name: `Node ${String.fromCharCode(65 + i)}`,
-            group: Math.floor(Math.random() * 4) + 1,
-            size: Math.floor(Math.random() * 20) + 10
-        }));
-
-        // Generate random links
-        const links = [];
-        for (let i = 0; i < numLinks; i++) {
-            const source = Math.floor(Math.random() * numNodes);
-            let target = Math.floor(Math.random() * numNodes);
-            while (target === source) {
-                target = Math.floor(Math.random() * numNodes);
-            }
-            links.push({
-                source: source,
-                target: target,
-                value: Math.floor(Math.random() * 3) + 1
-            });
-        }
-
-        return { nodes, links };
+        // For now, return the BTC map instead of random data
+        return this.getSampleGraph();
     }
 
     static getEmptyGraph() {
