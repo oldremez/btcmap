@@ -40,7 +40,7 @@ const BlockchainUtils = {
     async getERC20Balance(contractAddress, walletAddress, rpcUrl = 'https://eth.llamarpc.com') {
         try {
             const balanceOfSignature = '0x70a08231';
-            const paddedAddress = '0x000000000000000000000000' + walletAddress.slice(2);
+            const paddedAddress = '000000000000000000000000' + walletAddress.slice(2);
             
             const response = await fetch(rpcUrl, {
                 method: 'POST',
@@ -231,7 +231,24 @@ class GraphData {
                 { source: "ethereum", target: "lido", value: 1, type: "ecosystem", text: null },
                 { source: "lido", target: "ebtc", value: 1, type: "ecosystem", text: null },
                 { source: "wbtc-eth", target: "solvbtc", value: 1, type: "ecosystem", text: null },
-                { source: "wbtc-eth", target: "axelar", value: 1, type: "ecosystem", text: null },
+                { source: "wbtc-eth", target: "axelar", value: 1, type: "ecosystem", text: async (link) => {
+                    try {
+                        const wbtcContractAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'; // WBTC contract
+                        const targetContractAddress = '0x4F4495243837681061C4743b74B3eEdf548D56A5'; // Axelar contract
+                        const balance = await BlockchainUtils.getERC20Balance(wbtcContractAddress, targetContractAddress);
+                        
+                        if (balance !== null) {
+                            // WBTC has 8 decimals
+                            const wbtcBalance = balance / 100000000;
+                            return `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                        }
+                        
+                        return 'WBTC Balance: Loading...';
+                    } catch (error) {
+                        console.error('Error fetching WBTC balance:', error);
+                        return 'WBTC Balance: Error';
+                    }
+                }},
                 { source: "wbtc-eth", target: "symbiotic", value: 1, type: "ecosystem", text: null },
                 
                 // Cross-chain connections
