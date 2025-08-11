@@ -181,104 +181,117 @@ const TokenHandlers = {
 // Route to query link labels
 app.post('/api/link-label', async (req, res) => {
     try {
-        const { linkType, source, target, linkData } = req.body;
+        const { source, target, linkData } = req.body;
         
         let label = null;
         
-        switch (linkType) {
-            case 'btc-supply':
-                label = await TokenHandlers.handleBitcoinSupply();
-                break;
-                
-            case 'wbtc-supply':
-                label = await TokenHandlers.handleERC20Supply(
-                    '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', 
-                    'WBTC'
-                );
-                break;
-                
-            case 'solana-wbtc-supply':
-                label = await TokenHandlers.handleSolanaSupply(
-                    '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ',
-                    'WBTC'
-                );
-                break;
-                
-            case 'cbbtc-supply':
-                label = await TokenHandlers.handleERC20Supply(
-                    '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
-                    'cbBTC'
-                );
-                break;
-                
-            case 'tbtc-supply':
-                label = await TokenHandlers.handleERC20Supply(
-                    '0x18084fba666a33d37592fa2633fd49a74dd93a88',
-                    'tBTC',
-                    18
-                );
-                break;
-                
-            case 'fbtc-supply':
-                label = await TokenHandlers.handleERC20Supply(
-                    '0xc96de26018a54d51c097160568752c4e3bd6c364',
-                    'FBTC'
-                );
-                break;
-                
-            case 'wbtc-balance':
-                const balance = await BlockchainUtils.getERC20Balance(
-                    '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                    '0x4F4495243837681061C4743b74B3eEdf548D56A5'
-                );
-                if (balance !== null) {
-                    const wbtcBalance = balance / 100000000;
-                    label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
-                } else {
-                    label = 'WBTC Balance: Loading...';
-                }
-                break;
-                
-            case 'osmosis-ibc-supply':
-                label = await TokenHandlers.handleCosmosSupply(
-                    'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
-                    'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
-                    'IBC'
-                );
-                break;
-                
-            case 'osmosis-wbtc-supply':
-                label = await TokenHandlers.handleCosmosSupply(
-                    'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc',
-                    'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
-                    'WBTC',
-                    8
-                );
-                break;
-                
-            case 'wbtc-axl-solana-supply':
-                label = await TokenHandlers.handleSolanaSupply(
-                    '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
-                    'WBTC'
-                );
-                break;
-                
-            case 'babylon-staked-btc':
-                label = await TokenHandlers.handleBabylonStaking();
-                break;
-                
-            case 'static':
-                label = linkData?.text || null;
-                break;
-                
-            case 'function':
-                if (linkData?.value) {
-                    label = `${linkData.type || 'Value'}: ${linkData.value}`;
-                }
-                break;
-                
-            default:
-                label = null;
+        // Determine label based on source/target combination
+        const sourceId = typeof source === 'object' ? source.id : source;
+        const targetId = typeof target === 'object' ? target.id : target;
+        
+        // Bitcoin supply
+        if ((sourceId === 'bitcoin' && targetId === 'btc') || 
+            (sourceId === 'btc' && targetId === 'bitcoin')) {
+            label = await TokenHandlers.handleBitcoinSupply();
+        }
+        // WBTC supply (BitGo to WBTC)
+        else if ((sourceId === 'bitgo' && targetId === 'wbtc-eth') || 
+                 (sourceId === 'wbtc-eth' && targetId === 'bitgo')) {
+            label = await TokenHandlers.handleERC20Supply(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', 
+                'WBTC'
+            );
+        }
+        // WBTC supply on Osmosis (BitGo to WBTC Osmosis)
+        else if ((sourceId === 'bitgo' && targetId === 'wbtc-osmosis') || 
+                 (sourceId === 'wbtc-osmosis' && targetId === 'bitgo')) {
+            label = await TokenHandlers.handleCosmosSupply(
+                'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc',
+                'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
+                'WBTC',
+                8
+            );
+        }
+        // WBTC supply on Solana (BitGo to WBTC Solana)
+        else if ((sourceId === 'bitgo' && targetId === 'wbtc-solana') || 
+                 (sourceId === 'wbtc-solana' && targetId === 'bitgo')) {
+            label = await TokenHandlers.handleSolanaSupply(
+                '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ',
+                'WBTC'
+            );
+        }
+        // cbBTC supply (Coinbase to cbBTC)
+        else if ((sourceId === 'coinbase' && targetId === 'cbbtc') || 
+                 (sourceId === 'cbbtc' && targetId === 'coinbase')) {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+                'cbBTC'
+            );
+        }
+        // tBTC supply (BTC to tBTC)
+        else if ((sourceId === 'btc' && targetId === 'tbtc') || 
+                 (sourceId === 'tbtc' && targetId === 'btc')) {
+            label = await TokenHandlers.handleERC20Supply(
+                '0x18084fba666a33d37592fa2633fd49a74dd93a88',
+                'tBTC',
+                18
+            );
+        }
+        // FBTC supply (if connected to FBTC)
+        else if ((sourceId === 'fbtc' && targetId === 'solvbtc') || 
+                 (sourceId === 'solvbtc' && targetId === 'fbtc')) {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                'FBTC'
+            );
+        }
+        // WBTC balance (WBTC to Axelar)
+        else if ((sourceId === 'wbtc-eth' && targetId === 'axelar') || 
+                 (sourceId === 'axelar' && targetId === 'wbtc-eth')) {
+            const balance = await BlockchainUtils.getERC20Balance(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                '0x4F4495243837681061C4743b74B3eEdf548D56A5'
+            );
+            if (balance !== null) {
+                const wbtcBalance = balance / 100000000;
+                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+            } else {
+                label = 'WBTC Balance: Loading...';
+            }
+        }
+        // IBC supply (Axelar to WBTC.eth.axl)
+        else if ((sourceId === 'axelar' && targetId === 'wbtc-eth-axl') || 
+                 (sourceId === 'wbtc-eth-axl' && targetId === 'axelar')) {
+            label = await TokenHandlers.handleCosmosSupply(
+                'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                'IBC'
+            );
+        }
+        // WBTC supply on Solana via Axelar (Portal Bridge to WBTC.axl Solana)
+        else if ((sourceId === 'portal-bridge' && targetId === 'wbtc-axl-solana') || 
+                 (sourceId === 'wbtc-axl-solana' && targetId === 'portal-bridge')) {
+            label = await TokenHandlers.handleSolanaSupply(
+                '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
+                'WBTC'
+            );
+        }
+        // Babylon staking (BTC to Babylon)
+        else if ((sourceId === 'btc' && targetId === 'babylon') || 
+                 (sourceId === 'babylon' && targetId === 'btc')) {
+            label = await TokenHandlers.handleBabylonStaking();
+        }
+        // Static text from linkData
+        else if (linkData?.text) {
+            label = linkData.text;
+        }
+        // Function result from linkData
+        else if (linkData?.value) {
+            label = `${linkData.type || 'Value'}: ${linkData.value}`;
+        }
+        // Default case
+        else {
+            label = null;
         }
         
         res.json({ success: true, label });
