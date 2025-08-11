@@ -90,12 +90,13 @@ class GraphVisualization {
     }
 
     exportNodePositions() {
-        const positions = this.nodes.map(node => ({
-            id: node.id,
-            name: node.name,
-            x: Math.round(node.x || node.fx || 0),
-            y: Math.round(node.y || node.fy || 0)
-        }));
+        const positions = {};
+        this.nodes.forEach(node => {
+            positions[node.id] = {
+                x: Math.round(node.x || node.fx || 0),
+                y: Math.round(node.y || node.fy || 0)
+            };
+        });
 
         const dataStr = JSON.stringify(positions, null, 2);
         const dataBlob = new Blob([dataStr], { type: 'application/json' });
