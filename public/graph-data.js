@@ -131,7 +131,7 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-base" },
                 { source: "bitgo", target: "wbtc-kava" },
                 
-                { source: "function", target: "fbtc" },
+                { source: "function", target: "fbtc", text: true },
                 
                 { source: "coinbase", target: "cbbtc", text: true },
                 

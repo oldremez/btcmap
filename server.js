@@ -241,6 +241,14 @@ app.post('/api/link-label', async (req, res) => {
                 'FBTC'
             );
         }
+        // FBTC supply (function to fbtc)
+        else if ((sourceId === 'function' && targetId === 'fbtc') || 
+                 (sourceId === 'fbtc' && targetId === 'function')) {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                'FBTC'
+            );
+        }
         // WBTC balance (WBTC to Axelar)
         else if ((sourceId === 'wbtc-eth' && targetId === 'axelar') || 
                  (sourceId === 'axelar' && targetId === 'wbtc-eth')) {
