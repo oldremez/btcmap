@@ -74,6 +74,110 @@ const BlockchainUtils = {
     }
 };
 
+// Generic token supply handlers
+const TokenHandlers = {
+    // Generic ERC20 token supply handler
+    async handleERC20Supply(contractAddress, tokenName, decimals = 8) {
+        const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
+        if (supply !== null) {
+            const tokenSupply = supply / Math.pow(10, decimals);
+            return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+        }
+        return `${tokenName} Supply: Loading...`;
+    },
+
+    // Generic Solana token supply handler
+    async handleSolanaSupply(tokenMint, tokenName) {
+        try {
+            const response = await fetch('https://api.mainnet-beta.solana.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'getTokenSupply',
+                    params: [tokenMint],
+                    id: 1
+                })
+            });
+            
+            const data = await response.json();
+            if (data.result && data.result.value) {
+                const supply = data.result.value.amount;
+                const decimals = data.result.value.decimals;
+                const tokenSupply = supply / Math.pow(10, decimals);
+                return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+            }
+            return `${tokenName} Supply: Loading...`;
+        } catch (error) {
+            console.error(`Error fetching ${tokenName} supply:`, error);
+            return `${tokenName} Supply: Error`;
+        }
+    },
+
+    // Generic Cosmos/IBC token supply handler
+    async handleCosmosSupply(endpoint, denom, tokenName, decimals = 6) {
+        try {
+            const response = await fetch(endpoint);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.amount && data.amount.amount) {
+                    const supply = parseInt(data.amount.amount);
+                    const tokenSupply = supply / Math.pow(10, decimals);
+                    return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+                }
+            }
+            return `${tokenName} Supply: Loading...`;
+        } catch (error) {
+            console.error(`Error fetching ${tokenName} supply:`, error);
+            return `${tokenName} Supply: Error`;
+        }
+    },
+
+    // Bitcoin supply handler
+    async handleBitcoinSupply() {
+        try {
+            const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true');
+            const data = await response.json();
+            
+            if (data.bitcoin && data.bitcoin.usd) {
+                const btcPrice = data.bitcoin.usd;
+                const btcMarketCap = data.bitcoin.usd_market_cap;
+                const approximateSupply = Math.round(btcMarketCap / btcPrice);
+                return `BTC Supply: ~${approximateSupply.toLocaleString()}`;
+            }
+            return 'BTC Supply: ~19.5M+';
+        } catch (error) {
+            console.error('Error fetching Bitcoin supply:', error);
+            return 'BTC Supply: Error';
+        }
+    },
+
+    // Babylon staking handler
+    async handleBabylonStaking() {
+        try {
+            const response = await fetch('https://babylon-api.polkachu.com/babylon/btcstaking/v1/btc_delegations/ACTIVE');
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.btc_delegations && Array.isArray(data.btc_delegations)) {
+                    const totalSats = data.btc_delegations.reduce((sum, delegation) => {
+                        const stakedAmountSats = parseInt(delegation.total_sat) || 0;
+                        return sum + stakedAmountSats;
+                    }, 0);
+                    
+                    const stakedAmount = totalSats / 100000000;
+                    return `Staked: ${stakedAmount.toLocaleString()} BTC`;
+                }
+                return 'Staked: 0 BTC';
+            }
+            return 'Staked: Error';
+        } catch (error) {
+            console.error('Error fetching Babylon staking data:', error);
+            return 'Staked: Error';
+        }
+    }
+};
+
 // Route to query link labels
 app.post('/api/link-label', async (req, res) => {
     try {
@@ -83,104 +187,52 @@ app.post('/api/link-label', async (req, res) => {
         
         switch (linkType) {
             case 'btc-supply':
-                // Query Bitcoin supply from CoinGecko API
-                const btcResponse = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true&include_last_updated_at=true');
-                const btcData = await btcResponse.json();
-                
-                if (btcData.bitcoin && btcData.bitcoin.usd) {
-                    const btcPrice = btcData.bitcoin.usd;
-                    const btcMarketCap = btcData.bitcoin.usd_market_cap;
-                    const approximateSupply = Math.round(btcMarketCap / btcPrice);
-                    label = `BTC Supply: ~${approximateSupply.toLocaleString()}`;
-                } else {
-                    label = 'BTC Supply: ~19.5M+';
-                }
+                label = await TokenHandlers.handleBitcoinSupply();
                 break;
                 
             case 'wbtc-supply':
-                // Query WBTC supply
-                const wbtcAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
-                const totalSupply = await BlockchainUtils.getERC20TotalSupply(wbtcAddress);
-                
-                if (totalSupply !== null) {
-                    const wbtcSupply = totalSupply / 100000000; // WBTC has 8 decimals
-                    label = `WBTC Supply: ${wbtcSupply.toLocaleString()}`;
-                } else {
-                    label = 'WBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleERC20Supply(
+                    '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', 
+                    'WBTC'
+                );
                 break;
                 
             case 'solana-wbtc-supply':
-                // Query Solana WBTC supply
-                const solResponse = await fetch('https://api.mainnet-beta.solana.com', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        jsonrpc: '2.0',
-                        method: 'getTokenSupply',
-                        params: ['5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ'],
-                        id: 1
-                    })
-                });
-                
-                const solData = await solResponse.json();
-                if (solData.result && solData.result.value) {
-                    const supply = solData.result.value.amount;
-                    const decimals = solData.result.value.decimals;
-                    const tokenSupply = supply / Math.pow(10, decimals);
-                    label = `WBTC Supply: ${tokenSupply.toLocaleString()}`;
-                } else {
-                    label = 'WBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleSolanaSupply(
+                    '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ',
+                    'WBTC'
+                );
                 break;
                 
             case 'cbbtc-supply':
-                // Query cbBTC supply
-                const contractAddress = '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf';
-                const cbbtcSupply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
-                
-                if (cbbtcSupply !== null) {
-                    const tokenSupply = cbbtcSupply / 100000000; // Assuming 8 decimals
-                    label = `cbBTC Supply: ${tokenSupply.toLocaleString()}`;
-                } else {
-                    label = 'cbBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleERC20Supply(
+                    '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+                    'cbBTC'
+                );
                 break;
                 
             case 'tbtc-supply':
-                // Query tBTC supply from the specified ERC20 contract
-                const tbtcContractAddress = '0x18084fba666a33d37592fa2633fd49a74dd93a88';
-                const tbtcSupply = await BlockchainUtils.getERC20TotalSupply(tbtcContractAddress);
-                
-                if (tbtcSupply !== null) {
-                    const tokenSupply = tbtcSupply / 100000000000000000; 
-                    label = `tBTC Supply: ${tokenSupply.toLocaleString()}`;
-                } else {
-                    label = 'tBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleERC20Supply(
+                    '0x18084fba666a33d37592fa2633fd49a74dd93a88',
+                    'tBTC',
+                    18
+                );
                 break;
                 
             case 'fbtc-supply':
-                // Query FBTC supply from the specified ERC20 contract
-                const fbtcContractAddress = '0xc96de26018a54d51c097160568752c4e3bd6c364';
-                const fbtcSupply = await BlockchainUtils.getERC20TotalSupply(fbtcContractAddress);
-                
-                if (fbtcSupply !== null) {
-                    const tokenSupply = fbtcSupply / 100000000; // Assuming 8 decimals for FBTC
-                    label = `FBTC Supply: ${tokenSupply.toLocaleString()}`;
-                } else {
-                    label = 'FBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleERC20Supply(
+                    '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                    'FBTC'
+                );
                 break;
                 
             case 'wbtc-balance':
-                // Query WBTC balance for Axelar contract
-                const wbtcContractAddress = '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599';
-                const targetContractAddress = '0x4F4495243837681061C4743b74B3eEdf548D56A5';
-                const balance = await BlockchainUtils.getERC20Balance(wbtcContractAddress, targetContractAddress);
-                
+                const balance = await BlockchainUtils.getERC20Balance(
+                    '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                    '0x4F4495243837681061C4743b74B3eEdf548D56A5'
+                );
                 if (balance !== null) {
-                    const wbtcBalance = balance / 100000000; // WBTC has 8 decimals
+                    const wbtcBalance = balance / 100000000;
                     label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
                 } else {
                     label = 'WBTC Balance: Loading...';
@@ -188,110 +240,38 @@ app.post('/api/link-label', async (req, res) => {
                 break;
                 
             case 'osmosis-ibc-supply':
-                // Query Osmosis IBC token supply
-                const ibcResponse = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F');
-                
-                if (ibcResponse.ok) {
-                    const ibcData = await ibcResponse.json();
-                    if (ibcData.amount && ibcData.amount.amount) {
-                        const supply = ibcData.amount.amount;
-                        const tokenSupply = supply / 100000000; // Assuming 6 decimals for IBC tokens
-                        label = `IBC Supply: ${tokenSupply.toLocaleString()}`;
-                    } else {
-                        label = 'IBC Supply: Loading...';
-                    }
-                } else {
-                    label = 'IBC Supply: Error';
-                }
+                label = await TokenHandlers.handleCosmosSupply(
+                    'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                    'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                    'IBC'
+                );
                 break;
                 
             case 'osmosis-wbtc-supply':
-                // Query WBTC token supply on Osmosis using the factory address
-                try {
-                    const osmosisResponse = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc');
-                    
-                    if (osmosisResponse.ok) {
-                        const osmosisData = await osmosisResponse.json();
-                        console.log('Osmosis WBTC response:', JSON.stringify(osmosisData, null, 2));
-                        
-                        if (osmosisData.amount && osmosisData.amount.amount) {
-                            const supply = parseInt(osmosisData.amount.amount);
-                            const tokenSupply = supply / 100000000; // WBTC has 8 decimals
-                            label = `WBTC Supply: ${tokenSupply.toLocaleString()}`;
-                        } else {
-                            console.log('No amount data found in response');
-                            label = 'WBTC Supply: Loading...';
-                        }
-                    } else {
-                        console.log('Osmosis API response not ok:', osmosisResponse.status, osmosisResponse.statusText);
-                        label = 'WBTC Supply: Error';
-                    }
-                } catch (error) {
-                    console.error('Error fetching Osmosis WBTC supply:', error);
-                    label = 'WBTC Supply: Error';
-                }
+                label = await TokenHandlers.handleCosmosSupply(
+                    'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc',
+                    'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
+                    'WBTC',
+                    8
+                );
                 break;
                 
             case 'wbtc-axl-solana-supply':
-                // Query Solana WBTC supply
-                const solResponse1 = await fetch('https://api.mainnet-beta.solana.com', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        jsonrpc: '2.0',
-                        method: 'getTokenSupply',
-                        params: ['3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh'],
-                        id: 1
-                    })
-                });
-                
-                const solData1 = await solResponse1.json();
-                if (solData1.result && solData1.result.value) {
-                    const supply = solData1.result.value.amount;
-                    const decimals = solData1.result.value.decimals;
-                    const tokenSupply = supply / Math.pow(10, decimals);
-                    label = `WBTC Supply: ${tokenSupply.toLocaleString()}`;
-                } else {
-                    label = 'WBTC Supply: Loading...';
-                }
+                label = await TokenHandlers.handleSolanaSupply(
+                    '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
+                    'WBTC'
+                );
                 break;
                 
             case 'babylon-staked-btc':
-                // Query amount of BTC staked with Babylon using the working API endpoint
-                try {
-                    const babylonResponse = await fetch('https://babylon-api.polkachu.com/babylon/btcstaking/v1/btc_delegations/ACTIVE');
-                    
-                    if (babylonResponse.ok) {
-                        const babylonData = await babylonResponse.json();
-                        if (babylonData.btc_delegations && Array.isArray(babylonData.btc_delegations)) {
-                            // Sum up all staked amounts in satoshis
-                            const totalSats = babylonData.btc_delegations.reduce((sum, delegation) => {
-                                const stakedAmountSats = parseInt(delegation.total_sat) || 0;
-                                return sum + stakedAmountSats;
-                            }, 0);
-                            
-                            // Convert satoshis to BTC (1 BTC = 100,000,000 satoshis)
-                            const stakedAmount = totalSats / 100000000;
-                            label = `Staked: ${stakedAmount.toLocaleString()} BTC`;
-                        } else {
-                            label = 'Staked: 0 BTC';
-                        }
-                    } else {
-                        label = 'Staked: Error';
-                    }
-                } catch (error) {
-                    console.error('Error fetching Babylon staking data:', error);
-                    label = 'Staked: Error';
-                }
+                label = await TokenHandlers.handleBabylonStaking();
                 break;
                 
             case 'static':
-                // Return static text if provided
                 label = linkData?.text || null;
                 break;
                 
             case 'function':
-                // Handle function-based text (for simple cases)
                 if (linkData?.value) {
                     label = `${linkData.type || 'Value'}: ${linkData.value}`;
                 }
