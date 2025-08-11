@@ -115,8 +115,9 @@ const TokenHandlers = {
     },
 
     // Generic Cosmos/IBC token supply handler
-    async handleCosmosSupply(endpoint, denom, tokenName, decimals = 6) {
+    async handleCosmosSupply(denom, tokenName, decimals = 6) {
         try {
+            const endpoint = `https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=${encodeURIComponent(denom)}`;
             const response = await fetch(endpoint);
             if (response.ok) {
                 const data = await response.json();
@@ -206,7 +207,6 @@ app.post('/api/link-label', async (req, res) => {
         else if ((sourceId === 'bitgo' && targetId === 'wbtc-osmosis') || 
                  (sourceId === 'wbtc-osmosis' && targetId === 'bitgo')) {
             label = await TokenHandlers.handleCosmosSupply(
-                'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc',
                 'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
                 'WBTC',
                 8
@@ -263,9 +263,9 @@ app.post('/api/link-label', async (req, res) => {
         else if ((sourceId === 'axelar' && targetId === 'wbtc-eth-axl') || 
                  (sourceId === 'wbtc-eth-axl' && targetId === 'axelar')) {
             label = await TokenHandlers.handleCosmosSupply(
-                'https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
                 'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
-                'IBC'
+                'IBC',
+                8
             );
         }
         // WBTC supply on Solana via Axelar (Portal Bridge to WBTC.axl Solana)
