@@ -74,6 +74,7 @@ class GraphData {
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", type: "issuer" },
                 { id: "bitgo", name: "BitGo", type: "issuer" },
+                { id: "function", name: "Function", type: "issuer" },
 
                 { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "token" },
                 { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "token" },
@@ -115,6 +116,7 @@ class GraphData {
                 // Bridge connections from BTC
                 { source: "btc", target: "babylon", text: true },
                 { source: "btc", target: "bitgo" },
+                { source: "btc", target: "function" },
                 { source: "btc", target: "coinbase" },
                 { source: "btc", target: "internet-computer" },
                 
@@ -126,6 +128,8 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base" },
                 { source: "bitgo", target: "wbtc-kava" },
+                
+                { source: "function", target: "fbtc" },
                 
                 { source: "coinbase", target: "cbbtc", text: true },
                 
