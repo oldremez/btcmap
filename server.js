@@ -182,7 +182,7 @@ const TokenHandlers = {
 // Route to query link labels
 app.post('/api/link-label', async (req, res) => {
     try {
-        const { source, target, linkData } = req.body;
+        const { source, target } = req.body;
         
         let label = null;
         
@@ -203,7 +203,7 @@ app.post('/api/link-label', async (req, res) => {
                 'WBTC'
             );
         }
-        // WBTC supply on Osmosis (BitGo to WBTC Osmosis)
+        // WBTC supply (BitGo to WBTC Osmosis)
         else if ((sourceId === 'bitgo' && targetId === 'wbtc-osmosis') || 
                  (sourceId === 'wbtc-osmosis' && targetId === 'bitgo')) {
             label = await TokenHandlers.handleCosmosSupply(
@@ -280,14 +280,6 @@ app.post('/api/link-label', async (req, res) => {
         else if ((sourceId === 'btc' && targetId === 'babylon') || 
                  (sourceId === 'babylon' && targetId === 'btc')) {
             label = await TokenHandlers.handleBabylonStaking();
-        }
-        // Static text from linkData
-        else if (linkData?.text) {
-            label = linkData.text;
-        }
-        // Function result from linkData
-        else if (linkData?.value) {
-            label = `${linkData.type || 'Value'}: ${linkData.value}`;
         }
         // Default case
         else {

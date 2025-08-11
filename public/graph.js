@@ -1,4 +1,30 @@
 // Graph visualization using D3.js
+
+// Utility function to query link labels from backend
+async function getLinkLabel(source, target) {
+    try {
+        const response = await fetch('/api/link-label', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                source,
+                target
+            })
+        });
+        
+        const data = await response.json();
+        if (data.success) {
+            return data.label;
+        }
+        return null;
+    } catch (error) {
+        console.error('Error fetching link label:', error);
+        return null;
+    }
+}
+
 class GraphVisualization {
     constructor() {
         this.width = document.getElementById('graph').clientWidth;

@@ -5,32 +5,6 @@
 // - function: Custom function that returns text (receives link object as parameter)
 // - async function: Async function that can query external data (blockchain, APIs, etc.)
 
-// Utility function to query link labels from backend
-async function getLinkLabel(source, target, linkData = {}) {
-    try {
-        const response = await fetch('/api/link-label', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                source,
-                target,
-                linkData
-            })
-        });
-        
-        const data = await response.json();
-        if (data.success) {
-            return data.label;
-        }
-        return null;
-    } catch (error) {
-        console.error('Error fetching link label:', error);
-        return null;
-    }
-}
-
 class GraphData {
     static getSampleGraph() {
         return {
@@ -201,7 +175,7 @@ class GraphData {
                 // Portal Bridge routes
                 { source: "wbtc-eth", target: "portal-bridge" },
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target, { token: '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh' });
+                    return await getLinkLabel(link.source, link.target);
                 }},
                 
                 // New routes for Neutron
