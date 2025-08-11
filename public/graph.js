@@ -228,17 +228,6 @@ class GraphVisualization {
         this.applyNodePositions();
     }
 
-    generateRandomGraph() {
-        const graphData = GraphData.generateRandomGraph();
-        this.nodes = graphData.nodes;
-        this.links = graphData.links;
-        this.frames = graphData.frames;
-        
-        // Apply loaded node positions
-        this.applyNodePositions();
-        this.render();
-    }
-
     render() {
         // Clear existing elements from the main group
         this.mainGroup.selectAll('*').remove();
@@ -468,31 +457,6 @@ class GraphVisualization {
         });
     }
 
-
-
-    clearGraph() {
-        const graphData = GraphData.getEmptyGraph();
-        this.nodes = graphData.nodes;
-        this.links = graphData.links;
-        this.frames = graphData.frames;
-        this.render();
-    }
-
-    addFrame(frame) {
-        if (!this.frames) {
-            this.frames = [];
-        }
-        this.frames.push(frame);
-        this.render();
-    }
-
-    removeFrame(frameId) {
-        if (this.frames) {
-            this.frames = this.frames.filter(f => f.id !== frameId);
-            this.render();
-        }
-    }
-
     getNodeSize(node) {
         // Provide default sizes based on node types to maintain visual consistency
         switch(node.type) {
@@ -542,36 +506,3 @@ document.addEventListener('DOMContentLoaded', async () => {
     graph = new GraphVisualization();
     // Note: init() is called automatically in constructor, but it's async
 });
-
-// Global functions for buttons
-function generateRandomGraph() {
-    if (graph) {
-        graph.generateRandomGraph();
-    }
-}
-
-function clearGraph() {
-    if (graph) {
-        graph.clearGraph();
-    }
-}
-
-function addCustomFrame() {
-    if (graph) {
-        const customFrame = {
-            id: "custom-frame",
-            label: "Custom Group",
-            nodes: ["btc-000", "bitcoin-001"],
-            color: "#ff6b35",
-            strokeWidth: 3,
-            padding: 25
-        };
-        graph.addFrame(customFrame);
-    }
-}
-
-function removeCustomFrame() {
-    if (graph) {
-        graph.removeFrame("custom-frame");
-    }
-}
