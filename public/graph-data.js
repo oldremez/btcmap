@@ -92,7 +92,6 @@ class GraphData {
                 { id: "tbtc", name: "tBTC", type: "token" },
                 { id: "solvbtc", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
-                { id: "btcn", name: "BTCN", type: "token" },
                 { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
                 { id: "allbtc", name: "allBTC", type: "token" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
@@ -149,8 +148,6 @@ class GraphData {
                 { source: "tbtc", target: "solvbtc" },
                 { source: "cbbtc", target: "solvbtc" },
                 { source: "fbtc", target: "solvbtc" },
-                { source: "cbbtc", target: "btcn" },
-                { source: "wbtc-eth", target: "btcn" },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer" },
