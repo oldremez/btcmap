@@ -75,19 +75,27 @@ const BlockchainUtils = {
 };
 
 // Generic token supply handlers
+// Utility function for consistent number formatting
+const formatNumber = (number) => {
+    if (number === null || number === undefined || isNaN(number)) {
+        return 'Error';
+    }
+    return Number(number).toFixed(2);
+};
+
 const TokenHandlers = {
     // Generic ERC20 token supply handler
-    async handleERC20Supply(contractAddress, tokenName, decimals = 8) {
+    async handleERC20Supply(contractAddress, decimals = 8) {
         const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
         if (supply !== null) {
             const tokenSupply = supply / Math.pow(10, decimals);
-            return tokenSupply.toLocaleString();
+            return formatNumber(tokenSupply);
         }
         return 'Loading...';
     },
 
     // Generic Solana token supply handler
-    async handleSolanaSupply(tokenMint, tokenName) {
+    async handleSolanaSupply(tokenMint) {
         try {
             const response = await fetch('https://api.mainnet-beta.solana.com', {
                 method: 'POST',
@@ -105,17 +113,17 @@ const TokenHandlers = {
                 const supply = data.result.value.amount;
                 const decimals = data.result.value.decimals;
                 const tokenSupply = supply / Math.pow(10, decimals);
-                return tokenSupply.toLocaleString();
+                return formatNumber(tokenSupply);
             }
             return 'Loading...';
         } catch (error) {
-            console.error(`Error fetching ${tokenName} supply:`, error);
+            console.error(`Error fetching ${tokenMint} supply:`, error);
             return 'Error';
         }
     },
 
     // Generic Cosmos/IBC token supply handler
-    async handleCosmosSupply(denom, tokenName, decimals = 6) {
+    async handleCosmosSupply(denom, decimals = 6) {
         try {
             const endpoint = `https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=${encodeURIComponent(denom)}`;
             const response = await fetch(endpoint);
@@ -124,18 +132,18 @@ const TokenHandlers = {
                 if (data.amount && data.amount.amount) {
                     const supply = parseInt(data.amount.amount);
                     const tokenSupply = supply / Math.pow(10, decimals);
-                    return tokenSupply.toLocaleString();
+                    return formatNumber(tokenSupply);
                 }
             }
             return 'Loading...';
         } catch (error) {
-            console.error(`Error fetching ${tokenName} supply:`, error);
+            console.error(`Error fetching ${denom} supply:`, error);
             return 'Error';
         }
     },
 
     // Generic Solana token balance handler
-    async handleSolanaBalance(tokenAccount, tokenName) {
+    async handleSolanaBalance(tokenAccount) {
         try {
             const response = await fetch('https://api.mainnet-beta.solana.com', {
                 method: 'POST',
@@ -153,11 +161,11 @@ const TokenHandlers = {
                 const balance = data.result.value.amount;
                 const decimals = data.result.value.decimals;
                 const tokenBalance = balance / Math.pow(10, decimals);
-                return tokenBalance.toLocaleString();
+                return formatNumber(tokenBalance);
             }
             return 'Loading...';
         } catch (error) {
-            console.error(`Error fetching ${tokenName} balance:`, error);
+            console.error(`Error fetching ${tokenAccount} balance:`, error);
             return 'Error';
         }
     },
@@ -172,7 +180,7 @@ const TokenHandlers = {
                 const btcPrice = data.bitcoin.usd;
                 const btcMarketCap = data.bitcoin.usd_market_cap;
                 const approximateSupply = Math.round(btcMarketCap / btcPrice);
-                return `~${approximateSupply.toLocaleString()}`;
+                return `~${formatNumber(approximateSupply)}`;
             }
             return '~19.5M+';
         } catch (error) {
@@ -195,15 +203,28 @@ const TokenHandlers = {
                     }, 0);
                     
                     const stakedAmount = totalSats / 100000000;
-                    return `${stakedAmount.toLocaleString()}`;
+                    return formatNumber(stakedAmount);
                 }
-                return '0';
+                return '0.00';
             }
             return 'Error';
         } catch (error) {
             console.error('Error fetching Babylon staking data:', error);
             return 'Error';
         }
+    },
+
+    // WBTC balance handler
+    async handleWBTCBalance(walletAddress) {
+        const balance = await BlockchainUtils.getERC20Balance(
+            '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC contract address
+            walletAddress
+        );
+        if (balance !== null) {
+            const wbtcBalance = balance / 100000000; // WBTC has 8 decimals
+            return formatNumber(wbtcBalance);
+        }
+        return 'Loading...';
     }
 };
 
@@ -225,138 +246,83 @@ app.post('/api/link-label', async (req, res) => {
         // WBTC supply (bitgo -> wbtc-eth)
         else if (sourceId === 'bitgo' && targetId === 'wbtc-eth') {
             label = await TokenHandlers.handleERC20Supply(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', 
-                'WBTC'
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
             );
         }
         // WBTC supply (bitgo -> wbtc-osmosis)
         else if (sourceId === 'bitgo' && targetId === 'wbtc-osmosis') {
             label = await TokenHandlers.handleCosmosSupply(
                 'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
-                'WBTC',
                 8
             );
         }
         // WBTC supply (bitgo -> wbtc-solana)
         else if (sourceId === 'bitgo' && targetId === 'wbtc-solana') {
             label = await TokenHandlers.handleSolanaSupply(
-                '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ',
-                'WBTC'
+                '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ'
             );
         }
         // cbBTC supply (coinbase -> cbbtc)
         else if (sourceId === 'coinbase' && targetId === 'cbbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
-                'cbBTC'
+                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf'
             );
         }
         // tBTC supply (btc -> tbtc)
         else if (sourceId === 'btc' && targetId === 'tbtc') {
             label = await TokenHandlers.handleERC20Supply(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
-                'tBTC',
                 18
             );
         }
         // FBTC supply (fbtc -> solvbtc)
         else if (sourceId === 'fbtc' && targetId === 'solvbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xc96de26018a54d51c097160568752c4e3bd6c364',
-                'FBTC'
+                '0xc96de26018a54d51c097160568752c4e3bd6c364'
             );
         }
         // FBTC supply (function -> fbtc)
         else if (sourceId === 'function' && targetId === 'fbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xc96de26018a54d51c097160568752c4e3bd6c364',
-                'FBTC'
+                '0xc96de26018a54d51c097160568752c4e3bd6c364'
             );
         }
         // WBTC balance (wbtc-eth -> axelar)
         else if (sourceId === 'wbtc-eth' && targetId === 'axelar') {
-            const balance = await BlockchainUtils.getERC20Balance(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                '0x4F4495243837681061C4743b74B3eEdf548D56A5'
-            );
-            if (balance !== null) {
-                const wbtcBalance = balance / 100000000;
-                label = wbtcBalance.toLocaleString();
-            } else {
-                label = 'Loading...';
-            }
+            label = await TokenHandlers.handleWBTCBalance('0x4F4495243837681061C4743b74B3eEdf548D56A5');
         }
         else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge') {
-            const balance = await BlockchainUtils.getERC20Balance(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                '0x3ee18B2214AFF97000D974cf647E7C347E8fa585'
-            );
-            if (balance !== null) {
-                const wbtcBalance = balance / 100000000;
-                label = wbtcBalance.toLocaleString();
-            } else {
-                label = 'Loading...';
-            }
+            label = await TokenHandlers.handleWBTCBalance('0x3ee18B2214AFF97000D974cf647E7C347E8fa585');
         }
         // WBTC balance (wbtc-eth -> aave)
         else if (sourceId === 'wbtc-eth' && targetId === 'aave') {
-            const balance = await BlockchainUtils.getERC20Balance(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                '0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8'
-            );
-            if (balance !== null) {
-                const wbtcBalance = balance / 100000000;
-                label = wbtcBalance.toLocaleString();
-            } else {
-                label = 'Loading...';
-            }
+            label = await TokenHandlers.handleWBTCBalance('0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8');
         }
         // WBTC balance (wbtc-eth -> morpho)
         else if (sourceId === 'wbtc-eth' && targetId === 'morpho') {
-            const balance = await BlockchainUtils.getERC20Balance(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb'
-            );
-            if (balance !== null) {
-                const wbtcBalance = balance / 100000000;
-                label = wbtcBalance.toLocaleString();
-            } else {
-                label = 'Loading...';
-            }
+            label = await TokenHandlers.handleWBTCBalance('0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb');
         }
         // WBTC balance (wbtc-eth -> compound)
         else if (sourceId === 'wbtc-eth' && targetId === 'compound') {
-            const balance = await BlockchainUtils.getERC20Balance(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-                '0xc3d688B66703497DAA19211EEdff47f25384cdc3'
-            );
-            if (balance !== null) {
-                const wbtcBalance = balance / 100000000;
-                label = wbtcBalance.toLocaleString();
-            } else {
-                label = 'Loading...';
-            }
+            label = await TokenHandlers.handleWBTCBalance('0xc3d688B66703497DAA19211EEdff47f25384cdc3');
         }
         // IBC supply (axelar -> wbtc-eth-axl)
         else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl') {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
-                'IBC',
                 8
             );
         }
         // WBTC supply on Solana via Axelar (portal-bridge -> wbtc-axl-solana)
         else if (sourceId === 'portal-bridge' && targetId === 'wbtc-axl-solana') {
             label = await TokenHandlers.handleSolanaSupply(
-                '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
-                'WBTC'
+                '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh'
             );
         }
         // WBTC balance on Jupiter Perps account (wbtc-axl-solana -> jupiter-perps)
         else if (sourceId === 'wbtc-axl-solana' && targetId === 'jupiter-perps') {
             label = await TokenHandlers.handleSolanaBalance(
-                'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ',
-                'WBTC'
+                'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ'
             );
         }
         // Babylon staking (btc -> babylon)
@@ -367,21 +333,18 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'internet-computer' && targetId === 'ckbtc-osmosis') {
             label = await TokenHandlers.handleCosmosSupply(
                 'factory/osmo10c4y9csfs8q7mtvfg4p9gd8d0acx0hpc2mte9xqzthd7rd3348tsfhaesm/sICP-icrc-ckBTC',
-                'ckBTC',
                 8
             );
         }
         else if (sourceId === 'nomic' && targetId === 'nbtc') {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
-                'nBTC',
                 8
             );
         }
         else if (sourceId === 'allbtc-issuer' && targetId === 'allbtc') {
             label = await TokenHandlers.handleCosmosSupply(
                 'factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC',
-                'allBTC',
                 8
             );
         }
