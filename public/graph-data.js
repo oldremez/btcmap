@@ -95,45 +95,45 @@ class GraphData {
             ],
             nodes: [
                 // Central Bitcoin nodes
-                { id: "btc", name: "BTC", group: 1, size: 30, type: "central", x: 400, y: 500 },
-                { id: "bitcoin", name: "Bitcoin", group: 1, size: 25, type: "central", x: 300, y: 600 },
+                { id: "btc", name: "BTC", group: 1, size: 30, type: "central" },
+                { id: "bitcoin", name: "Bitcoin", group: 1, size: 25, type: "central" },
                 
                 // Major Bridge Protocols
-                { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge", x: 250, y: 300 },
-                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge", x: 397, y: 423 },
+                { id: "babylon", name: "Babylon", group: 2, size: 22, type: "bridge" },
+                { id: "bitgo", name: "BitGo", group: 2, size: 22, type: "bridge" },
 
-                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge", x: 397, y: 334 },
-                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 797, y: 657 },
-                { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped", x: 93, y: 350 },
-                { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped", x: 97, y: 466 },
-                { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped", x: 800, y: 900 },
+                { id: "wbtc-eth", name: "WBTC (Ethereum)", group: 2, size: 22, type: "bridge" },
+                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", group: 3, size: 20, type: "wrapped" },
+                { id: "wbtc-solana", name: "WBTC (Solana)", group: 3, size: 20, type: "wrapped" },
+                { id: "wbtc-base", name: "WBTC (Base)", group: 3, size: 20, type: "wrapped" },
+                { id: "wbtc-kava", name: "WBTC (Kava)", group: 3, size: 20, type: "wrapped" },
 
-                { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge", x: 687, y: 429 },
+                { id: "coinbase", name: "Coinbase", group: 2, size: 22, type: "bridge" },
                 
                 // Wrapped BTC Tokens
-                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped", x: 681, y: 352 },
-                { id: "tbtc", name: "tBTC", group: 3, size: 20, type: "wrapped", x: 493, y: 348 },
-                { id: "solvbtc", name: "SolvBTC", group: 3, size: 20, type: "wrapped", x: 452, y: 222 },
-                { id: "fbtc", name: "FBTC", group: 3, size: 20, type: "wrapped", x: 818, y: 348 },
-                { id: "btcn", name: "BTCN", group: 3, size: 20, type: "wrapped", x: 619, y: 212 },
-                { id: "allbtc", name: "allBTC", group: 3, size: 20, type: "wrapped", x: 950, y: 657 },
-                { id: "axelar", name: "Axelar", group: 3, size: 20, type: "wrapped", x: 587, y: 547 },
-                { id: "internet-computer", name: "Internet Computer", group: 3, size: 20, type: "wrapped", x: 650, y: 700 },
-                { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", group: 3, size: 20, type: "wrapped", x: 800, y: 750 },
-                { id: "nbtc", name: "nBTC", group: 3, size: 20, type: "wrapped", x: 900, y: 550 },
-                { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 447, y: 124 },
+                { id: "cbbtc", name: "cbBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "tbtc", name: "tBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "solvbtc", name: "SolvBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "fbtc", name: "FBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "btcn", name: "BTCN", group: 3, size: 20, type: "wrapped" },
+                { id: "allbtc", name: "allBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "axelar", name: "Axelar", group: 3, size: 20, type: "wrapped" },
+                { id: "internet-computer", name: "Internet Computer", group: 3, size: 20, type: "wrapped" },
+                { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", group: 3, size: 20, type: "wrapped" },
+                { id: "nbtc", name: "nBTC", group: 3, size: 20, type: "wrapped" },
+                { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped" },
                 
                 // Special nodes
-                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 },
-                { id: "portal-bridge", name: "Portal Bridge", group: 2, size: 22, type: "bridge", x: 500, y: 400 },
-                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", group: 3, size: 20, type: "wrapped", x: 150, y: 450 },
+                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special" },
+                { id: "portal-bridge", name: "Portal Bridge", group: 2, size: 22, type: "bridge" },
+                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", group: 3, size: 20, type: "wrapped" },
                 
                 // Eureka node (outside all frames)
-                { id: "eureka", name: "Eureka", group: 2, size: 22, type: "bridge", x: 600, y: 200 },
+                { id: "eureka", name: "Eureka", group: 2, size: 22, type: "bridge" },
                 
                 // Neutron nodes
-                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", group: 3, size: 20, type: "wrapped", x: 700, y: 150 },
-                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", group: 3, size: 20, type: "wrapped", x: 800, y: 150 }
+                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", group: 3, size: 20, type: "wrapped" },
+                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", group: 3, size: 20, type: "wrapped" }
             ],
             links: [
                 // Central connections

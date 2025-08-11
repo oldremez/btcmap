@@ -8,10 +8,11 @@ class GraphVisualization {
         this.simulation = null;
         this.svg = null;
         this.devMode = true; // Enable dev mode by default
+        this.nodePositions = {}; // Store loaded node positions
         this.init();
     }
 
-    init() {
+    async init() {
         // Clear existing content
         d3.select('#graph').selectAll('*').remove();
 
@@ -37,7 +38,8 @@ class GraphVisualization {
             this.addDevControls();
         }
 
-        // Initialize with a simple graph
+        // Load node positions first, then initialize graph
+        await this.loadNodePositions();
         this.generateSampleGraph();
         this.render();
     }
@@ -77,6 +79,22 @@ class GraphVisualization {
             .style('margin-right', '5px')
             .on('click', () => this.exportNodePositions());
 
+        // Add reload positions button
+        controls.append('button')
+            .text('Reload Positions')
+            .style('background', '#9b59b6')
+            .style('color', 'white')
+            .style('border', 'none')
+            .style('padding', '5px 10px')
+            .style('border-radius', '3px')
+            .style('cursor', 'pointer')
+            .style('margin-right', '5px')
+            .on('click', async () => {
+                await this.loadNodePositions();
+                this.applyNodePositions();
+                this.render();
+            });
+
         // Add toggle button
         controls.append('button')
             .text('Toggle Dev Mode')
@@ -107,6 +125,46 @@ class GraphVisualization {
         link.click();
         
         console.log('Node positions exported:', positions);
+    }
+
+    async loadNodePositions() {
+        try {
+            const response = await fetch('/node-positions.json');
+            if (response.ok) {
+                this.nodePositions = await response.json();
+                console.log('Node positions loaded:', this.nodePositions);
+                return true;
+            } else {
+                console.warn('Could not load node-positions.json, using default positions');
+                return false;
+            }
+        } catch (error) {
+            console.warn('Error loading node positions:', error);
+            return false;
+        }
+    }
+
+    applyNodePositions() {
+        this.nodes.forEach(node => {
+            if (this.nodePositions[node.id]) {
+                const pos = this.nodePositions[node.id];
+                node.x = pos.x;
+                node.y = pos.y;
+                node.fx = pos.x; // Fix position for dev mode
+                node.fy = pos.y;
+            } else {
+                // Set default positions if none loaded - use a grid-like pattern
+                const index = this.nodes.indexOf(node);
+                const cols = Math.ceil(Math.sqrt(this.nodes.length));
+                const row = Math.floor(index / cols);
+                const col = index % cols;
+                
+                node.x = (col + 1) * (this.width / (cols + 1));
+                node.y = (row + 1) * (this.height / (cols + 1));
+                
+                console.warn(`No position found for node ${node.id}, using default position: (${node.x}, ${node.y})`);
+            }
+        });
     }
 
     toggleDevMode() {
@@ -165,6 +223,9 @@ class GraphVisualization {
         this.nodes = graphData.nodes;
         this.links = graphData.links;
         this.frames = graphData.frames;
+        
+        // Apply loaded node positions
+        this.applyNodePositions();
     }
 
     generateRandomGraph() {
@@ -172,6 +233,9 @@ class GraphVisualization {
         this.nodes = graphData.nodes;
         this.links = graphData.links;
         this.frames = graphData.frames;
+        
+        // Apply loaded node positions
+        this.applyNodePositions();
         this.render();
     }
 
@@ -438,8 +502,9 @@ class GraphVisualization {
 // Initialize the graph when the page loads
 let graph;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     graph = new GraphVisualization();
+    // Note: init() is called automatically in constructor, but it's async
 });
 
 // Global functions for buttons
