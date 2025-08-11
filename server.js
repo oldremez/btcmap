@@ -81,9 +81,9 @@ const TokenHandlers = {
         const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
         if (supply !== null) {
             const tokenSupply = supply / Math.pow(10, decimals);
-            return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+            return tokenSupply.toLocaleString();
         }
-        return `${tokenName} Supply: Loading...`;
+        return 'Loading...';
     },
 
     // Generic Solana token supply handler
@@ -105,12 +105,12 @@ const TokenHandlers = {
                 const supply = data.result.value.amount;
                 const decimals = data.result.value.decimals;
                 const tokenSupply = supply / Math.pow(10, decimals);
-                return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+                return tokenSupply.toLocaleString();
             }
-            return `${tokenName} Supply: Loading...`;
+            return 'Loading...';
         } catch (error) {
             console.error(`Error fetching ${tokenName} supply:`, error);
-            return `${tokenName} Supply: Error`;
+            return 'Error';
         }
     },
 
@@ -124,13 +124,13 @@ const TokenHandlers = {
                 if (data.amount && data.amount.amount) {
                     const supply = parseInt(data.amount.amount);
                     const tokenSupply = supply / Math.pow(10, decimals);
-                    return `${tokenName} Supply: ${tokenSupply.toLocaleString()}`;
+                    return tokenSupply.toLocaleString();
                 }
             }
-            return `${tokenName} Supply: Loading...`;
+            return 'Loading...';
         } catch (error) {
             console.error(`Error fetching ${tokenName} supply:`, error);
-            return `${tokenName} Supply: Error`;
+            return 'Error';
         }
     },
 
@@ -153,12 +153,12 @@ const TokenHandlers = {
                 const balance = data.result.value.amount;
                 const decimals = data.result.value.decimals;
                 const tokenBalance = balance / Math.pow(10, decimals);
-                return `${tokenName} Balance: ${tokenBalance.toLocaleString()}`;
+                return tokenBalance.toLocaleString();
             }
-            return `${tokenName} Balance: Loading...`;
+            return 'Loading...';
         } catch (error) {
             console.error(`Error fetching ${tokenName} balance:`, error);
-            return `${tokenName} Balance: Error`;
+            return 'Error';
         }
     },
 
@@ -172,12 +172,12 @@ const TokenHandlers = {
                 const btcPrice = data.bitcoin.usd;
                 const btcMarketCap = data.bitcoin.usd_market_cap;
                 const approximateSupply = Math.round(btcMarketCap / btcPrice);
-                return `BTC Supply: ~${approximateSupply.toLocaleString()}`;
+                return `~${approximateSupply.toLocaleString()}`;
             }
-            return 'BTC Supply: ~19.5M+';
+            return '~19.5M+';
         } catch (error) {
             console.error('Error fetching Bitcoin supply:', error);
-            return 'BTC Supply: Error';
+            return 'Error';
         }
     },
 
@@ -195,14 +195,14 @@ const TokenHandlers = {
                     }, 0);
                     
                     const stakedAmount = totalSats / 100000000;
-                    return `Staked: ${stakedAmount.toLocaleString()} BTC`;
+                    return `${stakedAmount.toLocaleString()}`;
                 }
-                return 'Staked: 0 BTC';
+                return '0';
             }
-            return 'Staked: Error';
+            return 'Error';
         } catch (error) {
             console.error('Error fetching Babylon staking data:', error);
-            return 'Staked: Error';
+            return 'Error';
         }
     }
 };
@@ -281,9 +281,9 @@ app.post('/api/link-label', async (req, res) => {
             );
             if (balance !== null) {
                 const wbtcBalance = balance / 100000000;
-                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                label = wbtcBalance.toLocaleString();
             } else {
-                label = 'WBTC Balance: Loading...';
+                label = 'Loading...';
             }
         }
         else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge') {
@@ -293,9 +293,9 @@ app.post('/api/link-label', async (req, res) => {
             );
             if (balance !== null) {
                 const wbtcBalance = balance / 100000000;
-                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                label = wbtcBalance.toLocaleString();
             } else {
-                label = 'WBTC Balance: Loading...';
+                label = 'Loading...';
             }
         }
         // WBTC balance (wbtc-eth -> aave)
@@ -306,9 +306,9 @@ app.post('/api/link-label', async (req, res) => {
             );
             if (balance !== null) {
                 const wbtcBalance = balance / 100000000;
-                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                label = wbtcBalance.toLocaleString();
             } else {
-                label = 'WBTC Balance: Loading...';
+                label = 'Loading...';
             }
         }
         // WBTC balance (wbtc-eth -> morpho)
@@ -319,9 +319,9 @@ app.post('/api/link-label', async (req, res) => {
             );
             if (balance !== null) {
                 const wbtcBalance = balance / 100000000;
-                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                label = wbtcBalance.toLocaleString();
             } else {
-                label = 'WBTC Balance: Loading...';
+                label = 'Loading...';
             }
         }
         // WBTC balance (wbtc-eth -> compound)
@@ -332,9 +332,9 @@ app.post('/api/link-label', async (req, res) => {
             );
             if (balance !== null) {
                 const wbtcBalance = balance / 100000000;
-                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+                label = wbtcBalance.toLocaleString();
             } else {
-                label = 'WBTC Balance: Loading...';
+                label = 'Loading...';
             }
         }
         // IBC supply (axelar -> wbtc-eth-axl)
