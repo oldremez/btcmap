@@ -277,6 +277,31 @@ app.post('/api/link-label', async (req, res) => {
                  (sourceId === 'babylon' && targetId === 'btc')) {
             label = await TokenHandlers.handleBabylonStaking();
         }
+        // Osmosis routes
+        else if ((sourceId === 'internet-computer' && targetId === 'ckbtc-osmosis') || 
+                 (sourceId === 'ckbtc-osmosis' && targetId === 'internet-computer')) {
+            label = await TokenHandlers.handleCosmosSupply(
+                'factory/osmo10c4y9csfs8q7mtvfg4p9gd8d0acx0hpc2mte9xqzthd7rd3348tsfhaesm/sICP-icrc-ckBTC',
+                'ckBTC',
+                8
+            );
+        }
+        else if ((sourceId === 'nomic' && targetId === 'nbtc') || 
+                 (sourceId === 'nbtc' && targetId === 'nomic')) {
+            label = await TokenHandlers.handleCosmosSupply(
+                'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
+                'nBTC',
+                8
+            );
+        }
+        else if ((sourceId === 'allbtc-issuer' && targetId === 'allbtc') || 
+                 (sourceId === 'allbtc' && targetId === 'allbtc-issuer')) {
+            label = await TokenHandlers.handleCosmosSupply(
+                'factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC',
+                'allBTC',
+                8
+            );
+        }
         // Default case
         else {
             label = null;

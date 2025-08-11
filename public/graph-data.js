@@ -75,6 +75,7 @@ class GraphData {
                 { id: "babylon", name: "Babylon", type: "issuer" },
                 { id: "bitgo", name: "BitGo", type: "issuer" },
                 { id: "function", name: "Function", type: "issuer" },
+                { id: "nomic", name: "Nomic", type: "issuer" },
 
                 { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "token" },
                 { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "token" },
@@ -147,9 +148,12 @@ class GraphData {
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer" },
-                { source: "internet-computer", target: "ckbtc-osmosis" },
+                { source: "internet-computer", target: "ckbtc-osmosis", text: true },
                 { source: "ckbtc-osmosis", target: "allbtc-issuer" },
                 { source: "nbtc", target: "allbtc-issuer" },
+                { source: "nomic", target: "nbtc", text: true },
+                { source: "btc", target: "nomic" },
+                { source: "allbtc-issuer", target: "allbtc", text: true },
                 
                 // Axelar bridge
                 { source: "axelar", target: "wbtc-eth-axl", text: true },
