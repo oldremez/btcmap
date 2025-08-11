@@ -195,7 +195,6 @@ app.post('/api/link-label', async (req, res) => {
             (sourceId === 'btc' && targetId === 'bitcoin')) {
             label = await TokenHandlers.handleBitcoinSupply();
         }
-        // WBTC supply (BitGo to WBTC)
         else if ((sourceId === 'bitgo' && targetId === 'wbtc-eth') || 
                  (sourceId === 'wbtc-eth' && targetId === 'bitgo')) {
             label = await TokenHandlers.handleERC20Supply(
@@ -203,7 +202,6 @@ app.post('/api/link-label', async (req, res) => {
                 'WBTC'
             );
         }
-        // WBTC supply (BitGo to WBTC Osmosis)
         else if ((sourceId === 'bitgo' && targetId === 'wbtc-osmosis') || 
                  (sourceId === 'wbtc-osmosis' && targetId === 'bitgo')) {
             label = await TokenHandlers.handleCosmosSupply(
@@ -212,7 +210,6 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
-        // WBTC supply on Solana (BitGo to WBTC Solana)
         else if ((sourceId === 'bitgo' && targetId === 'wbtc-solana') || 
                  (sourceId === 'wbtc-solana' && targetId === 'bitgo')) {
             label = await TokenHandlers.handleSolanaSupply(
@@ -220,7 +217,6 @@ app.post('/api/link-label', async (req, res) => {
                 'WBTC'
             );
         }
-        // cbBTC supply (Coinbase to cbBTC)
         else if ((sourceId === 'coinbase' && targetId === 'cbbtc') || 
                  (sourceId === 'cbbtc' && targetId === 'coinbase')) {
             label = await TokenHandlers.handleERC20Supply(

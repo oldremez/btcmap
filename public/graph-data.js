@@ -124,6 +124,8 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-eth", text: true },
                 { source: "bitgo", target: "wbtc-osmosis", text: true },
                 { source: "bitgo", target: "wbtc-solana", text: true },
+                { source: "bitgo", target: "wbtc-base" },
+                { source: "bitgo", target: "wbtc-kava" },
                 
                 { source: "coinbase", target: "cbbtc", text: true },
                 
