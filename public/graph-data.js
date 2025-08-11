@@ -2,8 +2,8 @@
 // Link text property can be:
 // - null/undefined: No text displayed
 // - string: Static text displayed
-// - function: Custom function that returns text (receives link object as parameter)
-// - async function: Async function that can query external data (blockchain, APIs, etc.)
+// - true: Call getLinkLabel() to fetch dynamic text from backend
+// - false: No text displayed
 
 class GraphData {
     static getSampleGraph() {
@@ -110,14 +110,10 @@ class GraphData {
             ],
             links: [
                 // Central connections
-                { source: "bitcoin", target: "btc", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "bitcoin", target: "btc", text: true },
                 
                 // Bridge connections from BTC
-                { source: "btc", target: "babylon", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "btc", target: "babylon", text: true },
                 { source: "btc", target: "bitgo" },
                 { source: "btc", target: "coinbase" },
                 { source: "btc", target: "internet-computer" },
@@ -125,25 +121,15 @@ class GraphData {
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "solvbtc-bbn" },
                 
-                { source: "bitgo", target: "wbtc-eth", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
-                { source: "bitgo", target: "wbtc-osmosis", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
-                { source: "bitgo", target: "wbtc-solana", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "bitgo", target: "wbtc-eth", text: true },
+                { source: "bitgo", target: "wbtc-osmosis", text: true },
+                { source: "bitgo", target: "wbtc-solana", text: true },
                 
-                { source: "coinbase", target: "cbbtc", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "coinbase", target: "cbbtc", text: true },
                 
                 // Ethereum ecosystem
                 { source: "wbtc-eth", target: "solvbtc" },
-                { source: "wbtc-eth", target: "axelar", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "wbtc-eth", target: "axelar", text: true },
                 
                 // Cross-chain connections
                 { source: "tbtc", target: "solvbtc" },
@@ -159,24 +145,18 @@ class GraphData {
                 { source: "nbtc", target: "allbtc" },
                 
                 // Axelar bridge
-                { source: "axelar", target: "wbtc-eth-axl", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "axelar", target: "wbtc-eth-axl", text: true },
                 { source: "wbtc-eth-axl", target: "allbtc" },
                 
                 // Weighted connections (with specific values)
-                { source: "btc", target: "tbtc", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "btc", target: "tbtc", text: true },
                 
                 // Additional connections
                 { source: "solvbtc-bbn", target: "solvbtc" },
                 
                 // Portal Bridge routes
                 { source: "wbtc-eth", target: "portal-bridge" },
-                { source: "portal-bridge", target: "wbtc-axl-solana", text: async (link) => {
-                    return await getLinkLabel(link.source, link.target);
-                }},
+                { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
                 
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },

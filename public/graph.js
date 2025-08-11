@@ -366,9 +366,9 @@ class GraphVisualization {
 
         // Process link text asynchronously
         this.links.forEach(async (link, index) => {
-            if (typeof link.text === 'function') {
+            if (link.text === true) {
                 try {
-                    const result = await link.text(link);
+                    const result = await getLinkLabel(link.source, link.target);
                     if (result && typeof result === 'string') {
                         // Update the specific label with the result
                         linkLabels.filter((d, i) => i === index)
