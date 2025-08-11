@@ -39,7 +39,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "portal-bridge"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "fbtc", "cbbtc"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -65,6 +65,30 @@ class GraphData {
                     label: "Solana",
                     nodes: ["wbtc-solana", "wbtc-axl-solana"],
                     color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "base-frame", 
+                    label: "Base",
+                    nodes: ["wbtc-base"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "kava-frame", 
+                    label: "Kava",
+                    nodes: ["wbtc-kava"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "neutron-frame", 
+                    label: "Neutron",
+                    nodes: ["wbtc-eureka-neutron", "wbtc-axl-neutron"],
+                    color: "#9b59b6",
                     strokeWidth: 2,
                     padding: 20
                 }
@@ -102,7 +126,14 @@ class GraphData {
                 // Special nodes
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 },
                 { id: "portal-bridge", name: "Portal Bridge", group: 2, size: 22, type: "bridge", x: 500, y: 400 },
-                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", group: 3, size: 20, type: "wrapped", x: 150, y: 450 }
+                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", group: 3, size: 20, type: "wrapped", x: 150, y: 450 },
+                
+                // Eureka node (outside all frames)
+                { id: "eureka", name: "Eureka", group: 2, size: 22, type: "bridge", x: 600, y: 200 },
+                
+                // Neutron nodes
+                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", group: 3, size: 20, type: "wrapped", x: 700, y: 150 },
+                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", group: 3, size: 20, type: "wrapped", x: 800, y: 150 }
             ],
             links: [
                 // Central connections
@@ -172,7 +203,12 @@ class GraphData {
                 { source: "wbtc-eth", target: "portal-bridge", value: 2, type: "bridge", text: null },
                 { source: "portal-bridge", target: "wbtc-axl-solana", value: 1, type: "bridge", text: async (link) => {
                     return await getLinkLabel('wbtc-axl-solana-supply', link.source, link.target, { token: '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh' });
-                }}
+                }},
+                
+                // New routes for Neutron
+                { source: "wbtc-eth", target: "eureka", value: 1, type: "bridge", text: null },
+                { source: "eureka", target: "wbtc-eureka-neutron", value: 1, type: "bridge", text: null },
+                { source: "axelar", target: "wbtc-axl-neutron", value: 1, type: "bridge", text: null }
             ]
         };
     }
