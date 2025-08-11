@@ -180,7 +180,7 @@ const TokenHandlers = {
                 const btcPrice = data.bitcoin.usd;
                 const btcMarketCap = data.bitcoin.usd_market_cap;
                 const approximateSupply = Math.round(btcMarketCap / btcPrice);
-                return `~${formatNumber(approximateSupply)}`;
+                return formatNumber(approximateSupply);
             }
             return '~19.5M+';
         } catch (error) {
