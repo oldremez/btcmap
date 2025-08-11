@@ -168,7 +168,7 @@ class GraphData {
                 { source: "solvbtc-bbn", target: "solvbtc" },
                 
                 // Portal Bridge routes
-                { source: "wbtc-eth", target: "portal-bridge" },
+                { source: "wbtc-eth", target: "portal-bridge", text: true },
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
                 
                 // Solana ecosystem

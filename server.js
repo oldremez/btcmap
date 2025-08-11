@@ -286,6 +286,18 @@ app.post('/api/link-label', async (req, res) => {
                 label = 'WBTC Balance: Loading...';
             }
         }
+        else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge') {
+            const balance = await BlockchainUtils.getERC20Balance(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                '0x3ee18B2214AFF97000D974cf647E7C347E8fa585'
+            );
+            if (balance !== null) {
+                const wbtcBalance = balance / 100000000;
+                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+            } else {
+                label = 'WBTC Balance: Loading...';
+            }
+        }
         // IBC supply (axelar -> wbtc-eth-axl)
         else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl') {
             label = await TokenHandlers.handleCosmosSupply(
