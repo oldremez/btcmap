@@ -172,7 +172,7 @@ class GraphData {
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
                 
                 // Solana ecosystem
-                { source: "wbtc-axl-solana", target: "jupiter-perps" },
+                { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
                 
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },

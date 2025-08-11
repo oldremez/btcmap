@@ -134,6 +134,34 @@ const TokenHandlers = {
         }
     },
 
+    // Generic Solana token balance handler
+    async handleSolanaBalance(tokenAccount, tokenName) {
+        try {
+            const response = await fetch('https://api.mainnet-beta.solana.com', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'getTokenAccountBalance',
+                    params: [tokenAccount],
+                    id: 1
+                })
+            });
+            
+            const data = await response.json();
+            if (data.result && data.result.value) {
+                const balance = data.result.value.amount;
+                const decimals = data.result.value.decimals;
+                const tokenBalance = balance / Math.pow(10, decimals);
+                return `${tokenName} Balance: ${tokenBalance.toLocaleString()}`;
+            }
+            return `${tokenName} Balance: Loading...`;
+        } catch (error) {
+            console.error(`Error fetching ${tokenName} balance:`, error);
+            return `${tokenName} Balance: Error`;
+        }
+    },
+
     // Bitcoin supply handler
     async handleBitcoinSupply() {
         try {
@@ -277,6 +305,14 @@ app.post('/api/link-label', async (req, res) => {
                  (sourceId === 'wbtc-axl-solana' && targetId === 'portal-bridge')) {
             label = await TokenHandlers.handleSolanaSupply(
                 '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
+                'WBTC'
+            );
+        }
+        // WBTC balance on Jupiter Perps account (WBTC.axl Solana to Jupiter Perps)
+        else if ((sourceId === 'wbtc-axl-solana' && targetId === 'jupiter-perps') || 
+                 (sourceId === 'jupiter-perps' && targetId === 'wbtc-axl-solana')) {
+            label = await TokenHandlers.handleSolanaBalance(
+                'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ',
                 'WBTC'
             );
         }
