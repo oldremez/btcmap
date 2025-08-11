@@ -232,6 +232,30 @@ app.post('/api/link-label', async (req, res) => {
                 }
                 break;
                 
+            case 'wbtc-axl-solana-supply':
+                // Query Solana WBTC supply
+                const solResponse1 = await fetch('https://api.mainnet-beta.solana.com', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        jsonrpc: '2.0',
+                        method: 'getTokenSupply',
+                        params: ['3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh'],
+                        id: 1
+                    })
+                });
+                
+                const solData1 = await solResponse1.json();
+                if (solData1.result && solData1.result.value) {
+                    const supply = solData1.result.value.amount;
+                    const decimals = solData1.result.value.decimals;
+                    const tokenSupply = supply / Math.pow(10, decimals);
+                    label = `WBTC Supply: ${tokenSupply.toLocaleString()}`;
+                } else {
+                    label = 'WBTC Supply: Loading...';
+                }
+                break;
+                
             case 'babylon-staked-btc':
                 // Query amount of BTC staked with Babylon using the working API endpoint
                 try {

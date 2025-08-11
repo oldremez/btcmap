@@ -39,7 +39,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "portal-bridge"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -56,6 +56,14 @@ class GraphData {
                     id: "bitcoin-frame", 
                     label: "Bitcoin",
                     nodes: ["btc", "bitcoin"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "solana-frame", 
+                    label: "Solana",
+                    nodes: ["wbtc-solana", "wbtc-axl-solana"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -92,7 +100,9 @@ class GraphData {
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", group: 3, size: 20, type: "wrapped", x: 447, y: 124 },
                 
                 // Special nodes
-                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 }
+                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", group: 4, size: 18, type: "special", x: 794, y: 558 },
+                { id: "portal-bridge", name: "Portal Bridge", group: 2, size: 22, type: "bridge", x: 500, y: 400 },
+                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", group: 3, size: 20, type: "wrapped", x: 150, y: 450 }
             ],
             links: [
                 // Central connections
@@ -156,7 +166,13 @@ class GraphData {
                 }},
                 
                 // Additional connections
-                { source: "solvbtc-bbn", target: "solvbtc", value: 1, type: "dashed", text: null }
+                { source: "solvbtc-bbn", target: "solvbtc", value: 1, type: "dashed", text: null },
+                
+                // Portal Bridge routes
+                { source: "wbtc-eth", target: "portal-bridge", value: 2, type: "bridge", text: null },
+                { source: "portal-bridge", target: "wbtc-axl-solana", value: 1, type: "bridge", text: async (link) => {
+                    return await getLinkLabel('wbtc-axl-solana-supply', link.source, link.target, { token: '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh' });
+                }}
             ]
         };
     }
