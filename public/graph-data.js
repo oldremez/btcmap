@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -74,6 +74,7 @@ class GraphData {
                 // Major Bridge Protocols
                 { id: "babylon", name: "Babylon", type: "issuer" },
                 { id: "bitgo", name: "BitGo", type: "issuer" },
+                { id: "solvbtc", name: "SolvBTC", type: "issuer" },
                 { id: "function", name: "Function", type: "issuer" },
                 { id: "nomic", name: "Nomic", type: "issuer" },
 
@@ -90,7 +91,7 @@ class GraphData {
                 // Wrapped BTC Tokens
                 { id: "cbbtc", name: "cbBTC", type: "token" },
                 { id: "tbtc", name: "tBTC", type: "token" },
-                { id: "solvbtc", name: "SolvBTC", type: "token" },
+                { id: "solvbtc-eth", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
                 { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
                 { id: "allbtc", name: "allBTC", type: "token" },
@@ -135,6 +136,7 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base" },
                 { source: "bitgo", target: "wbtc-kava" },
+                { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
                 

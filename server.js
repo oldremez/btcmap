@@ -287,6 +287,12 @@ app.post('/api/link-label', async (req, res) => {
                 '0xc96de26018a54d51c097160568752c4e3bd6c364'
             );
         }
+        else if (sourceId === 'solvbtc' && targetId === 'solvbtc-eth') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
+                18
+            );
+        }
         // WBTC balance (wbtc-eth -> axelar)
         else if (sourceId === 'wbtc-eth' && targetId === 'axelar') {
             label = await TokenHandlers.handleWBTCBalance('0x4F4495243837681061C4743b74B3eEdf548D56A5');
