@@ -298,6 +298,45 @@ app.post('/api/link-label', async (req, res) => {
                 label = 'WBTC Balance: Loading...';
             }
         }
+        // WBTC balance (wbtc-eth -> aave)
+        else if (sourceId === 'wbtc-eth' && targetId === 'aave') {
+            const balance = await BlockchainUtils.getERC20Balance(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                '0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8'
+            );
+            if (balance !== null) {
+                const wbtcBalance = balance / 100000000;
+                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+            } else {
+                label = 'WBTC Balance: Loading...';
+            }
+        }
+        // WBTC balance (wbtc-eth -> morpho)
+        else if (sourceId === 'wbtc-eth' && targetId === 'morpho') {
+            const balance = await BlockchainUtils.getERC20Balance(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb'
+            );
+            if (balance !== null) {
+                const wbtcBalance = balance / 100000000;
+                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+            } else {
+                label = 'WBTC Balance: Loading...';
+            }
+        }
+        // WBTC balance (wbtc-eth -> compound)
+        else if (sourceId === 'wbtc-eth' && targetId === 'compound') {
+            const balance = await BlockchainUtils.getERC20Balance(
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                '0xc3d688B66703497DAA19211EEdff47f25384cdc3'
+            );
+            if (balance !== null) {
+                const wbtcBalance = balance / 100000000;
+                label = `WBTC Balance: ${wbtcBalance.toLocaleString()}`;
+            } else {
+                label = 'WBTC Balance: Loading...';
+            }
+        }
         // IBC supply (axelar -> wbtc-eth-axl)
         else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl') {
             label = await TokenHandlers.handleCosmosSupply(

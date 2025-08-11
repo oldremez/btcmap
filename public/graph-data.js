@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "fbtc", "cbbtc"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc", "btcn", "fbtc", "cbbtc", "aave", "morpho", "compound"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -105,6 +105,11 @@ class GraphData {
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "token" },
                 { id: "portal-bridge", name: "Portal Bridge", type: "issuer" },
                 
+                // DeFi Protocol nodes
+                { id: "aave", name: "AAVE", type: "protocol" },
+                { id: "morpho", name: "Morpho", type: "protocol" },
+                { id: "compound", name: "Compound", type: "protocol" },
+                
                 // Eureka node (outside all frames)
                 { id: "eureka", name: "Eureka", type: "issuer" },
                 
@@ -170,6 +175,11 @@ class GraphData {
                 // Portal Bridge routes
                 { source: "wbtc-eth", target: "portal-bridge", text: true },
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
+                
+                // DeFi Protocol connections from WBTC-ETH
+                { source: "wbtc-eth", target: "aave", text: true },
+                { source: "wbtc-eth", target: "morpho", text: true },
+                { source: "wbtc-eth", target: "compound", text: true },
                 
                 // Solana ecosystem
                 { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
