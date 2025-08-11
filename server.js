@@ -189,13 +189,13 @@ app.post('/api/link-label', async (req, res) => {
                 
             case 'osmosis-ibc-supply':
                 // Query Osmosis IBC token supply
-                const ibcResponse = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F');
+                const ibcResponse = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=ibc%2FD1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F');
                 
                 if (ibcResponse.ok) {
                     const ibcData = await ibcResponse.json();
-                    if (ibcData.supply && ibcData.supply.amount) {
-                        const supply = ibcData.supply.amount;
-                        const tokenSupply = supply / 1000000; // Assuming 6 decimals for IBC tokens
+                    if (ibcData.amount && ibcData.amount.amount) {
+                        const supply = ibcData.amount.amount;
+                        const tokenSupply = supply / 100000000; // Assuming 6 decimals for IBC tokens
                         label = `IBC Supply: ${tokenSupply.toLocaleString()}`;
                     } else {
                         label = 'IBC Supply: Loading...';
