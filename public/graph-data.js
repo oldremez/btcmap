@@ -114,7 +114,9 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-eth", value: 1, type: "bridge", text: async (link) => {
                     return await getLinkLabel('wbtc-supply', link.source, link.target);
                 }},
-                { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: null },
+                { source: "bitgo", target: "wbtc-osmosis", value: 1, type: "bridge", text: async (link) => {
+                    return await getLinkLabel('osmosis-wbtc-supply', link.source, link.target);
+                }},
                 { source: "bitgo", target: "wbtc-solana", value: 1, type: "bridge", text: async (link) => {
                     return await getLinkLabel('solana-wbtc-supply', link.source, link.target);
                 }},

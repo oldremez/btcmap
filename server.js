@@ -205,6 +205,33 @@ app.post('/api/link-label', async (req, res) => {
                 }
                 break;
                 
+            case 'osmosis-wbtc-supply':
+                // Query WBTC token supply on Osmosis using the factory address
+                try {
+                    const osmosisResponse = await fetch('https://lcd.osmosis.zone/cosmos/bank/v1beta1/supply/by_denom?denom=factory%2Fosmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743%2Fwbtc');
+                    
+                    if (osmosisResponse.ok) {
+                        const osmosisData = await osmosisResponse.json();
+                        console.log('Osmosis WBTC response:', JSON.stringify(osmosisData, null, 2));
+                        
+                        if (osmosisData.amount && osmosisData.amount.amount) {
+                            const supply = parseInt(osmosisData.amount.amount);
+                            const tokenSupply = supply / 100000000; // WBTC has 8 decimals
+                            label = `WBTC Supply: ${tokenSupply.toLocaleString()}`;
+                        } else {
+                            console.log('No amount data found in response');
+                            label = 'WBTC Supply: Loading...';
+                        }
+                    } else {
+                        console.log('Osmosis API response not ok:', osmosisResponse.status, osmosisResponse.statusText);
+                        label = 'WBTC Supply: Error';
+                    }
+                } catch (error) {
+                    console.error('Error fetching Osmosis WBTC supply:', error);
+                    label = 'WBTC Supply: Error';
+                }
+                break;
+                
             case 'babylon-staked-btc':
                 // Query amount of BTC staked with Babylon using the working API endpoint
                 try {
