@@ -36,7 +36,7 @@ class GraphData {
                 {
                     id: "solana-frame", 
                     label: "Solana",
-                    nodes: ["wbtc-solana", "wbtc-axl-solana"],
+                    nodes: ["wbtc-solana", "wbtc-axl-solana", "jupiter-perps"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -80,6 +80,8 @@ class GraphData {
                 { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "token" },
                 { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "token" },
                 { id: "wbtc-solana", name: "WBTC (Solana)", type: "token" },
+                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", type: "token" },
+                { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
                 { id: "wbtc-base", name: "WBTC (Base)", type: "token" },
                 { id: "wbtc-kava", name: "WBTC (Kava)", type: "token" },
 
@@ -102,7 +104,6 @@ class GraphData {
                 // Special nodes
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "token" },
                 { id: "portal-bridge", name: "Portal Bridge", type: "issuer" },
-                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", type: "token" },
                 
                 // Eureka node (outside all frames)
                 { id: "eureka", name: "Eureka", type: "issuer" },
@@ -169,6 +170,9 @@ class GraphData {
                 // Portal Bridge routes
                 { source: "wbtc-eth", target: "portal-bridge" },
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
+                
+                // Solana ecosystem
+                { source: "wbtc-axl-solana", target: "jupiter-perps" },
                 
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },

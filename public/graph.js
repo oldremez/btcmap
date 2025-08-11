@@ -414,11 +414,34 @@ class GraphVisualization {
                 switch(d.type) {
                     case 'issuer': return '#ff6b35';
                     case 'token': return '#45b7d1';
+                    case 'protocol': return '#9b59b6'; // Purple for protocol nodes
                     default: return '#999';
                 }
             })
-            .attr('stroke', '#fff')
-            .attr('stroke-width', 2);
+            .attr('stroke', d => {
+                // Different stroke styles for different node types
+                switch(d.type) {
+                    case 'protocol': return '#6c5ce7'; // Darker purple stroke for protocol nodes
+                    default: return '#fff';
+                }
+            })
+            .attr('stroke-width', d => {
+                // Different stroke widths for different node types
+                switch(d.type) {
+                    case 'protocol': return 3; // Thicker stroke for protocol nodes
+                    default: return 2;
+                }
+            });
+
+        // Add additional visual elements for protocol nodes
+        node.filter(d => d.type === 'protocol')
+            .append('circle')
+            .attr('r', d => this.getNodeSize(d) + 4)
+            .attr('fill', 'none')
+            .attr('stroke', '#a29bfe')
+            .attr('stroke-width', 1)
+            .attr('stroke-dasharray', '3,3')
+            .attr('opacity', 0.6);
 
         // Add labels to nodes
         node.append('text')
@@ -488,6 +511,7 @@ class GraphVisualization {
         switch(node.type) {
             case 'issuer': return 25;
             case 'token': return 22;
+            case 'protocol': return 28; // Larger size for protocol nodes to make them stand out
             default: return 20;
         }
     }
