@@ -243,9 +243,6 @@ class GraphVisualization {
         // Clear existing elements from the main group
         this.mainGroup.selectAll('*').remove();
 
-        // Color scale for groups
-        const color = d3.scaleOrdinal(d3.schemeCategory10);
-
         // Create frames first (so they appear behind nodes)
         if (this.frames && this.frames.length > 0) {
             this.frames.forEach(frame => {
@@ -310,7 +307,7 @@ class GraphVisualization {
             .force('link', d3.forceLink(this.links).id(d => d.id).distance(80))
             .force('charge', d3.forceManyBody().strength(-200))
             .force('center', d3.forceCenter(this.width / 2, this.height / 2))
-            .force('collision', d3.forceCollide().radius(d => d.size + 8))
+            .force('collision', d3.forceCollide().radius(d => this.getNodeSize(d) + 8))
             .force('x', d3.forceX(this.width / 2).strength(0.1))
             .force('y', d3.forceY(this.height / 2).strength(0.1));
 
@@ -396,7 +393,7 @@ class GraphVisualization {
 
         // Add circles to nodes
         node.append('circle')
-            .attr('r', d => d.size)
+            .attr('r', d => this.getNodeSize(d))
             .attr('fill', d => {
                 // Different colors for different node types
                 switch(d.type) {
@@ -404,7 +401,7 @@ class GraphVisualization {
                     case 'bridge': return '#4ecdc4';       // Teal for bridge protocols
                     case 'wrapped': return '#45b7d1';      // Blue for wrapped tokens
                     case 'special': return '#feca57';      // Yellow for special nodes
-                    default: return color(d.group);
+                    default: return '#999';                // Gray for any undefined types
                 }
             })
             .attr('stroke', '#fff')
@@ -421,7 +418,7 @@ class GraphVisualization {
 
         // Add tooltips
         node.append('title')
-            .text(d => `${d.name}\nType: ${d.type}\nGroup: ${d.group}`);
+            .text(d => `${d.name}\nType: ${d.type}`);
 
         // Update positions on simulation tick
         this.simulation.on('tick', () => {
@@ -495,6 +492,17 @@ class GraphVisualization {
         if (this.frames) {
             this.frames = this.frames.filter(f => f.id !== frameId);
             this.render();
+        }
+    }
+
+    getNodeSize(node) {
+        // Provide default sizes based on node types to maintain visual consistency
+        switch(node.type) {
+            case 'central': return 25;      // Central Bitcoin nodes
+            case 'bridge': return 22;       // Bridge protocols
+            case 'wrapped': return 20;      // Wrapped tokens
+            case 'special': return 18;      // Special nodes
+            default: return 20;             // Default size
         }
     }
 }
