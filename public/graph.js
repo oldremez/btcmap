@@ -397,11 +397,9 @@ class GraphVisualization {
             .attr('fill', d => {
                 // Different colors for different node types
                 switch(d.type) {
-                    case 'central': return '#ff6b35';      // Orange for central Bitcoin nodes
-                    case 'bridge': return '#4ecdc4';       // Teal for bridge protocols
-                    case 'wrapped': return '#45b7d1';      // Blue for wrapped tokens
-                    case 'special': return '#feca57';      // Yellow for special nodes
-                    default: return '#999';                // Gray for any undefined types
+                    case 'issuer': return '#ff6b35';
+                    case 'token': return '#45b7d1';
+                    default: return '#999';
                 }
             })
             .attr('stroke', '#fff')
@@ -498,11 +496,9 @@ class GraphVisualization {
     getNodeSize(node) {
         // Provide default sizes based on node types to maintain visual consistency
         switch(node.type) {
-            case 'central': return 25;      // Central Bitcoin nodes
-            case 'bridge': return 22;       // Bridge protocols
-            case 'wrapped': return 20;      // Wrapped tokens
-            case 'special': return 18;      // Special nodes
-            default: return 20;             // Default size
+            case 'issuer': return 25;
+            case 'token': return 22;
+            default: return 20;
         }
     }
 

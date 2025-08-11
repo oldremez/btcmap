@@ -95,45 +95,45 @@ class GraphData {
             ],
             nodes: [
                 // Central Bitcoin nodes
-                { id: "btc", name: "BTC", type: "central" },
-                { id: "bitcoin", name: "Bitcoin", type: "central" },
+                { id: "btc", name: "BTC", type: "token" },
+                { id: "bitcoin", name: "Bitcoin", type: "issuer" },
                 
                 // Major Bridge Protocols
-                { id: "babylon", name: "Babylon", type: "bridge" },
-                { id: "bitgo", name: "BitGo", type: "bridge" },
+                { id: "babylon", name: "Babylon", type: "issuer" },
+                { id: "bitgo", name: "BitGo", type: "issuer" },
 
-                { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "bridge" },
-                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "wrapped" },
-                { id: "wbtc-solana", name: "WBTC (Solana)", type: "wrapped" },
-                { id: "wbtc-base", name: "WBTC (Base)", type: "wrapped" },
-                { id: "wbtc-kava", name: "WBTC (Kava)", type: "wrapped" },
+                { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "token" },
+                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "token" },
+                { id: "wbtc-solana", name: "WBTC (Solana)", type: "token" },
+                { id: "wbtc-base", name: "WBTC (Base)", type: "token" },
+                { id: "wbtc-kava", name: "WBTC (Kava)", type: "token" },
 
-                { id: "coinbase", name: "Coinbase", type: "bridge" },
+                { id: "coinbase", name: "Coinbase", type: "issuer" },
                 
                 // Wrapped BTC Tokens
-                { id: "cbbtc", name: "cbBTC", type: "wrapped" },
-                { id: "tbtc", name: "tBTC", type: "wrapped" },
-                { id: "solvbtc", name: "SolvBTC", type: "wrapped" },
-                { id: "fbtc", name: "FBTC", type: "wrapped" },
-                { id: "btcn", name: "BTCN", type: "wrapped" },
-                { id: "allbtc", name: "allBTC", type: "wrapped" },
-                { id: "axelar", name: "Axelar", type: "wrapped" },
-                { id: "internet-computer", name: "Internet Computer", type: "wrapped" },
-                { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", type: "wrapped" },
-                { id: "nbtc", name: "nBTC", type: "wrapped" },
-                { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "wrapped" },
+                { id: "cbbtc", name: "cbBTC", type: "token" },
+                { id: "tbtc", name: "tBTC", type: "token" },
+                { id: "solvbtc", name: "SolvBTC", type: "token" },
+                { id: "fbtc", name: "FBTC", type: "token" },
+                { id: "btcn", name: "BTCN", type: "token" },
+                { id: "allbtc", name: "allBTC", type: "token" },
+                { id: "axelar", name: "Axelar", type: "issuer" },
+                { id: "internet-computer", name: "Internet Computer", type: "issuer" },
+                { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", type: "token" },
+                { id: "nbtc", name: "nBTC", type: "token" },
+                { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
                 
                 // Special nodes
-                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "special" },
-                { id: "portal-bridge", name: "Portal Bridge", type: "bridge" },
-                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", type: "wrapped" },
+                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "token" },
+                { id: "portal-bridge", name: "Portal Bridge", type: "issuer" },
+                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", type: "token" },
                 
                 // Eureka node (outside all frames)
-                { id: "eureka", name: "Eureka", type: "bridge" },
+                { id: "eureka", name: "Eureka", type: "issuer" },
                 
                 // Neutron nodes
-                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", type: "wrapped" },
-                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", type: "wrapped" }
+                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", type: "token" },
+                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", type: "token" }
             ],
             links: [
                 // Central connections
