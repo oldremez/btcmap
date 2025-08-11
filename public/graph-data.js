@@ -145,12 +145,12 @@ class GraphData {
                 { source: "btc", target: "babylon", text: async (link) => {
                     return await getLinkLabel('babylon-staked-btc', link.source, link.target);
                 }},
-                { source: "btc", target: "bitgo", text: null },
-                { source: "btc", target: "coinbase", text: null },
-                { source: "btc", target: "internet-computer", text: null },
+                { source: "btc", target: "bitgo" },
+                { source: "btc", target: "coinbase" },
+                { source: "btc", target: "internet-computer" },
                 
                 // Bridge to wrapped tokens
-                { source: "babylon", target: "solvbtc-bbn", text: null },
+                { source: "babylon", target: "solvbtc-bbn" },
                 
                 { source: "bitgo", target: "wbtc-eth", text: async (link) => {
                     return await getLinkLabel('wbtc-supply', link.source, link.target);
@@ -167,29 +167,29 @@ class GraphData {
                 }},
                 
                 // Ethereum ecosystem
-                { source: "wbtc-eth", target: "solvbtc", text: null },
+                { source: "wbtc-eth", target: "solvbtc" },
                 { source: "wbtc-eth", target: "axelar", text: async (link) => {
                     return await getLinkLabel('wbtc-balance', link.source, link.target);
                 }},
                 
                 // Cross-chain connections
-                { source: "tbtc", target: "solvbtc", text: null },
-                { source: "cbbtc", target: "solvbtc", text: null },
-                { source: "fbtc", target: "solvbtc", text: null },
-                { source: "cbbtc", target: "btcn", text: null },
-                { source: "wbtc-eth", target: "btcn", text: null },
+                { source: "tbtc", target: "solvbtc" },
+                { source: "cbbtc", target: "solvbtc" },
+                { source: "fbtc", target: "solvbtc" },
+                { source: "cbbtc", target: "btcn" },
+                { source: "wbtc-eth", target: "btcn" },
                 
                 // Osmosis ecosystem
-                { source: "wbtc-osmosis", target: "allbtc", text: null },
-                { source: "internet-computer", target: "ckbtc-osmosis", text: null },
-                { source: "ckbtc-osmosis", target: "allbtc", text: null },
-                { source: "nbtc", target: "allbtc", text: null },
+                { source: "wbtc-osmosis", target: "allbtc" },
+                { source: "internet-computer", target: "ckbtc-osmosis" },
+                { source: "ckbtc-osmosis", target: "allbtc" },
+                { source: "nbtc", target: "allbtc" },
                 
                 // Axelar bridge
                 { source: "axelar", target: "wbtc-eth-axl", text: async (link) => {
                     return await getLinkLabel('osmosis-ibc-supply', link.source, link.target);
                 }},
-                { source: "wbtc-eth-axl", target: "allbtc", text: null },
+                { source: "wbtc-eth-axl", target: "allbtc" },
                 
                 // Weighted connections (with specific values)
                 { source: "btc", target: "tbtc", text: async (link) => {
@@ -197,18 +197,18 @@ class GraphData {
                 }},
                 
                 // Additional connections
-                { source: "solvbtc-bbn", target: "solvbtc", text: null },
+                { source: "solvbtc-bbn", target: "solvbtc" },
                 
                 // Portal Bridge routes
-                { source: "wbtc-eth", target: "portal-bridge", text: null },
+                { source: "wbtc-eth", target: "portal-bridge" },
                 { source: "portal-bridge", target: "wbtc-axl-solana", text: async (link) => {
                     return await getLinkLabel('wbtc-axl-solana-supply', link.source, link.target, { token: '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh' });
                 }},
                 
                 // New routes for Neutron
-                { source: "wbtc-eth", target: "eureka", text: null },
-                { source: "eureka", target: "wbtc-eureka-neutron", text: null },
-                { source: "axelar", target: "wbtc-axl-neutron", text: null }
+                { source: "wbtc-eth", target: "eureka" },
+                { source: "eureka", target: "wbtc-eureka-neutron" },
+                { source: "axelar", target: "wbtc-axl-neutron" }
             ]
         };
     }
