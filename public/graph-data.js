@@ -90,6 +90,7 @@ class GraphData {
                 { id: "solvbtc", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
                 { id: "btcn", name: "BTCN", type: "token" },
+                { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
                 { id: "allbtc", name: "allBTC", type: "token" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
@@ -145,14 +146,15 @@ class GraphData {
                 { source: "wbtc-eth", target: "btcn" },
                 
                 // Osmosis ecosystem
-                { source: "wbtc-osmosis", target: "allbtc" },
+                { source: "wbtc-osmosis", target: "allbtc-issuer" },
                 { source: "internet-computer", target: "ckbtc-osmosis" },
-                { source: "ckbtc-osmosis", target: "allbtc" },
-                { source: "nbtc", target: "allbtc" },
+                { source: "ckbtc-osmosis", target: "allbtc-issuer" },
+                { source: "nbtc", target: "allbtc-issuer" },
                 
                 // Axelar bridge
                 { source: "axelar", target: "wbtc-eth-axl", text: true },
-                { source: "wbtc-eth-axl", target: "allbtc" },
+                { source: "wbtc-eth-axl", target: "allbtc-issuer" },
+                { source: "allbtc-issuer", target: "allbtc" },
                 
                 // Weighted connections (with specific values)
                 { source: "btc", target: "tbtc", text: true },
