@@ -48,6 +48,9 @@ class GraphVisualization {
             .attr('width', this.width)
             .attr('height', this.height);
 
+        // Add arrow markers for directional links
+        this.addArrowMarkers();
+
         // Create main group for zooming
         this.mainGroup = this.svg.append('g');
 
@@ -131,6 +134,41 @@ class GraphVisualization {
             .style('border-radius', '3px')
             .style('cursor', 'pointer')
             .on('click', () => this.toggleDevMode());
+    }
+
+    addArrowMarkers() {
+        // Define arrow markers for different link types
+        const defs = this.svg.append('defs');
+        
+        // Arrow marker for regular links
+        defs.append('marker')
+            .attr('id', 'arrowhead')
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 10)
+            .attr('refY', 0)
+            .attr('orient', 'auto')
+            .attr('markerWidth', 8)
+            .attr('markerHeight', 8)
+            .append('path')
+            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('fill', '#999')
+            .attr('stroke', '#666')
+            .attr('stroke-width', 0.5);
+        
+        // Arrow marker for protocol links (different color)
+        defs.append('marker')
+            .attr('id', 'arrowhead-protocol')
+            .attr('viewBox', '0 -5 10 10')
+            .attr('refX', 10)
+            .attr('refY', 0)
+            .attr('orient', 'auto')
+            .attr('markerWidth', 8)
+            .attr('markerHeight', 8)
+            .append('path')
+            .attr('d', 'M0,-5L10,0L0,5')
+            .attr('fill', '#9b59b6')
+            .attr('stroke', '#6c5ce7')
+            .attr('stroke-width', 0.5);
     }
 
     exportNodePositions() {
@@ -333,7 +371,17 @@ class GraphVisualization {
             .enter().append('line')
             .attr('stroke', '#999')
             .attr('stroke-opacity', 0.8)
-            .attr('stroke-width', 2);
+            .attr('stroke-width', d => {
+                // Make links slightly thicker to accommodate arrows
+                return 2.5;
+            })
+            .attr('marker-end', d => {
+                // Use different arrow markers based on link type
+                if (d.source.type === 'protocol' || d.target.type === 'protocol') {
+                    return 'url(#arrowhead-protocol)';
+                }
+                return 'url(#arrowhead)';
+            });
 
         // Add tooltips to links
         link.append('title')
@@ -448,13 +496,25 @@ class GraphVisualization {
             link
                 .attr('x1', d => d.source.x)
                 .attr('y1', d => d.source.y)
-                .attr('x2', d => d.target.x)
-                .attr('y2', d => d.target.y);
+                .attr('x2', d => {
+                    const arrowEnd = this.calculateArrowEndPosition(d.source, d.target);
+                    return arrowEnd.x;
+                })
+                .attr('y2', d => {
+                    const arrowEnd = this.calculateArrowEndPosition(d.source, d.target);
+                    return arrowEnd.y;
+                });
 
             // Update link label positions (center of each link)
             linkLabels
-                .attr('x', d => (d.source.x + d.target.x) / 2)
-                .attr('y', d => (d.source.y + d.target.y) / 2);
+                .attr('x', d => {
+                    const arrowEnd = this.calculateArrowEndPosition(d.source, d.target);
+                    return (d.source.x + arrowEnd.x) / 2;
+                })
+                .attr('y', d => {
+                    const arrowEnd = this.calculateArrowEndPosition(d.source, d.target);
+                    return (d.source.y + arrowEnd.y) / 2;
+                });
 
             this.nodeGroups
                 .attr('transform', d => `translate(${d.x},${d.y})`);
@@ -501,6 +561,25 @@ class GraphVisualization {
             case 'protocol': return 28; // Larger size for protocol nodes to make them stand out
             default: return 20;
         }
+    }
+
+    calculateArrowEndPosition(source, target) {
+        // Calculate the position where the arrow should end (before the target node's border)
+        const targetSize = this.getNodeSize(target);
+        const dx = target.x - source.x;
+        const dy = target.y - source.y;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance > 0) {
+            // Calculate the point just before the node's border
+            // Add a small offset to ensure the arrow doesn't overlap with the node
+            const ratio = (distance - targetSize - 4) / distance;
+            return {
+                x: source.x + dx * ratio,
+                y: source.y + dy * ratio
+            };
+        }
+        return { x: target.x, y: target.y };
     }
 
 
