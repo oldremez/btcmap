@@ -11,6 +11,7 @@ A minimal web server that renders interactive graphs using D3.js. This project d
 - **Responsive design** with modern UI styling
 - **Real-time updates** with smooth animations
 - **Development mode** with additional controls and features (enabled via environment variable)
+- **HTTPS support** with automatic SSL certificate generation and HTTP to HTTPS redirect
 
 ## Project Structure
 
@@ -39,8 +40,51 @@ btcmap/
 
 3. **Open your browser** and navigate to:
    ```
-   http://localhost:3000
+   HTTPS (recommended): https://localhost:3443
+   HTTP (redirects to HTTPS): http://localhost:3000
    ```
+
+## HTTPS Support
+
+The server automatically supports both HTTP and HTTPS:
+
+### Automatic Setup
+- **Self-signed certificates** are automatically generated on first run
+- **HTTPS server** runs on port 3443 by default
+- **HTTP to HTTPS redirect** automatically redirects HTTP traffic to HTTPS
+- **Fallback to HTTP-only** if HTTPS setup fails
+
+### Manual Configuration
+You can customize HTTPS settings using environment variables:
+
+```bash
+# Copy the example configuration
+cp config.env.example .env
+
+# Edit the configuration
+nano .env
+```
+
+Available HTTPS options:
+- `ENABLE_HTTPS=true/false` - Enable/disable HTTPS (default: true)
+- `HTTPS_PORT=3443` - HTTPS port number
+- `SSL_KEY_PATH=./key.pem` - Path to private key file
+- `SSL_CERT_PATH=./cert.pem` - Path to certificate file
+
+### Manual Certificate Generation
+If you prefer to generate certificates manually:
+
+```bash
+# Generate private key
+openssl genrsa -out key.pem 2048
+
+# Generate certificate
+openssl req -new -x509 -key key.pem -out cert.pem -days 365 \
+  -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
+```
+
+### Browser Security Warning
+Since self-signed certificates are used, browsers will show security warnings. This is normal for development. Click "Advanced" and "Proceed to localhost" to continue.
 
 ## Usage
 

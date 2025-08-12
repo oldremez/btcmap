@@ -243,3 +243,9 @@ $RECYCLE.BIN/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# SSL certificates
+*.pem
+*.key
+*.crt
+*.csr
