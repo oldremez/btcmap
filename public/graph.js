@@ -33,7 +33,7 @@ class GraphVisualization {
         this.links = [];
         this.simulation = null;
         this.svg = null;
-        this.devMode = true; // Enable dev mode by default
+        this.devMode = window.DEV_MODE === 'true'; // Enable dev mode only if environment variable is set
         this.nodePositions = {}; // Store loaded node positions
         this.init();
     }

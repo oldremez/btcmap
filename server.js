@@ -415,6 +415,16 @@ app.post('/api/link-label', async (req, res) => {
     }
 });
 
+// Serve configuration script with environment variables
+app.get('/config.js', (req, res) => {
+  const config = {
+    DEV_MODE: process.env.DEV_MODE || 'false'
+  };
+  
+  res.setHeader('Content-Type', 'application/javascript');
+  res.send(`window.DEV_MODE = '${config.DEV_MODE}';`);
+});
+
 // Serve the main HTML page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

@@ -5,11 +5,12 @@ A minimal web server that renders interactive graphs using D3.js. This project d
 ## Features
 
 - **Force-directed graph layout** using D3.js physics simulation
-- **Interactive nodes** that can be dragged and repositioned
+- **Interactive nodes** that can be dragged and repositioned (dev mode only)
 - **Zoom and pan** functionality for exploring large graphs
 - **Dynamic graph generation** with random node and link creation
 - **Responsive design** with modern UI styling
 - **Real-time updates** with smooth animations
+- **Development mode** with additional controls and features (enabled via environment variable)
 
 ## Project Structure
 
@@ -72,7 +73,29 @@ You can easily modify the graph by editing these files:
 
 ## Development
 
-To run in development mode:
+### Dev Mode
+
+Dev mode provides additional development features like:
+- Node dragging and repositioning
+- Export/import of node positions
+- Development controls panel
+- Position persistence
+
+To enable dev mode, set the `DEV_MODE` environment variable:
+
+```bash
+# Enable dev mode
+DEV_MODE=true npm start
+
+# Or on Windows
+set DEV_MODE=true && npm start
+
+# Or export for the session
+export DEV_MODE=true
+npm start
+```
+
+To run in development mode with auto-restart:
 ```bash
 npm run dev
 ```
