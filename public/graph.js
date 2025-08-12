@@ -331,26 +331,13 @@ class GraphVisualization {
             .selectAll('line')
             .data(this.links)
             .enter().append('line')
-            .attr('stroke', d => {
-                // Different colors for different connection types
-                switch(this.getLinkType(d)) {
-                    case 'central': return '#ff6b35';      // Orange for central connections
-                    case 'bridge': return '#4ecdc4';       // Teal for bridge connections
-                    case 'ecosystem': return '#45b7d1';    // Blue for ecosystem connections
-                    case 'cross-chain': return '#96ceb4';  // Green for cross-chain
-                    case 'defi': return '#feca57';         // Yellow for DeFi
-                    case 'weighted': return '#ff9ff3';     // Pink for weighted connections
-                    case 'dashed': return '#54a0ff';       // Blue for dashed connections
-                    default: return '#999';
-                }
-            })
+            .attr('stroke', '#999')
             .attr('stroke-opacity', 0.8)
-            .attr('stroke-width', d => Math.sqrt(this.getLinkValue(d)) * 2)
-            .attr('stroke-dasharray', d => this.getLinkType(d) === 'dashed' ? '5,5' : 'none');
+            .attr('stroke-width', 2);
 
         // Add tooltips to links
         link.append('title')
-            .text(d => `Connection: ${d.source.name || d.source} → ${d.target.name || d.target}\nType: ${this.getLinkType(d)}\nValue: ${this.getLinkValue(d)}`);
+            .text(d => `Connection: ${d.source.name || d.source} → ${d.target.name || d.target}`);
 
         // Create link labels
         const linkLabels = this.mainGroup.append('g')
@@ -516,37 +503,9 @@ class GraphVisualization {
         }
     }
 
-    getLinkType(link) {
-        // Provide default link types based on source and target node types to maintain visual consistency
-        if (link.type) return link.type;
-        
-        // Infer type from node types if available
-        const sourceType = link.source.type || 'default';
-        const targetType = link.target.type || 'default';
-        
-        if (sourceType === 'central' || targetType === 'central') return 'central';
-        if (sourceType === 'bridge' || targetType === 'bridge') return 'bridge';
-        if (sourceType === 'wrapped' || targetType === 'wrapped') return 'ecosystem';
-        
-        return 'default';
-    }
 
-    getLinkValue(link) {
-        // Provide default link values to maintain visual consistency
-        if (link.value) return link.value;
-        
-        // Default values based on inferred types
-        const linkType = this.getLinkType(link);
-        switch(linkType) {
-            case 'central': return 3;       // Central connections are stronger
-            case 'bridge': return 2;        // Bridge connections are medium strength
-            case 'ecosystem': return 1;     // Ecosystem connections are standard
-            case 'cross-chain': return 1;   // Cross-chain connections are standard
-            case 'weighted': return 5;      // Weighted connections are strongest
-            case 'dashed': return 1;        // Dashed connections are standard
-            default: return 1;              // Default value
-        }
-    }
+
+
 }
 
 // Initialize the graph when the page loads
