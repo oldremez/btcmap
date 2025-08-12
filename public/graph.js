@@ -151,7 +151,8 @@ class GraphVisualization {
             .attr('markerHeight', 6)
             .append('path')
             .attr('d', 'M0,-3L10,0L0,3')
-            .attr('fill', '#999');
+            .attr('fill', '#999')
+            .attr('stroke-opacity', 0.8);
     }
 
     exportNodePositions() {
@@ -550,7 +551,7 @@ class GraphVisualization {
         if (distance > 0) {
             // Calculate the point just before the node's border
             // Add a small offset to ensure the arrow doesn't overlap with the node
-            const ratio = (distance - targetSize - 4) / distance;
+            const ratio = (distance - targetSize + 3) / distance;
             return {
                 x: source.x + dx * ratio,
                 y: source.y + dy * ratio
