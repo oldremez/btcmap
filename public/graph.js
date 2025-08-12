@@ -137,38 +137,21 @@ class GraphVisualization {
     }
 
     addArrowMarkers() {
-        // Define arrow markers for different link types
+        // Define arrow markers for directional links
         const defs = this.svg.append('defs');
         
-        // Arrow marker for regular links
+        // Single arrow marker for all links
         defs.append('marker')
             .attr('id', 'arrowhead')
             .attr('viewBox', '0 -5 10 10')
             .attr('refX', 10)
             .attr('refY', 0)
             .attr('orient', 'auto')
-            .attr('markerWidth', 8)
-            .attr('markerHeight', 8)
+            .attr('markerWidth', 6)
+            .attr('markerHeight', 6)
             .append('path')
-            .attr('d', 'M0,-5L10,0L0,5')
-            .attr('fill', '#999')
-            .attr('stroke', '#666')
-            .attr('stroke-width', 0.5);
-        
-        // Arrow marker for protocol links (different color)
-        defs.append('marker')
-            .attr('id', 'arrowhead-protocol')
-            .attr('viewBox', '0 -5 10 10')
-            .attr('refX', 10)
-            .attr('refY', 0)
-            .attr('orient', 'auto')
-            .attr('markerWidth', 8)
-            .attr('markerHeight', 8)
-            .append('path')
-            .attr('d', 'M0,-5L10,0L0,5')
-            .attr('fill', '#9b59b6')
-            .attr('stroke', '#6c5ce7')
-            .attr('stroke-width', 0.5);
+            .attr('d', 'M0,-3L10,0L0,3')
+            .attr('fill', '#999');
     }
 
     exportNodePositions() {
@@ -375,13 +358,7 @@ class GraphVisualization {
                 // Make links slightly thicker to accommodate arrows
                 return 2.5;
             })
-            .attr('marker-end', d => {
-                // Use different arrow markers based on link type
-                if (d.source.type === 'protocol' || d.target.type === 'protocol') {
-                    return 'url(#arrowhead-protocol)';
-                }
-                return 'url(#arrowhead)';
-            });
+            .attr('marker-end', 'url(#arrowhead)');
 
         // Add tooltips to links
         link.append('title')
@@ -581,10 +558,6 @@ class GraphVisualization {
         }
         return { x: target.x, y: target.y };
     }
-
-
-
-
 }
 
 // Initialize the graph when the page loads
