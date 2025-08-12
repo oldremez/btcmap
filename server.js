@@ -142,6 +142,26 @@ const TokenHandlers = {
         }
     },
 
+    // Generic Cosmos/IBC token balance handler for a specific address
+    async handleCosmosBalance(denom, address, decimals = 6) {
+        try {
+            const endpoint = `https://lcd.osmosis.zone/cosmos/bank/v1beta1/balances/${address}/by_denom?denom=${encodeURIComponent(denom)}`;
+            const response = await fetch(endpoint);
+            if (response.ok) {
+                const data = await response.json();
+                if (data.balance && data.balance.amount) {
+                    const balance = parseInt(data.balance.amount);
+                    const tokenBalance = balance / Math.pow(10, decimals);
+                    return formatNumber(tokenBalance);
+                }
+            }
+            return 'Loading...';
+        } catch (error) {
+            console.error(`Error fetching ${denom} balance for ${address}:`, error);
+            return 'Error';
+        }
+    },
+
     // Generic Solana token balance handler
     async handleSolanaBalance(tokenAccount) {
         try {
@@ -346,6 +366,34 @@ app.post('/api/link-label', async (req, res) => {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
                 14
+            );
+        }
+        else if (sourceId === 'nbtc' && targetId === 'allbtc-issuer') {
+            label = await TokenHandlers.handleCosmosBalance(
+                'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
+                'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+                14
+            );
+        }
+        else if (sourceId === 'wbtc-osmosis' && targetId === 'allbtc-issuer') {
+            label = await TokenHandlers.handleCosmosBalance(
+                'factory/osmo1z0qrq605sjgcqpylfl4aa6s90x738j7m58wyatt0tdzflg2ha26q67k743/wbtc',
+                'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+                8
+            );
+        }
+        else if (sourceId === 'ckbtc-osmosis' && targetId === 'allbtc-issuer') {
+            label = await TokenHandlers.handleCosmosBalance(
+                'factory/osmo10c4y9csfs8q7mtvfg4p9gd8d0acx0hpc2mte9xqzthd7rd3348tsfhaesm/sICP-icrc-ckBTC',
+                'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+                8
+            );
+        }
+        else if (sourceId === 'wbtc-eth-axl' && targetId === 'allbtc-issuer') {
+            label = await TokenHandlers.handleCosmosBalance(
+                'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+                8
             );
         }
         else if (sourceId === 'allbtc-issuer' && targetId === 'allbtc') {

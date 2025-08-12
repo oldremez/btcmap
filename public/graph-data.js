@@ -152,18 +152,17 @@ class GraphData {
                 { source: "fbtc", target: "solvbtc" },
                 
                 // Osmosis ecosystem
-                { source: "wbtc-osmosis", target: "allbtc-issuer" },
+                { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
                 { source: "internet-computer", target: "ckbtc-osmosis", text: true },
-                { source: "ckbtc-osmosis", target: "allbtc-issuer" },
-                { source: "nbtc", target: "allbtc-issuer" },
+                { source: "ckbtc-osmosis", target: "allbtc-issuer", text: true },
+                { source: "nbtc", target: "allbtc-issuer", text: true },
                 { source: "nomic", target: "nbtc", text: true },
                 { source: "btc", target: "nomic" },
                 { source: "allbtc-issuer", target: "allbtc", text: true },
                 
                 // Axelar bridge
                 { source: "axelar", target: "wbtc-eth-axl", text: true },
-                { source: "wbtc-eth-axl", target: "allbtc-issuer" },
-                { source: "allbtc-issuer", target: "allbtc" },
+                { source: "wbtc-eth-axl", target: "allbtc-issuer", text: true },
                 
                 // Weighted connections (with specific values)
                 { source: "btc", target: "tbtc", text: true },
