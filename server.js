@@ -345,7 +345,7 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'nomic' && targetId === 'nbtc') {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
-                8
+                14
             );
         }
         else if (sourceId === 'allbtc-issuer' && targetId === 'allbtc') {
