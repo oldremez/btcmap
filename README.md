@@ -41,7 +41,8 @@ btcmap/
 3. **Open your browser** and navigate to:
    ```
    HTTPS (recommended): https://localhost:3443
-   HTTP (redirects to HTTPS): http://localhost:3000
+   HTTP: http://localhost:3000
+   HTTP Redirect: http://localhost:3001 (redirects to HTTPS)
    ```
 
 ## HTTPS Support
@@ -51,8 +52,11 @@ The server automatically supports both HTTP and HTTPS:
 ### Automatic Setup
 - **Self-signed certificates** are automatically generated on first run
 - **HTTPS server** runs on port 3443 by default
-- **HTTP to HTTPS redirect** automatically redirects HTTP traffic to HTTPS
+- **HTTP server** runs on port 3000 by default
+- **HTTP redirect server** runs on port 3001, redirecting traffic to HTTPS
 - **Fallback to HTTP-only** if HTTPS setup fails
+
+**Note**: The redirect server uses a separate port (3001) to avoid conflicts with the main HTTP server (3000).
 
 ### Manual Configuration
 You can customize HTTPS settings using environment variables:
@@ -68,6 +72,7 @@ nano .env
 Available HTTPS options:
 - `ENABLE_HTTPS=true/false` - Enable/disable HTTPS (default: true)
 - `HTTPS_PORT=3443` - HTTPS port number
+- `HTTP_REDIRECT_PORT=3001` - Port for HTTP to HTTPS redirect server
 - `DOMAIN_NAME=localhost` - Domain name for SSL certificate (default: localhost)
 - `SSL_KEY_PATH=./key.pem` - Path to private key file
 - `SSL_CERT_PATH=./cert.pem` - Path to certificate file

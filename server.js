@@ -8,6 +8,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
+const HTTP_REDIRECT_PORT = process.env.HTTP_REDIRECT_PORT || 3001;
 const DOMAIN_NAME = process.env.DOMAIN_NAME || 'localhost';
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || './key.pem';
 const SSL_CERT_PATH = process.env.SSL_CERT_PATH || './cert.pem';
@@ -473,7 +474,7 @@ function startServers() {
   // Start HTTP server
   const httpServer = http.createServer(app);
   httpServer.listen(PORT, () => {
-    console.log(`HTTP Server running at http://localhost:${PORT}`);
+    console.log(`HTTP Server running at http://${DOMAIN_NAME}:${PORT}`);
   });
   
   // Try to start HTTPS server
@@ -489,7 +490,7 @@ function startServers() {
         console.log(`HTTPS Server running at https://${DOMAIN_NAME}:${HTTPS_PORT}`);
         console.log(`Note: You may see a security warning in your browser due to self-signed certificate`);
         
-        // Add HTTP to HTTPS redirect
+        // Add HTTP to HTTPS redirect on a different port
         const redirectApp = express();
         redirectApp.use((req, res) => {
           const httpsUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}${req.url}`;
@@ -497,8 +498,8 @@ function startServers() {
         });
         
         const redirectServer = http.createServer(redirectApp);
-        redirectServer.listen(PORT, () => {
-          console.log(`HTTP redirect server running on port ${PORT} - redirecting to HTTPS`);
+        redirectServer.listen(HTTP_REDIRECT_PORT, () => {
+          console.log(`HTTP redirect server running on port ${HTTP_REDIRECT_PORT} - redirecting to HTTPS`);
         });
       });
     } catch (error) {
@@ -512,7 +513,8 @@ function startServers() {
   console.log(`\nOpen your browser and navigate to:`);
   if (ENABLE_HTTPS) {
     console.log(`  HTTPS: https://${DOMAIN_NAME}:${HTTPS_PORT} (recommended)`);
-    console.log(`  HTTP:  http://${DOMAIN_NAME}:${PORT} (will redirect to HTTPS)`);
+    console.log(`  HTTP:  http://${DOMAIN_NAME}:${PORT}`);
+    console.log(`  HTTP Redirect: http://${DOMAIN_NAME}:${HTTP_REDIRECT_PORT} (redirects to HTTPS)`);
   } else {
     console.log(`  HTTP:  http://${DOMAIN_NAME}:${PORT}`);
   }
