@@ -68,8 +68,24 @@ nano .env
 Available HTTPS options:
 - `ENABLE_HTTPS=true/false` - Enable/disable HTTPS (default: true)
 - `HTTPS_PORT=3443` - HTTPS port number
+- `DOMAIN_NAME=localhost` - Domain name for SSL certificate (default: localhost)
 - `SSL_KEY_PATH=./key.pem` - Path to private key file
 - `SSL_CERT_PATH=./cert.pem` - Path to certificate file
+
+### Example: Custom Domain
+For production use with a real domain:
+
+```bash
+# .env file
+DOMAIN_NAME=yourdomain.com
+HTTPS_PORT=443
+ENABLE_HTTPS=true
+```
+
+**Note**: For production domains, you'll need to:
+1. Generate proper SSL certificates (not self-signed)
+2. Use a certificate authority like Let's Encrypt
+3. Place the certificates in the paths specified by `SSL_KEY_PATH` and `SSL_CERT_PATH`
 
 ### Manual Certificate Generation
 If you prefer to generate certificates manually:
@@ -78,7 +94,13 @@ If you prefer to generate certificates manually:
 # Generate private key
 openssl genrsa -out key.pem 2048
 
-# Generate certificate
+# Generate certificate (replace 'yourdomain.com' with your actual domain)
+openssl req -new -x509 -key key.pem -out cert.pem -days 365 \
+  -subj "/C=US/ST=State/L=City/O=Organization/CN=yourdomain.com"
+```
+
+**For localhost development:**
+```bash
 openssl req -new -x509 -key key.pem -out cert.pem -days 365 \
   -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
 ```

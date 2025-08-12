@@ -8,6 +8,7 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HTTPS_PORT = process.env.HTTPS_PORT || 3443;
+const DOMAIN_NAME = process.env.DOMAIN_NAME || 'localhost';
 const SSL_KEY_PATH = process.env.SSL_KEY_PATH || './key.pem';
 const SSL_CERT_PATH = process.env.SSL_CERT_PATH || './cert.pem';
 const ENABLE_HTTPS = process.env.ENABLE_HTTPS !== 'false'; // Default to true
@@ -454,7 +455,7 @@ function generateSelfSignedCert() {
     execSync(`openssl genrsa -out ${SSL_KEY_PATH} 2048`, { stdio: 'inherit' });
     
     // Generate certificate
-    execSync(`openssl req -new -x509 -key ${SSL_KEY_PATH} -out ${SSL_CERT_PATH} -days 365 -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"`, { stdio: 'inherit' });
+    execSync(`openssl req -new -x509 -key ${SSL_KEY_PATH} -out ${SSL_CERT_PATH} -days 365 -subj "/C=US/ST=State/L=City/O=Organization/CN=${DOMAIN_NAME}"`, { stdio: 'inherit' });
     
     console.log('SSL certificates generated successfully!');
     return true;
@@ -462,7 +463,7 @@ function generateSelfSignedCert() {
     console.error('Error generating SSL certificates:', error.message);
     console.log('HTTPS will not be available. You can manually generate certificates using:');
     console.log(`openssl genrsa -out ${SSL_KEY_PATH} 2048`);
-    console.log(`openssl req -new -x509 -key ${SSL_KEY_PATH} -out ${SSL_CERT_PATH} -days 365 -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"`);
+    console.log(`openssl req -new -x509 -key ${SSL_KEY_PATH} -out ${SSL_CERT_PATH} -days 365 -subj "/C=US/ST=State/L=City/O=Organization/CN=${DOMAIN_NAME}"`);
     return false;
   }
 }
@@ -485,13 +486,13 @@ function startServers() {
       
       const httpsServer = https.createServer(httpsOptions, app);
       httpsServer.listen(HTTPS_PORT, () => {
-        console.log(`HTTPS Server running at https://localhost:${HTTPS_PORT}`);
+        console.log(`HTTPS Server running at https://${DOMAIN_NAME}:${HTTPS_PORT}`);
         console.log(`Note: You may see a security warning in your browser due to self-signed certificate`);
         
         // Add HTTP to HTTPS redirect
         const redirectApp = express();
         redirectApp.use((req, res) => {
-          const httpsUrl = `https://${req.headers.host.replace(/:\d+$/, '')}:${HTTPS_PORT}${req.url}`;
+          const httpsUrl = `https://${DOMAIN_NAME}:${HTTPS_PORT}${req.url}`;
           res.redirect(301, httpsUrl);
         });
         
@@ -510,10 +511,10 @@ function startServers() {
   
   console.log(`\nOpen your browser and navigate to:`);
   if (ENABLE_HTTPS) {
-    console.log(`  HTTPS: https://localhost:${HTTPS_PORT} (recommended)`);
-    console.log(`  HTTP:  http://localhost:${PORT} (will redirect to HTTPS)`);
+    console.log(`  HTTPS: https://${DOMAIN_NAME}:${HTTPS_PORT} (recommended)`);
+    console.log(`  HTTP:  http://${DOMAIN_NAME}:${PORT} (will redirect to HTTPS)`);
   } else {
-    console.log(`  HTTP:  http://localhost:${PORT}`);
+    console.log(`  HTTP:  http://${DOMAIN_NAME}:${PORT}`);
   }
 }
 
