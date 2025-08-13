@@ -332,7 +332,7 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'wbtc-eth' && targetId === 'axelar') {
             label = await TokenHandlers.handleWBTCBalance('0x4F4495243837681061C4743b74B3eEdf548D56A5');
         }
-        else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge') {
+        else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge-wbtc') {
             label = await TokenHandlers.handleWBTCBalance('0x3ee18B2214AFF97000D974cf647E7C347E8fa585');
         }
         // WBTC balance (wbtc-eth -> aave)
@@ -343,6 +343,13 @@ app.post('/api/link-label', async (req, res) => {
             label = await TokenHandlers.handleERC20Balance(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
                 '0x10Ac93971cdb1F5c778144084242374473c350Da',
+                18
+            );
+        }
+        else if (sourceId === 'tbtc' && targetId === 'portal-bridge-tbtc') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x18084fba666a33d37592fa2633fd49a74dd93a88',
+                '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
                 18
             );
         }
@@ -361,8 +368,8 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
-        // WBTC supply on Solana via Axelar (portal-bridge -> wbtc-axl-solana)
-        else if (sourceId === 'portal-bridge' && targetId === 'wbtc-axl-solana') {
+        // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-axl-solana)
+        else if (sourceId === 'portal-bridge-wbtc' && targetId === 'wbtc-axl-solana') {
             label = await TokenHandlers.handleSolanaSupply(
                 '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh'
             );

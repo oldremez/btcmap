@@ -64,6 +64,14 @@ class GraphData {
                     color: "#9b59b6",
                     strokeWidth: 2,
                     padding: 20
+                },
+                {
+                    id: "portal-frame", 
+                    label: "Portal",
+                    nodes: ["portal-bridge-wbtc", "portal-bridge-tbtc"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
                 }
             ],
             nodes: [
@@ -78,13 +86,13 @@ class GraphData {
                 { id: "function", name: "Function", type: "issuer" },
                 { id: "nomic", name: "Nomic", type: "issuer" },
 
-                { id: "wbtc-eth", name: "WBTC (Ethereum)", type: "token" },
-                { id: "wbtc-osmosis", name: "WBTC (Osmosis)", type: "token" },
-                { id: "wbtc-solana", name: "WBTC (Solana)", type: "token" },
-                { id: "wbtc-axl-solana", name: "WBTC.axl (Solana)", type: "token" },
+                { id: "wbtc-eth", name: "WBTC", type: "token" },
+                { id: "wbtc-osmosis", name: "WBTC", type: "token" },
+                { id: "wbtc-solana", name: "WBTC", type: "token" },
+                { id: "wbtc-axl-solana", name: "WBTC.axl", type: "token" },
                 { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
-                { id: "wbtc-base", name: "WBTC (Base)", type: "token" },
-                { id: "wbtc-kava", name: "WBTC (Kava)", type: "token" },
+                { id: "wbtc-base", name: "WBTC", type: "token" },
+                { id: "wbtc-kava", name: "WBTC", type: "token" },
 
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
                 
@@ -97,13 +105,14 @@ class GraphData {
                 { id: "allbtc", name: "allBTC", type: "token" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
-                { id: "ckbtc-osmosis", name: "ckBTC (Osmosis)", type: "token" },
+                { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
                 { id: "nbtc", name: "nBTC", type: "token" },
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
                 
                 // Special nodes
                 { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "token" },
-                { id: "portal-bridge", name: "Portal Bridge", type: "issuer" },
+                { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
+                { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" },
                 
                 // DeFi Protocol nodes
                 { id: "aave", name: "AAVE", type: "protocol" },
@@ -168,8 +177,8 @@ class GraphData {
                 { source: "btc", target: "tbtc", text: true },
                 
                 // Portal Bridge routes
-                { source: "wbtc-eth", target: "portal-bridge", text: true },
-                { source: "portal-bridge", target: "wbtc-axl-solana", text: true },
+                { source: "wbtc-eth", target: "portal-bridge-wbtc", text: true },
+                { source: "portal-bridge-wbtc", target: "wbtc-axl-solana", text: true },
                 
                 // DeFi Protocol connections from WBTC-ETH
                 { source: "wbtc-eth", target: "aave", text: true },
@@ -177,6 +186,7 @@ class GraphData {
                 { source: "wbtc-eth", target: "compound", text: true },
                 
                 { source: "tbtc", target: "aave", text: true },
+                { source: "tbtc", target: "portal-bridge-tbtc", text: true },
 
                 // Solana ecosystem
                 { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
