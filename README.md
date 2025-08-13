@@ -1,178 +1,126 @@
-# D3.js Graph Visualization Web Server
+# Bitcoin Liquidity Map
 
-A minimal web server that renders interactive graphs using D3.js. This project demonstrates a force-directed graph visualization with interactive features.
+A comprehensive visualization of Bitcoin's liquidity across different blockchain networks and protocols.
 
 ## Features
 
-- **Force-directed graph layout** using D3.js physics simulation
-- **Interactive nodes** that can be dragged and repositioned (dev mode only)
-- **Zoom and pan** functionality for exploring large graphs
-- **Dynamic graph generation** with random node and link creation
-- **Responsive design** with modern UI styling
-- **Real-time updates** with smooth animations
-- **Development mode** with additional controls and features (enabled via environment variable)
-- **HTTPS support** with automatic SSL certificate generation and HTTP to HTTPS redirect
+- **Interactive Graph**: D3.js-based visualization of Bitcoin liquidity flows
+- **Multi-Chain Support**: Covers Ethereum, Solana, Osmosis, Base, Kava, Neutron, and more
+- **Real-time Data**: Live token supply and balance information
+- **Clickable Nodes**: Click on any node to view detailed descriptions
+- **Responsive Design**: Works on desktop and mobile devices
+- **Developer Mode**: Advanced controls for graph manipulation and position saving
 
-## Project Structure
+## Clickable Nodes
 
-```
-btcmap/
-├── package.json          # Node.js dependencies and scripts
-├── server.js            # Express web server
-├── public/
-│   ├── index.html       # Main HTML page with UI
-│   ├── graph-data.js    # Graph data definitions and generators
-│   └── graph.js         # D3.js graph logic and visualization
-└── README.md            # This file
-```
+Nodes in the graph are now clickable! Click on any node to open a popup window with detailed information about that node.
 
-## Installation
+### How it works:
 
-1. **Install dependencies:**
+1. **Click any node** in the graph
+2. **Popup window opens** with detailed information
+3. **Close the popup** by:
+   - Clicking the × button
+   - Clicking outside the popup
+   - Pressing the Escape key
+
+### Node Descriptions
+
+Node descriptions are stored as HTML files in the `public/descriptions/` directory. Each file should be named `<node-id>.html` where `<node-id>` matches the node ID in the graph data.
+
+**Example**: For a node with ID `bitcoin`, create `public/descriptions/bitcoin.html`
+
+### Creating Node Descriptions
+
+To add a description for a node:
+
+1. Create an HTML file in `public/descriptions/`
+2. Name it `<node-id>.html` (e.g., `wbtc-eth.html`)
+3. Write your HTML content with any styling you want
+4. The popup will automatically load and display your content
+
+**Note**: If no description file exists for a node, clicking on it will not open the popup.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd btcmap
+   ```
+
+2. Install dependencies:
    ```bash
    npm install
    ```
 
-2. **Start the server:**
+3. Start the development server:
    ```bash
    npm start
    ```
 
-3. **Open your browser** and navigate to:
-   ```
-   HTTPS (recommended): https://localhost:3443
-   HTTP: http://localhost:3000
-   HTTP Redirect: http://localhost:3001 (redirects to HTTPS)
-   ```
-
-## HTTPS Support
-
-The server automatically supports both HTTP and HTTPS:
-
-### Automatic Setup
-- **Self-signed certificates** are automatically generated on first run
-- **HTTPS server** runs on port 3443 by default
-- **HTTP server** runs on port 3000 by default
-- **HTTP redirect server** runs on port 3001, redirecting traffic to HTTPS
-- **Fallback to HTTP-only** if HTTPS setup fails
-
-**Note**: The redirect server uses a separate port (3001) to avoid conflicts with the main HTTP server (3000).
-
-### Manual Configuration
-You can customize HTTPS settings using environment variables:
-
-```bash
-# Copy the example configuration
-cp config.env.example .env
-
-# Edit the configuration
-nano .env
-```
-
-Available HTTPS options:
-- `ENABLE_HTTPS=true/false` - Enable/disable HTTPS (default: true)
-- `HTTPS_PORT=3443` - HTTPS port number
-- `HTTP_REDIRECT_PORT=3001` - Port for HTTP to HTTPS redirect server
-- `DOMAIN_NAME=localhost` - Domain name for SSL certificate (default: localhost)
-- `SSL_KEY_PATH=./key.pem` - Path to private key file
-- `SSL_CERT_PATH=./cert.pem` - Path to certificate file
-
-### Example: Custom Domain
-For production use with a real domain:
-
-```bash
-# .env file
-DOMAIN_NAME=yourdomain.com
-HTTPS_PORT=443
-ENABLE_HTTPS=true
-```
-
-**Note**: For production domains, you'll need to:
-1. Generate proper SSL certificates (not self-signed)
-2. Use a certificate authority like Let's Encrypt
-3. Place the certificates in the paths specified by `SSL_KEY_PATH` and `SSL_CERT_PATH`
-
-### Manual Certificate Generation
-If you prefer to generate certificates manually:
-
-```bash
-# Generate private key
-openssl genrsa -out key.pem 2048
-
-# Generate certificate (replace 'yourdomain.com' with your actual domain)
-openssl req -new -x509 -key key.pem -out cert.pem -days 365 \
-  -subj "/C=US/ST=State/L=City/O=Organization/CN=yourdomain.com"
-```
-
-**For localhost development:**
-```bash
-openssl req -new -x509 -key key.pem -out cert.pem -days 365 \
-  -subj "/C=US/ST=State/L=City/O=Organization/CN=localhost"
-```
-
-### Browser Security Warning
-Since self-signed certificates are used, browsers will show security warnings. This is normal for development. Click "Advanced" and "Proceed to localhost" to continue.
-
-## Usage
-
-- **Generate Random Graph**: Click to create a new random graph with varying numbers of nodes and connections
-- **Clear Graph**: Remove all nodes and links from the visualization
-- **Drag Nodes**: Click and drag nodes to reposition them
-- **Zoom**: Use mouse wheel or pinch gestures to zoom in/out
-- **Pan**: Click and drag on empty space to pan around the graph
-
-## Technologies Used
-
-- **Backend**: Node.js with Express.js
-- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
-- **Visualization**: D3.js v7 (loaded via CDN)
-- **Physics**: D3.js force simulation for automatic layout
-
-## Customization
-
-You can easily modify the graph by editing these files:
-
-- **`public/graph-data.js`**: Graph data structure, node/link properties, random generation logic
-- **`public/graph.js`**: D3.js visualization logic, layout forces, interaction handling
-- **`public/index.html`**: UI styling, layout, and controls
-
-**Key customization areas:**
-- **Node properties**: Size, color, labels, groups
-- **Link properties**: Thickness, color, distance
-- **Layout forces**: Repulsion, attraction, collision detection
-- **Visual styling**: Colors, fonts, sizes
+4. Open your browser and navigate to `http://localhost:3000`
 
 ## Development
 
-### Dev Mode
+### Environment Variables
 
-Dev mode provides additional development features like:
-- Node dragging and repositioning
-- Export/import of node positions
-- Development controls panel
-- Position persistence
+Create a `.env` file in the root directory:
 
-To enable dev mode, set the `DEV_MODE` environment variable:
-
-```bash
-# Enable dev mode
-DEV_MODE=true npm start
-
-# Or on Windows
-set DEV_MODE=true && npm start
-
-# Or export for the session
-export DEV_MODE=true
-npm start
+```env
+DEV_MODE=true
+PORT=3000
+ENABLE_HTTPS=true
 ```
 
-To run in development mode with auto-restart:
-```bash
-npm run dev
-```
+### Available Scripts
 
-The server will automatically restart when you make changes to the code.
+- `npm start` - Start the development server
+- `npm run build` - Build for production
+- `npm run dev` - Start in development mode
+
+### Graph Data Structure
+
+The graph data is defined in `public/graph-data.js` and includes:
+
+- **Nodes**: Individual entities (tokens, protocols, issuers)
+- **Links**: Connections between nodes
+- **Frames**: Visual groupings of related nodes
+
+### Adding New Nodes
+
+To add a new node:
+
+1. Add the node definition to the `nodes` array in `graph-data.js`
+2. Add any connections to the `links` array
+3. Optionally create a description file in `public/descriptions/`
+
+## Architecture
+
+- **Frontend**: HTML, CSS, JavaScript with D3.js for visualization
+- **Backend**: Node.js with Express.js
+- **Data**: Real-time blockchain data via various APIs
+- **Styling**: Custom CSS with responsive design
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Add tests if applicable
+5. Submit a pull request
 
 ## License
 
-MIT License - feel free to use this project for learning and development purposes.
+[Add your license information here]
+
+## Support
+
+For questions or support, please [create an issue](link-to-issues) or contact the development team.

@@ -25,6 +25,65 @@ async function getLinkLabel(source, target) {
     }
 }
 
+// Node description popup functionality
+class NodePopup {
+    constructor() {
+        this.popup = document.getElementById('nodePopup');
+        this.overlay = document.getElementById('popupOverlay');
+        this.title = document.getElementById('popupTitle');
+        this.content = document.getElementById('popupContent');
+        this.closeBtn = document.getElementById('popupClose');
+        
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        // Close popup when close button is clicked
+        this.closeBtn.addEventListener('click', () => this.hide());
+        
+        // Close popup when overlay is clicked
+        this.overlay.addEventListener('click', () => this.hide());
+        
+        // Close popup when Escape key is pressed
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') this.hide();
+        });
+    }
+
+    async show(nodeId, nodeName) {
+        try {
+            // Try to load the description HTML file
+            const response = await fetch(`/descriptions/${nodeId}.html`);
+            
+            if (response.ok) {
+                const htmlContent = await response.text();
+                this.title.textContent = nodeName;
+                this.content.innerHTML = htmlContent;
+                this.showPopup();
+            } else {
+                // If description file doesn't exist, don't show popup
+                console.log(`No description available for node: ${nodeId}`);
+                return false;
+            }
+        } catch (error) {
+            console.error('Error loading node description:', error);
+            return false;
+        }
+        return true;
+    }
+
+    showPopup() {
+        this.overlay.classList.add('active');
+        this.popup.classList.add('active');
+    }
+
+    hide() {
+        this.overlay.classList.remove('active');
+        this.popup.classList.remove('active');
+        this.content.innerHTML = '';
+    }
+}
+
 class GraphVisualization {
     constructor() {
         this.width = document.getElementById('graph').clientWidth;
@@ -35,6 +94,7 @@ class GraphVisualization {
         this.svg = null;
         this.devMode = window.DEV_MODE === 'true'; // Enable dev mode only if environment variable is set
         this.nodePositions = {}; // Store loaded node positions
+        this.nodePopup = new NodePopup(); // Initialize node popup
         this.init();
     }
 
@@ -407,7 +467,12 @@ class GraphVisualization {
         this.nodeGroups = this.mainGroup.append('g')
             .selectAll('g')
             .data(this.nodes)
-            .enter().append('g');
+            .enter().append('g')
+            .attr('class', 'node-group')
+            .on('click', (event, d) => {
+                // Handle node click to show description
+                this.nodePopup.show(d.id, d.name);
+            });
 
         // Enable dragging in dev mode
         if (this.devMode) {
