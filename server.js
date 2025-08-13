@@ -346,6 +346,20 @@ app.post('/api/link-label', async (req, res) => {
                 18
             );
         }
+        else if (sourceId === 'cbbtc' && targetId === 'aave') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+                '0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd',
+                8
+            );
+        }
+        else if (sourceId === 'cbbtc' && targetId === 'morpho') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+                '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb',
+                8
+            );
+        }
         else if (sourceId === 'tbtc' && targetId === 'portal-bridge-tbtc') {
             label = await TokenHandlers.handleERC20Balance(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
