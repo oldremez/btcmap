@@ -408,14 +408,14 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
-        // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-axl-solana)
-        else if (sourceId === 'portal-bridge-wbtc' && targetId === 'wbtc-axl-solana') {
+        // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-portal-solana)
+        else if (sourceId === 'portal-bridge-wbtc' && targetId === 'wbtc-portal-solana') {
             label = await TokenHandlers.handleSolanaSupply(
                 '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh'
             );
         }
-        // WBTC balance on Jupiter Perps account (wbtc-axl-solana -> jupiter-perps)
-        else if (sourceId === 'wbtc-axl-solana' && targetId === 'jupiter-perps') {
+        // WBTC balance on Jupiter Perps account (wbtc-portal-solana -> jupiter-perps)
+        else if (sourceId === 'wbtc-portal-solana' && targetId === 'jupiter-perps') {
             label = await TokenHandlers.handleSolanaBalance(
                 'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ'
             );

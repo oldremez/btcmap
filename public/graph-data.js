@@ -36,7 +36,7 @@ class GraphData {
                 {
                     id: "solana-frame", 
                     label: "Solana",
-                    nodes: ["wbtc-solana", "wbtc-axl-solana", "jupiter-perps"],
+                    nodes: ["wbtc-solana", "wbtc-portal-solana", "jupiter-perps"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -89,7 +89,7 @@ class GraphData {
                 { id: "wbtc-eth", name: "WBTC", type: "token" },
                 { id: "wbtc-osmosis", name: "WBTC", type: "token" },
                 { id: "wbtc-solana", name: "WBTC", type: "token" },
-                { id: "wbtc-axl-solana", name: "WBTC.axl", type: "token" },
+                { id: "wbtc-portal-solana", name: "WBTC.portal", type: "token" },
                 { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
                 { id: "wbtc-base", name: "WBTC", type: "token" },
                 { id: "wbtc-kava", name: "WBTC", type: "token" },
@@ -186,7 +186,7 @@ class GraphData {
                 
                 // Portal Bridge routes
                 { source: "wbtc-eth", target: "portal-bridge-wbtc", text: true },
-                { source: "portal-bridge-wbtc", target: "wbtc-axl-solana", text: true },
+                { source: "portal-bridge-wbtc", target: "wbtc-portal-solana", text: true },
                 
                 // DeFi Protocol connections from WBTC-ETH
                 { source: "wbtc-eth", target: "aave", text: true },
@@ -203,7 +203,7 @@ class GraphData {
                 { source: "lbtc", target: "aave", text: true },
                 
                 // Solana ecosystem
-                { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
+                { source: "wbtc-portal-solana", target: "jupiter-perps", text: true },
                 
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },
