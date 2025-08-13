@@ -199,6 +199,16 @@ const TokenHandlers = {
         }
     },
 
+    // Generic ERC20 token balance handler
+    async handleERC20Balance(contractAddress, walletAddress, decimals = 18) {
+        const balance = await BlockchainUtils.getERC20Balance(contractAddress, walletAddress);
+        if (balance !== null) {
+            const tokenBalance = balance / Math.pow(10, decimals);
+            return formatNumber(tokenBalance);
+        }
+        return 'Loading...';
+    },
+
     // Bitcoin supply handler
     async handleBitcoinSupply() {
         try {
@@ -245,15 +255,11 @@ const TokenHandlers = {
 
     // WBTC balance handler
     async handleWBTCBalance(walletAddress) {
-        const balance = await BlockchainUtils.getERC20Balance(
+        return this.handleERC20Balance(
             '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC contract address
-            walletAddress
+            walletAddress,
+            8 // WBTC has 8 decimals
         );
-        if (balance !== null) {
-            const wbtcBalance = balance / 100000000; // WBTC has 8 decimals
-            return formatNumber(wbtcBalance);
-        }
-        return 'Loading...';
     }
 };
 
@@ -332,6 +338,13 @@ app.post('/api/link-label', async (req, res) => {
         // WBTC balance (wbtc-eth -> aave)
         else if (sourceId === 'wbtc-eth' && targetId === 'aave') {
             label = await TokenHandlers.handleWBTCBalance('0x5Ee5bf7ae06D1Be5997A1A72006FE6C607eC6DE8');
+        }
+        else if (sourceId === 'tbtc' && targetId === 'aave') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x18084fba666a33d37592fa2633fd49a74dd93a88',
+                '0x10Ac93971cdb1F5c778144084242374473c350Da',
+                18
+            );
         }
         // WBTC balance (wbtc-eth -> morpho)
         else if (sourceId === 'wbtc-eth' && targetId === 'morpho') {

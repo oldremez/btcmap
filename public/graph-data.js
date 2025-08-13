@@ -176,6 +176,8 @@ class GraphData {
                 { source: "wbtc-eth", target: "morpho", text: true },
                 { source: "wbtc-eth", target: "compound", text: true },
                 
+                { source: "tbtc", target: "aave", text: true },
+
                 // Solana ecosystem
                 { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
                 
