@@ -360,6 +360,13 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
+        else if (sourceId === 'lbtc' && targetId === 'aave') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x8236a87084f8b84306f72007f36f2618a5634494',
+                '0x65906988ADEe75306021C417a1A3458040239602',
+                8
+            );
+        }
         else if (sourceId === 'cbbtc' && targetId === 'morpho') {
             label = await TokenHandlers.handleERC20Balance(
                 '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -392,6 +399,12 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'eureka' && targetId === 'wbtc-eth-eur-osmo') {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/88386AC48152D48B34B082648DF836F975506F0B57DBBFC10A54213B1BF484CB',
+                8
+            );
+        }
+        else if (sourceId === 'lombard' && targetId === 'lbtc') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0x8236a87084f8b84306f72007f36f2618a5634494',
                 8
             );
         }

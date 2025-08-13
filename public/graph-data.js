@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -95,6 +95,8 @@ class GraphData {
                 { id: "wbtc-kava", name: "WBTC", type: "token" },
 
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
+                { id: "lombard", name: "Lombard", type: "issuer" },
+                { id: "lbtc", name: "LBTC", type: "token" },
                 
                 // Wrapped BTC Tokens
                 { id: "cbbtc", name: "cbBTC", type: "token" },
@@ -140,6 +142,8 @@ class GraphData {
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "solvbtc-bbn" },
+                { source: "babylon", target: "lombard" },
+                { source: "lombard", target: "lbtc", text: true },
                 
                 { source: "bitgo", target: "wbtc-eth", text: true },
                 { source: "bitgo", target: "wbtc-osmosis", text: true },
@@ -196,6 +200,7 @@ class GraphData {
                 { source: "cbbtc", target: "morpho", text: true },
 
                 { source: "fbtc", target: "aave", text: true },
+                { source: "lbtc", target: "aave", text: true },
                 
                 // Solana ecosystem
                 { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },
