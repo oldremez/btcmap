@@ -190,6 +190,8 @@ class GraphData {
                 
                 { source: "cbbtc", target: "aave", text: true },
                 { source: "cbbtc", target: "morpho", text: true },
+
+                { source: "fbtc", target: "aave", text: true },
                 
                 // Solana ecosystem
                 { source: "wbtc-axl-solana", target: "jupiter-perps", text: true },

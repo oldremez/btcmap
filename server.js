@@ -353,6 +353,13 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
+        else if (sourceId === 'fbtc' && targetId === 'aave') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                '0xcCA43ceF272c30415866914351fdfc3E881bb7c2',
+                8
+            );
+        }
         else if (sourceId === 'cbbtc' && targetId === 'morpho') {
             label = await TokenHandlers.handleERC20Balance(
                 '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
