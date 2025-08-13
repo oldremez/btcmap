@@ -84,8 +84,8 @@
     "y": 629
   },
   "axelar": {
-    "x": 658,
-    "y": 861
+    "x": 810,
+    "y": 963
   },
   "internet-computer": {
     "x": 339,
@@ -103,9 +103,13 @@
     "x": 304,
     "y": 320
   },
-  "wbtc-eth-axl": {
-    "x": 938,
-    "y": 858
+  "wbtc-eth-axl-osmo": {
+    "x": 1040,
+    "y": 860
+  },
+  "wbtc-eth-eur-osmo": {
+    "x": 913,
+    "y": 860
   },
   "portal-bridge-wbtc": {
     "x": 320,

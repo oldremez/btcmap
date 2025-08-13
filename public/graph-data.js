@@ -20,7 +20,7 @@ class GraphData {
                 {
                     id: "osmosis-frame", 
                     label: "Osmosis",
-                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc", "nbtc", "wbtc-eth-axl"],
+                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc", "nbtc", "wbtc-eth-axl-osmo", "wbtc-eth-eur-osmo"],
                     color: "#45b7d1",
                     strokeWidth: 2,
                     padding: 20
@@ -110,7 +110,8 @@ class GraphData {
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
                 
                 // Special nodes
-                { id: "wbtc-eth-axl", name: "WBTC.eth.axl", type: "token" },
+                { id: "wbtc-eth-axl-osmo", name: "WBTC.eth.axl", type: "token" },
+                { id: "wbtc-eth-eur-osmo", name: "WBTC.eth.atom", type: "token" },
                 { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
                 { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" },
                 
@@ -123,8 +124,8 @@ class GraphData {
                 { id: "eureka", name: "Eureka", type: "issuer" },
                 
                 // Neutron nodes
-                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka Neutron)", type: "token" },
-                { id: "wbtc-axl-neutron", name: "WBTC (Axelar Neutron)", type: "token" }
+                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka)", type: "token" },
+                { id: "wbtc-axl-neutron", name: "WBTC (Axelar)", type: "token" }
             ],
             links: [
                 // Central connections
@@ -170,8 +171,11 @@ class GraphData {
                 { source: "allbtc-issuer", target: "allbtc", text: true },
                 
                 // Axelar bridge
-                { source: "axelar", target: "wbtc-eth-axl", text: true },
-                { source: "wbtc-eth-axl", target: "allbtc-issuer", text: true },
+                { source: "axelar", target: "wbtc-eth-axl-osmo", text: true },
+                { source: "wbtc-eth-axl-osmo", target: "allbtc-issuer", text: true },
+
+                { source: "eureka", target: "wbtc-eth-eur-osmo", text: true },
+                { source: "wbtc-eth-eur-osmo", target: "allbtc-issuer", text: true },
                 
                 // Weighted connections (with specific values)
                 { source: "btc", target: "tbtc", text: true },

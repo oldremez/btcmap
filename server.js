@@ -382,10 +382,16 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'wbtc-eth' && targetId === 'compound') {
             label = await TokenHandlers.handleWBTCBalance('0xc3d688B66703497DAA19211EEdff47f25384cdc3');
         }
-        // IBC supply (axelar -> wbtc-eth-axl)
-        else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl') {
+        // IBC supply (axelar -> wbtc-eth-axl-osmo)
+        else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl-osmo') {
             label = await TokenHandlers.handleCosmosSupply(
                 'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                8
+            );
+        }
+        else if (sourceId === 'eureka' && targetId === 'wbtc-eth-eur-osmo') {
+            label = await TokenHandlers.handleCosmosSupply(
+                'ibc/88386AC48152D48B34B082648DF836F975506F0B57DBBFC10A54213B1BF484CB',
                 8
             );
         }
@@ -439,9 +445,16 @@ app.post('/api/link-label', async (req, res) => {
                 8
             );
         }
-        else if (sourceId === 'wbtc-eth-axl' && targetId === 'allbtc-issuer') {
+        else if (sourceId === 'wbtc-eth-axl-osmo' && targetId === 'allbtc-issuer') {
             label = await TokenHandlers.handleCosmosBalance(
                 'ibc/D1542AA8762DB13087D8364F3EA6509FD6F009A34F00426AF9E4F9FA85CBBF1F',
+                'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+                8
+            );
+        }
+        else if (sourceId === 'wbtc-eth-eur-osmo' && targetId === 'allbtc-issuer') {
+            label = await TokenHandlers.handleCosmosBalance(
+                'ibc/88386AC48152D48B34B082648DF836F975506F0B57DBBFC10A54213B1BF484CB',
                 'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
                 8
             );
