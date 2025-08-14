@@ -50,6 +50,30 @@ class GraphData {
                     padding: 20
                 },
                 {
+                    id: "arbitrum-frame",
+                    label: "Arbitrum",
+                    nodes: ["wbtc-arbitrum"],
+                    color: "#28a745",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "polygon-frame",
+                    label: "Polygon",
+                    nodes: ["wbtc-polygon"],
+                    color: "#6f42c1",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "optimism-frame",
+                    label: "Optimism",
+                    nodes: ["wbtc-optimism"],
+                    color: "#dc3545",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
                     id: "bsc-frame", 
                     label: "Binance Smart Chain",
                     nodes: ["lbtc-bsc"],
@@ -125,6 +149,9 @@ class GraphData {
                 { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
                 { id: "wbtc-base", name: "WBTC", type: "token" },
                 { id: "wbtc-kava", name: "WBTC", type: "token" },
+                { id: "wbtc-arbitrum", name: "WBTC", type: "token" },
+                { id: "wbtc-polygon", name: "WBTC", type: "token" },
+                { id: "wbtc-optimism", name: "WBTC", type: "token" },
 
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
                 { id: "lombard", name: "Lombard", type: "issuer" },
@@ -192,6 +219,9 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base", text: true },
                 { source: "bitgo", target: "wbtc-kava", text: true },
+                { source: "wbtc-eth", target: "wbtc-arbitrum", text: true },
+                { source: "wbtc-eth", target: "wbtc-polygon", text: true },
+                { source: "wbtc-eth", target: "wbtc-optimism", text: true },
                 { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },

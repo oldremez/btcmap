@@ -98,6 +98,9 @@ const TokenHandlers = {
         'ethereum': 'https://eth.llamarpc.com',
         'base': 'https://mainnet.base.org',
         'bsc': 'https://bsc-dataseed1.binance.org',
+        'arbitrum': 'https://arb1.arbitrum.io/rpc',
+        'polygon': 'https://polygon-rpc.com',
+        'optimism': 'https://mainnet.optimism.io',
         'sonic': 'https://rpc.sonic.game',
         'katana': 'https://rpc.katana.roninchain.com',
         'kava': 'https://evm.kava.io'
@@ -362,6 +365,33 @@ app.post('/api/link-label', async (req, res) => {
                 '0xb5c4423a65B953905949548276654C96fcaE6992',
                 8,
                 'kava'
+            );
+        }
+        // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
+        else if (sourceId === 'bitgo' && targetId === 'wbtc-arbitrum') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+                '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
+                8,
+                'arbitrum'
+            );
+        }
+        // WBTC balance on Polygon (bitgo -> wbtc-polygon)
+        else if (sourceId === 'bitgo' && targetId === 'wbtc-polygon') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+                '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
+                8,
+                'polygon'
+            );
+        }
+        // WBTC balance on Optimism (bitgo -> wbtc-optimism)
+        else if (sourceId === 'bitgo' && targetId === 'wbtc-optimism') {
+            label = await TokenHandlers.handleERC20Balance(
+                '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+                '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
+                8,
+                'optimism'
             );
         }
         // WBTC supply (bitgo -> wbtc-osmosis)
