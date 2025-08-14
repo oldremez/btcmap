@@ -93,14 +93,54 @@ const formatNumber = (number) => {
 };
 
 const TokenHandlers = {
+    // Chain RPC URL mapping
+    chainRpcUrls: {
+        'ethereum': 'https://eth.llamarpc.com',
+        'base': 'https://mainnet.base.org',
+        'bsc': 'https://bsc-dataseed1.binance.org',
+        'sonic': 'https://mainnet.sonic.game',
+        'katana': 'https://rpc.katana.roninchain.com'
+    },
+
     // Generic ERC20 token supply handler
-    async handleERC20Supply(contractAddress, decimals = 8) {
-        const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress);
+    async handleERC20Supply(contractAddress, decimals = 8, chainName = 'ethereum') {
+        const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
+        const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress, rpcUrl);
         if (supply !== null) {
             const tokenSupply = supply / Math.pow(10, decimals);
             return formatNumber(tokenSupply);
         }
         return 'Loading...';
+    },
+
+    // Sui token supply handler
+    async handleSuiSupply(coinType) {
+        try {
+            const response = await fetch('https://sui-mainnet.blockvision.org', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    jsonrpc: '2.0',
+                    method: 'suix_getCoinMetadata',
+                    params: [coinType],
+                    id: 1
+                })
+            });
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.result && data.result.total_supply) {
+                    const supply = parseInt(data.result.total_supply);
+                    const decimals = data.result.decimals || 8;
+                    const tokenSupply = supply / Math.pow(10, decimals);
+                    return formatNumber(tokenSupply);
+                }
+            }
+            return 'Loading...';
+        } catch (error) {
+            console.error('Error fetching Sui token supply:', error);
+            return 'Error';
+        }
     },
 
     // Generic Solana token supply handler
@@ -200,8 +240,9 @@ const TokenHandlers = {
     },
 
     // Generic ERC20 token balance handler
-    async handleERC20Balance(contractAddress, walletAddress, decimals = 18) {
-        const balance = await BlockchainUtils.getERC20Balance(contractAddress, walletAddress);
+    async handleERC20Balance(contractAddress, walletAddress, decimals = 18, chainName = 'ethereum') {
+        const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
+        const balance = await BlockchainUtils.getERC20Balance(contractAddress, walletAddress, rpcUrl);
         if (balance !== null) {
             const tokenBalance = balance / Math.pow(10, decimals);
             return formatNumber(tokenBalance);
@@ -301,7 +342,9 @@ app.post('/api/link-label', async (req, res) => {
         // WBTC supply (bitgo -> wbtc-eth)
         else if (sourceId === 'bitgo' && targetId === 'wbtc-eth') {
             label = await TokenHandlers.handleERC20Supply(
-                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599'
+                '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
+                8,
+                'ethereum'
             );
         }
         // WBTC supply (bitgo -> wbtc-osmosis)
@@ -320,32 +363,40 @@ app.post('/api/link-label', async (req, res) => {
         // cbBTC supply (coinbase -> cbbtc)
         else if (sourceId === 'coinbase' && targetId === 'cbbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf'
+                '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+                8,
+                'ethereum'
             );
         }
         // tBTC supply (btc -> tbtc)
         else if (sourceId === 'btc' && targetId === 'tbtc') {
             label = await TokenHandlers.handleERC20Supply(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
-                18
+                18,
+                'ethereum'
             );
         }
         // FBTC supply (fbtc -> solvbtc)
         else if (sourceId === 'fbtc' && targetId === 'solvbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xc96de26018a54d51c097160568752c4e3bd6c364'
+                '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                8,
+                'ethereum'
             );
         }
         // FBTC supply (function -> fbtc)
         else if (sourceId === 'function' && targetId === 'fbtc') {
             label = await TokenHandlers.handleERC20Supply(
-                '0xc96de26018a54d51c097160568752c4e3bd6c364'
+                '0xc96de26018a54d51c097160568752c4e3bd6c364',
+                8,
+                'ethereum'
             );
         }
         else if (sourceId === 'solvbtc' && targetId === 'solvbtc-eth') {
             label = await TokenHandlers.handleERC20Supply(
                 '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
-                18
+                18,
+                'ethereum'
             );
         }
         // WBTC balance (wbtc-eth -> axelar)
@@ -363,42 +414,48 @@ app.post('/api/link-label', async (req, res) => {
             label = await TokenHandlers.handleERC20Balance(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
                 '0x10Ac93971cdb1F5c778144084242374473c350Da',
-                18
+                18,
+                'ethereum'
             );
         }
         else if (sourceId === 'cbbtc' && targetId === 'aave') {
             label = await TokenHandlers.handleERC20Balance(
                 '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
                 '0x5c647cE0Ae10658ec44FA4E11A51c96e94efd1Dd',
-                8
+                8,
+                'ethereum'
             );
         }
         else if (sourceId === 'fbtc' && targetId === 'aave') {
             label = await TokenHandlers.handleERC20Balance(
                 '0xc96de26018a54d51c097160568752c4e3bd6c364',
                 '0xcCA43ceF272c30415866914351fdfc3E881bb7c2',
-                8
+                8,
+                'ethereum'
             );
         }
         else if (sourceId === 'lbtc' && targetId === 'aave') {
             label = await TokenHandlers.handleERC20Balance(
                 '0x8236a87084f8b84306f72007f36f2618a5634494',
                 '0x65906988ADEe75306021C417a1A3458040239602',
-                8
+                8,
+                'ethereum'
             );
         }
         else if (sourceId === 'cbbtc' && targetId === 'morpho') {
             label = await TokenHandlers.handleERC20Balance(
                 '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
                 '0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb',
-                8
+                8,
+                'ethereum'
             );
         }
         else if (sourceId === 'tbtc' && targetId === 'portal-bridge-tbtc') {
             label = await TokenHandlers.handleERC20Balance(
                 '0x18084fba666a33d37592fa2633fd49a74dd93a88',
                 '0x3ee18B2214AFF97000D974cf647E7C347E8fa585',
-                18
+                18,
+                'ethereum'
             );
         }
         // WBTC balance (wbtc-eth -> morpho)
@@ -425,7 +482,46 @@ app.post('/api/link-label', async (req, res) => {
         else if (sourceId === 'lombard' && targetId === 'lbtc') {
             label = await TokenHandlers.handleERC20Supply(
                 '0x8236a87084f8b84306f72007f36f2618a5634494',
-                8
+                8,
+                'ethereum'
+            );
+        }
+        // LBTC supply on Base (lombard -> lbtc-base)
+        else if (sourceId === 'lombard' && targetId === 'lbtc-base') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xecac9c5f704e954931349da37f60e39f515c11c1',
+                8,
+                'base'
+            );
+        }
+        // LBTC supply on Binance Smart Chain (lombard -> lbtc-bsc)
+        else if (sourceId === 'lombard' && targetId === 'lbtc-bsc') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xecac9c5f704e954931349da37f60e39f515c11c1',
+                8,
+                'bsc'
+            );
+        }
+        // LBTC supply on Sui (lombard -> lbtc-sui)
+        else if (sourceId === 'lombard' && targetId === 'lbtc-sui') {
+            label = await TokenHandlers.handleSuiSupply(
+                '0x3e8e9423d80e1774a7ca128fccd8bf5f1f7753be658c5e645929037f7c819040::lbtc::LBTC'
+            );
+        }
+        // LBTC supply on Sonic (lombard -> lbtc-sonic)
+        else if (sourceId === 'lombard' && targetId === 'lbtc-sonic') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xecAc9C5F704e954931349Da37F60E39f515c11c1',
+                8,
+                'sonic'
+            );
+        }
+        // LBTC supply on Katana (lombard -> lbtc-katana)
+        else if (sourceId === 'lombard' && targetId === 'lbtc-katana') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xecAc9C5F704e954931349Da37F60E39f515c11c1',
+                8,
+                'katana'
             );
         }
         // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-portal-solana)

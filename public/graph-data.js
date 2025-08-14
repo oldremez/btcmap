@@ -44,8 +44,40 @@ class GraphData {
                 {
                     id: "base-frame", 
                     label: "Base",
-                    nodes: ["wbtc-base"],
+                    nodes: ["wbtc-base", "lbtc-base"],
                     color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "bsc-frame", 
+                    label: "Binance Smart Chain",
+                    nodes: ["lbtc-bsc"],
+                    color: "#f39c12",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "sui-frame", 
+                    label: "Sui",
+                    nodes: ["lbtc-sui"],
+                    color: "#e74c3c",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "sonic-frame", 
+                    label: "Sonic",
+                    nodes: ["lbtc-sonic"],
+                    color: "#3498db",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "katana-frame", 
+                    label: "Katana",
+                    nodes: ["lbtc-katana"],
+                    color: "#8e44ad",
                     strokeWidth: 2,
                     padding: 20
                 },
@@ -97,6 +129,11 @@ class GraphData {
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
                 { id: "lombard", name: "Lombard", type: "issuer" },
                 { id: "lbtc", name: "LBTC", type: "token" },
+                { id: "lbtc-base", name: "LBTC", type: "token" },
+                { id: "lbtc-bsc", name: "LBTC", type: "token" },
+                { id: "lbtc-sui", name: "LBTC", type: "token" },
+                { id: "lbtc-sonic", name: "LBTC", type: "token" },
+                { id: "lbtc-katana", name: "LBTC", type: "token" },
                 
                 // Wrapped BTC Tokens
                 { id: "cbbtc", name: "cbBTC", type: "token" },
@@ -144,6 +181,11 @@ class GraphData {
                 { source: "babylon", target: "solvbtc-bbn" },
                 { source: "babylon", target: "lombard", text: true },
                 { source: "lombard", target: "lbtc", text: true },
+                { source: "lombard", target: "lbtc-base", text: true },
+                { source: "lombard", target: "lbtc-bsc", text: true },
+                { source: "lombard", target: "lbtc-sui", text: true },
+                { source: "lombard", target: "lbtc-sonic", text: true },
+                { source: "lombard", target: "lbtc-katana", text: true },
                 
                 { source: "bitgo", target: "wbtc-eth", text: true },
                 { source: "bitgo", target: "wbtc-osmosis", text: true },
