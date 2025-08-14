@@ -325,6 +325,38 @@ const TokenHandlers = {
             walletAddress,
             8 // WBTC has 8 decimals
         );
+    },
+
+    // WBTC balance handler for multiple addresses (sums all balances)
+    async handleWBTCBalanceMultiple(walletAddresses) {
+        if (!Array.isArray(walletAddresses)) {
+            walletAddresses = [walletAddresses];
+        }
+        
+        try {
+            const balances = await Promise.all(
+                walletAddresses.map(address => 
+                    this.handleERC20Balance(
+                        '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC contract address
+                        address,
+                        8 // WBTC has 8 decimals
+                    )
+                )
+            );
+            
+            // Sum all valid balances
+            let totalBalance = 0;
+            for (const balance of balances) {
+                if (balance !== 'Loading...' && balance !== 'Error') {
+                    totalBalance += parseFloat(balance);
+                }
+            }
+            
+            return formatNumber(totalBalance);
+        } catch (error) {
+            console.error('Error fetching multiple WBTC balances:', error);
+            return 'Error';
+        }
     }
 };
 
@@ -511,7 +543,11 @@ app.post('/api/link-label', async (req, res) => {
         }
         // WBTC balance (wbtc-eth -> compound)
         else if (sourceId === 'wbtc-eth' && targetId === 'compound') {
-            label = await TokenHandlers.handleWBTCBalance('0xc3d688B66703497DAA19211EEdff47f25384cdc3');
+            label = await TokenHandlers.handleWBTCBalanceMultiple([
+                '0xc3d688B66703497DAA19211EEdff47f25384cdc3',
+                '0xccF4429DB6322D5C611ee964527D42E5d685DD6a',
+                '0x3Afdc9BCA9213A35503b077a6072F3D0d5AB0840'
+            ]);
         }
         // IBC supply (axelar -> wbtc-eth-axl-osmo)
         else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl-osmo') {
