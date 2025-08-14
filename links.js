@@ -78,7 +78,301 @@ const DENOMS = {
     LBTC_SUI: '0x3e8e9423d80e1774a7ca128fccd8bf5f1f7753be658c5e645929037f7c819040::lbtc::LBTC'
 };
 
-
+// Big map for link label handlers
+const LINK_LABEL_HANDLERS = {
+    // Bitcoin supply (bitcoin -> btc)
+    'bitcoin->btc': {
+        handler: TokenHandlers.handleBitcoinSupply,
+        args: []
+    },
+    
+    // WBTC supply (bitgo -> wbtc-eth)
+    'bitgo->wbtc-eth': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // WBTC supply on Base (bitgo -> wbtc-base)
+    'bitgo->wbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_BASE, 8, 'base']
+    },
+    
+    // WBTC supply on Kava (bitgo -> wbtc-kava)
+    'bitgo->wbtc-kava': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_KAVA, 8, 'kava']
+    },
+    
+    // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
+    'bitgo->wbtc-arbitrum': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.ARBITRUM_WBTC_WALLET, 8, 'arbitrum']
+    },
+    
+    // WBTC balance on Polygon (bitgo -> wbtc-polygon)
+    'bitgo->wbtc-polygon': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_POLYGON, ADDRESSES.POLYGON_WBTC_WALLET, 8, 'polygon']
+    },
+    
+    // WBTC balance on Optimism (bitgo -> wbtc-optimism)
+    'bitgo->wbtc-optimism': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_OPTIMISM, ADDRESSES.OPTIMISM_WBTC_WALLET, 8, 'optimism']
+    },
+    
+    // WBTC supply (bitgo -> wbtc-osmosis)
+    'bitgo->wbtc-osmosis': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.WBTC_OSMOSIS, 8]
+    },
+    
+    // WBTC supply (bitgo -> wbtc-solana)
+    'bitgo->wbtc-solana': {
+        handler: TokenHandlers.handleSolanaSupply,
+        args: [ADDRESSES.WBTC_SOLANA]
+    },
+    
+    // cbBTC supply (coinbase -> cbbtc)
+    'coinbase->cbbtc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.CBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // tBTC supply (btc -> tbtc)
+    'btc->tbtc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.TBTC_ETHEREUM, 18, 'ethereum']
+    },
+    
+    // FBTC supply (fbtc -> solvbtc)
+    'fbtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.FBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // FBTC supply (function -> fbtc)
+    'function->fbtc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.FBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // SolvBTC supply (solvbtc -> solvbtc-eth)
+    'solvbtc->solvbtc-eth': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_ETH, 18, 'ethereum']
+    },
+    
+    // WBTC balance (wbtc-eth -> axelar)
+    'wbtc-eth->axelar': {
+        handler: TokenHandlers.handleWBTCBalance,
+        args: [ADDRESSES.AXELAR_WBTC]
+    },
+    
+    // WBTC balance (wbtc-eth -> portal-bridge-wbtc)
+    'wbtc-eth->portal-bridge-wbtc': {
+        handler: TokenHandlers.handleWBTCBalance,
+        args: [ADDRESSES.PORTAL_BRIDGE_WBTC]
+    },
+    
+    // WBTC balance (wbtc-eth -> aave)
+    'wbtc-eth->aave': {
+        handler: TokenHandlers.handleWBTCBalance,
+        args: [ADDRESSES.AAVE_WBTC]
+    },
+    
+    // tBTC balance (tbtc -> aave)
+    'tbtc->aave': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.AAVE_TBTC, 18, 'ethereum']
+    },
+    
+    // cbBTC balance (cbbtc -> aave)
+    'cbbtc->aave': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.AAVE_CBTC, 8, 'ethereum']
+    },
+    
+    // FBTC balance (fbtc -> aave)
+    'fbtc->aave': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.FBTC_ETHEREUM, ADDRESSES.AAVE_FBTC, 8, 'ethereum']
+    },
+    
+    // LBTC balance (lbtc -> aave)
+    'lbtc->aave': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.LBTC_ETHEREUM, ADDRESSES.AAVE_LBTC, 8, 'ethereum']
+    },
+    
+    // cbBTC balance (cbbtc -> morpho)
+    'cbbtc->morpho': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.MORPHO_CBTC, 8, 'ethereum']
+    },
+    
+    // tBTC balance (tbtc -> portal-bridge-tbtc)
+    'tbtc->portal-bridge-tbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.PORTAL_BRIDGE_TBTC, 18, 'ethereum']
+    },
+    
+    // WBTC balance (wbtc-eth -> morpho)
+    'wbtc-eth->morpho': {
+        handler: TokenHandlers.handleWBTCBalance,
+        args: [ADDRESSES.MORPHO_WBTC]
+    },
+    
+    // WBTC balance (wbtc-eth -> compound)
+    'wbtc-eth->compound': {
+        handler: TokenHandlers.handleWBTCBalanceMultiple,
+        args: [[ADDRESSES.COMPOUND_WBTC_1, ADDRESSES.COMPOUND_WBTC_2, ADDRESSES.COMPOUND_WBTC_3]]
+    },
+    
+    // IBC supply (axelar -> wbtc-eth-axl-osmo)
+    'axelar->wbtc-eth-axl-osmo': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.WBTC_ETH_AXL_OSMO, 8]
+    },
+    
+    // IBC supply (eureka -> wbtc-eth-eur-osmo)
+    'eureka->wbtc-eth-eur-osmo': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.WBTC_ETH_EUR_OSMO, 8]
+    },
+    
+    // LBTC supply (lombard -> lbtc)
+    'lombard->lbtc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.LBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // LBTC supply on Base (lombard -> lbtc-base)
+    'lombard->lbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.LBTC_BASE, 8, 'base']
+    },
+    
+    // LBTC supply on Binance Smart Chain (lombard -> lbtc-bsc)
+    'lombard->lbtc-bsc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.LBTC_BSC, 8, 'bsc']
+    },
+    
+    // LBTC supply on Sui (lombard -> lbtc-sui)
+    'lombard->lbtc-sui': {
+        handler: TokenHandlers.handleSuiSupply,
+        args: [DENOMS.LBTC_SUI]
+    },
+    
+    // LBTC supply on Sonic (lombard -> lbtc-sonic)
+    'lombard->lbtc-sonic': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.LBTC_SONIC, 8, 'sonic']
+    },
+    
+    // LBTC supply on Katana (lombard -> lbtc-katana)
+    'lombard->lbtc-katana': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.LBTC_KATANA, 8, 'katana']
+    },
+    
+    // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-portal-solana)
+    'portal-bridge-wbtc->wbtc-portal-solana': {
+        handler: TokenHandlers.handleSolanaSupply,
+        args: [ADDRESSES.WBTC_PORTAL_SOLANA]
+    },
+    
+    // WBTC balance on Jupiter Perps account (wbtc-portal-solana -> jupiter-perps)
+    'wbtc-portal-solana->jupiter-perps': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.JUPITER_PERPS_WBTC]
+    },
+    
+    // tBTC supply on Solana via Portal (portal-bridge-tbtc -> tbtc-portal-solana)
+    'portal-bridge-tbtc->tbtc-portal-solana': {
+        handler: TokenHandlers.handleSolanaSupply,
+        args: [ADDRESSES.TBTC_PORTAL_SOLANA]
+    },
+    
+    // WBTC balance on Drift (wbtc-portal-solana -> drift)
+    'wbtc-portal-solana->drift': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.DRIFT_WBTC]
+    },
+    
+    // WBTC balance on Orca (wbtc-portal-solana -> orca)
+    'wbtc-portal-solana->orca': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.ORCA_WBTC]
+    },
+    
+    // WBTC balance on Kamino (wbtc-portal-solana -> kamino)
+    'wbtc-portal-solana->kamino': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.KAMINO_WBTC]
+    },
+    
+    // WBTC balance on Marginifi (wbtc-portal-solana -> marginifi)
+    'wbtc-portal-solana->marginifi': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.MARGINIFI_WBTC]
+    },
+    
+    // Babylon staking (btc -> babylon)
+    'btc->babylon': {
+        handler: TokenHandlers.handleBabylonStaking,
+        args: []
+    },
+    
+    // Lombard reserves (babylon -> lombard)
+    'babylon->lombard': {
+        handler: TokenHandlers.handleLombardReserves,
+        args: []
+    },
+    
+    // Osmosis routes
+    'internet-computer->ckbtc-osmosis': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.CKBTC_OSMOSIS, 8]
+    },
+    
+    'nomic->nbtc': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.NOMIC_BTC, 14]
+    },
+    
+    'nbtc->allbtc-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.NOMIC_BTC, ADDRESSES.ALLBTC_ISSUER_OSMO, 14]
+    },
+    
+    'wbtc-osmosis->allbtc-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.WBTC_OSMOSIS, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
+    },
+    
+    'ckbtc-osmosis->allbtc-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.CKBTC_OSMOSIS, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
+    },
+    
+    'wbtc-eth-axl-osmo->allbtc-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.WBTC_ETH_AXL_OSMO, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
+    },
+    
+    'wbtc-eth-eur-osmo->allbtc-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.WBTC_ETH_EUR_OSMO, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
+    },
+    
+    'allbtc-issuer->allbtc': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.ALLBTC_ISSUER, 8]
+    }
+};
 
 /**
  * Determines the label for a link between two nodes based on their source and target IDs
@@ -87,354 +381,15 @@ const DENOMS = {
  * @returns {Promise<string|null>} - The label for the link, or null if no label is defined
  */
 async function getLinkLabel(sourceId, targetId) {
-    let label = null;
+    const key = `${sourceId}->${targetId}`;
+    const handlerConfig = LINK_LABEL_HANDLERS[key];
     
-    // Bitcoin supply (bitcoin -> btc)
-    if (sourceId === 'bitcoin' && targetId === 'btc') {
-        label = await TokenHandlers.handleBitcoinSupply();
-    }
-    // WBTC supply (bitgo -> wbtc-eth)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-eth') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.WBTC_ETHEREUM,
-            8,
-            'ethereum'
-        );
-    }
-    // WBTC supply on Base (bitgo -> wbtc-base)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-base') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.WBTC_BASE,
-            8,
-            'base'
-        );
-    }
-    // WBTC supply on Kava (bitgo -> wbtc-kava)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-kava') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.WBTC_KAVA,
-            8,
-            'kava'
-        );
-    }
-    // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-arbitrum') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.WBTC_ARBITRUM,
-            ADDRESSES.ARBITRUM_WBTC_WALLET,
-            8,
-            'arbitrum'
-        );
-    }
-    // WBTC balance on Polygon (bitgo -> wbtc-polygon)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-polygon') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.WBTC_POLYGON,
-            ADDRESSES.POLYGON_WBTC_WALLET,
-            8,
-            'polygon'
-        );
-    }
-    // WBTC balance on Optimism (bitgo -> wbtc-optimism)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-optimism') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.WBTC_OPTIMISM,
-            ADDRESSES.OPTIMISM_WBTC_WALLET,
-            8,
-            'optimism'
-        );
-    }
-    // WBTC supply (bitgo -> wbtc-osmosis)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-osmosis') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.WBTC_OSMOSIS,
-            8
-        );
-    }
-    // WBTC supply (bitgo -> wbtc-solana)
-    else if (sourceId === 'bitgo' && targetId === 'wbtc-solana') {
-        label = await TokenHandlers.handleSolanaSupply(
-            ADDRESSES.WBTC_SOLANA
-        );
-    }
-    // cbBTC supply (coinbase -> cbbtc)
-    else if (sourceId === 'coinbase' && targetId === 'cbbtc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.CBTC_ETHEREUM,
-            8,
-            'ethereum'
-        );
-    }
-    // tBTC supply (btc -> tbtc)
-    else if (sourceId === 'btc' && targetId === 'tbtc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.TBTC_ETHEREUM,
-            18,
-            'ethereum'
-        );
-    }
-    // FBTC supply (fbtc -> solvbtc)
-    else if (sourceId === 'fbtc' && targetId === 'solvbtc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.FBTC_ETHEREUM,
-            8,
-            'ethereum'
-        );
-    }
-    // FBTC supply (function -> fbtc)
-    else if (sourceId === 'function' && targetId === 'fbtc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.FBTC_ETHEREUM,
-            8,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'solvbtc' && targetId === 'solvbtc-eth') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.SOLVBTC_ETH,
-            18,
-            'ethereum'
-        );
-    }
-    // WBTC balance (wbtc-eth -> axelar)
-    else if (sourceId === 'wbtc-eth' && targetId === 'axelar') {
-        label = await TokenHandlers.handleWBTCBalance(ADDRESSES.AXELAR_WBTC);
-    }
-    else if (sourceId === 'wbtc-eth' && targetId === 'portal-bridge-wbtc') {
-        label = await TokenHandlers.handleWBTCBalance(ADDRESSES.PORTAL_BRIDGE_WBTC);
-    }
-    // WBTC balance (wbtc-eth -> aave)
-    else if (sourceId === 'wbtc-eth' && targetId === 'aave') {
-        label = await TokenHandlers.handleWBTCBalance(ADDRESSES.AAVE_WBTC);
-    }
-    else if (sourceId === 'tbtc' && targetId === 'aave') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.TBTC_ETHEREUM,
-            ADDRESSES.AAVE_TBTC,
-            18,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'cbbtc' && targetId === 'aave') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.CBTC_ETHEREUM,
-            ADDRESSES.AAVE_CBTC,
-            8,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'fbtc' && targetId === 'aave') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.FBTC_ETHEREUM,
-            ADDRESSES.AAVE_FBTC,
-            8,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'lbtc' && targetId === 'aave') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.LBTC_ETHEREUM,
-            ADDRESSES.AAVE_LBTC,
-            8,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'cbbtc' && targetId === 'morpho') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.CBTC_ETHEREUM,
-            ADDRESSES.MORPHO_CBTC,
-            8,
-            'ethereum'
-        );
-    }
-    else if (sourceId === 'tbtc' && targetId === 'portal-bridge-tbtc') {
-        label = await TokenHandlers.handleERC20Balance(
-            ADDRESSES.TBTC_ETHEREUM,
-            ADDRESSES.PORTAL_BRIDGE_TBTC,
-            18,
-            'ethereum'
-        );
-    }
-    // WBTC balance (wbtc-eth -> morpho)
-    else if (sourceId === 'wbtc-eth' && targetId === 'morpho') {
-        label = await TokenHandlers.handleWBTCBalance(ADDRESSES.MORPHO_WBTC);
-    }
-    // WBTC balance (wbtc-eth -> compound)
-    else if (sourceId === 'wbtc-eth' && targetId === 'compound') {
-        label = await TokenHandlers.handleWBTCBalanceMultiple([
-            ADDRESSES.COMPOUND_WBTC_1,
-            ADDRESSES.COMPOUND_WBTC_2,
-            ADDRESSES.COMPOUND_WBTC_3
-        ]);
-    }
-    // IBC supply (axelar -> wbtc-eth-axl-osmo)
-    else if (sourceId === 'axelar' && targetId === 'wbtc-eth-axl-osmo') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.WBTC_ETH_AXL_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'eureka' && targetId === 'wbtc-eth-eur-osmo') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.WBTC_ETH_EUR_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'lombard' && targetId === 'lbtc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.LBTC_ETHEREUM,
-            8,
-            'ethereum'
-        );
-    }
-    // LBTC supply on Base (lombard -> lbtc-base)
-    else if (sourceId === 'lombard' && targetId === 'lbtc-base') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.LBTC_BASE,
-            8,
-            'base'
-        );
-    }
-    // LBTC supply on Binance Smart Chain (lombard -> lbtc-bsc)
-    else if (sourceId === 'lombard' && targetId === 'lbtc-bsc') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.LBTC_BSC,
-            8,
-            'bsc'
-        );
-    }
-    // LBTC supply on Sui (lombard -> lbtc-sui)
-    else if (sourceId === 'lombard' && targetId === 'lbtc-sui') {
-        label = await TokenHandlers.handleSuiSupply(
-            DENOMS.LBTC_SUI
-        );
-    }
-    // LBTC supply on Sonic (lombard -> lbtc-sonic)
-    else if (sourceId === 'lombard' && targetId === 'lbtc-sonic') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.LBTC_SONIC,
-            8,
-            'sonic'
-        );
-    }
-    // LBTC supply on Katana (lombard -> lbtc-katana)
-    else if (sourceId === 'lombard' && targetId === 'lbtc-katana') {
-        label = await TokenHandlers.handleERC20Supply(
-            ADDRESSES.LBTC_KATANA,
-            8,
-            'katana'
-        );
-    }
-    // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-portal-solana)
-    else if (sourceId === 'portal-bridge-wbtc' && targetId === 'wbtc-portal-solana') {
-        label = await TokenHandlers.handleSolanaSupply(
-            ADDRESSES.WBTC_PORTAL_SOLANA
-        );
-    }
-    // WBTC balance on Jupiter Perps account (wbtc-portal-solana -> jupiter-perps)
-    else if (sourceId === 'wbtc-portal-solana' && targetId === 'jupiter-perps') {
-        label = await TokenHandlers.handleSolanaBalance(
-            ADDRESSES.JUPITER_PERPS_WBTC
-        );
-    }
-    // tBTC supply on Solana via Portal (portal-bridge-tbtc -> tbtc-portal-solana)
-    else if (sourceId === 'portal-bridge-tbtc' && targetId === 'tbtc-portal-solana') {
-        label = await TokenHandlers.handleSolanaSupply(
-            ADDRESSES.TBTC_PORTAL_SOLANA
-        );
-    }
-    // WBTC balance on Drift (wbtc-portal-solana -> drift)
-    else if (sourceId === 'wbtc-portal-solana' && targetId === 'drift') {
-        label = await TokenHandlers.handleSolanaBalance(
-            ADDRESSES.DRIFT_WBTC
-        );
-    }
-    // WBTC balance on Orca (wbtc-portal-solana -> orca)
-    else if (sourceId === 'wbtc-portal-solana' && targetId === 'orca') {
-        label = await TokenHandlers.handleSolanaBalance(
-            ADDRESSES.ORCA_WBTC
-        );
-    }
-    // WBTC balance on Kamino (wbtc-portal-solana -> kamino)
-    else if (sourceId === 'wbtc-portal-solana' && targetId === 'kamino') {
-        label = await TokenHandlers.handleSolanaBalance(
-            ADDRESSES.KAMINO_WBTC
-        );
-    }
-    // WBTC balance on Marginifi (wbtc-portal-solana -> marginifi)
-    else if (sourceId === 'wbtc-portal-solana' && targetId === 'marginifi') {
-        label = await TokenHandlers.handleSolanaBalance(
-            ADDRESSES.MARGINIFI_WBTC
-        );
-    }
-    // Babylon staking (btc -> babylon)
-    else if (sourceId === 'btc' && targetId === 'babylon') {
-        label = await TokenHandlers.handleBabylonStaking();
-    }
-    // Lombard reserves (babylon -> lombard)
-    else if (sourceId === 'babylon' && targetId === 'lombard') {
-        label = await TokenHandlers.handleLombardReserves();
-    }
-    // Osmosis routes
-    else if (sourceId === 'internet-computer' && targetId === 'ckbtc-osmosis') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.CKBTC_OSMOSIS,
-            8
-        );
-    }
-    else if (sourceId === 'nomic' && targetId === 'nbtc') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.NOMIC_BTC,
-            14
-        );
-    }
-    else if (sourceId === 'nbtc' && targetId === 'allbtc-issuer') {
-        label = await TokenHandlers.handleCosmosBalance(
-            DENOMS.NOMIC_BTC,
-            ADDRESSES.ALLBTC_ISSUER_OSMO,
-            14
-        );
-    }
-    else if (sourceId === 'wbtc-osmosis' && targetId === 'allbtc-issuer') {
-        label = await TokenHandlers.handleCosmosBalance(
-            DENOMS.WBTC_OSMOSIS,
-            ADDRESSES.ALLBTC_ISSUER_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'ckbtc-osmosis' && targetId === 'allbtc-issuer') {
-        label = await TokenHandlers.handleCosmosBalance(
-            DENOMS.CKBTC_OSMOSIS,
-            ADDRESSES.ALLBTC_ISSUER_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'wbtc-eth-axl-osmo' && targetId === 'allbtc-issuer') {
-        label = await TokenHandlers.handleCosmosBalance(
-            DENOMS.WBTC_ETH_AXL_OSMO,
-            ADDRESSES.ALLBTC_ISSUER_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'wbtc-eth-eur-osmo' && targetId === 'allbtc-issuer') {
-        label = await TokenHandlers.handleCosmosBalance(
-            DENOMS.WBTC_ETH_EUR_OSMO,
-            ADDRESSES.ALLBTC_ISSUER_OSMO,
-            8
-        );
-    }
-    else if (sourceId === 'allbtc-issuer' && targetId === 'allbtc') {
-        label = await TokenHandlers.handleCosmosSupply(
-            DENOMS.ALLBTC_ISSUER,
-            8
-        );
-    }
-    // Default case
-    else {
-        label = null;
+    if (!handlerConfig) {
+        return null;
     }
     
-    return label;
+    const { handler, args } = handlerConfig;
+    return await handler.apply(TokenHandlers, args);
 }
 
 module.exports = {
