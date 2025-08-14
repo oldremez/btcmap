@@ -142,7 +142,7 @@ class GraphData {
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "solvbtc-bbn" },
-                { source: "babylon", target: "lombard" },
+                { source: "babylon", target: "lombard", text: true },
                 { source: "lombard", target: "lbtc", text: true },
                 
                 { source: "bitgo", target: "wbtc-eth", text: true },

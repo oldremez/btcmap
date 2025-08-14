@@ -253,6 +253,26 @@ const TokenHandlers = {
         }
     },
 
+    // Lombard reserves handler
+    async handleLombardReserves() {
+        try {
+            const response = await fetch('https://bff.prod.lombard.finance/dune-api/btc-total-reserves');
+            
+            if (response.ok) {
+                const data = await response.text();
+                const reserves = parseFloat(data);
+                if (!isNaN(reserves)) {
+                    return formatNumber(reserves);
+                }
+                return 'Error';
+            }
+            return 'Error';
+        } catch (error) {
+            console.error('Error fetching Lombard reserves:', error);
+            return 'Error';
+        }
+    },
+
     // WBTC balance handler
     async handleWBTCBalance(walletAddress) {
         return this.handleERC20Balance(
@@ -423,6 +443,10 @@ app.post('/api/link-label', async (req, res) => {
         // Babylon staking (btc -> babylon)
         else if (sourceId === 'btc' && targetId === 'babylon') {
             label = await TokenHandlers.handleBabylonStaking();
+        }
+        // Lombard reserves (babylon -> lombard)
+        else if (sourceId === 'babylon' && targetId === 'lombard') {
+            label = await TokenHandlers.handleLombardReserves();
         }
         // Osmosis routes
         else if (sourceId === 'internet-computer' && targetId === 'ckbtc-osmosis') {
