@@ -619,6 +619,36 @@ app.post('/api/link-label', async (req, res) => {
                 'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ'
             );
         }
+        // tBTC supply on Solana via Portal (portal-bridge-tbtc -> tbtc-portal-solana)
+        else if (sourceId === 'portal-bridge-tbtc' && targetId === 'tbtc-portal-solana') {
+            label = await TokenHandlers.handleSolanaSupply(
+                '6DNSN2BJsaPFdFFc1zP37kkeNe4Usc1Sqkzr9C9vPWcU'
+            );
+        }
+        // WBTC balance on Drift (wbtc-portal-solana -> drift)
+        else if (sourceId === 'wbtc-portal-solana' && targetId === 'drift') {
+            label = await TokenHandlers.handleSolanaBalance(
+                '3Zaz6vATY8br9WceXWD1Xa7fcyCpKSNanWFDRTEjjPqb'
+            );
+        }
+        // WBTC balance on Orca (wbtc-portal-solana -> orca)
+        else if (sourceId === 'wbtc-portal-solana' && targetId === 'orca') {
+            label = await TokenHandlers.handleSolanaBalance(
+                '5xXtGXq5JHB3grdgTGQ4yt7YmJBqBxdffhnkZ8vc6xLB'
+            );
+        }
+        // WBTC balance on Kamino (wbtc-portal-solana -> kamino)
+        else if (sourceId === 'wbtc-portal-solana' && targetId === 'kamino') {
+            label = await TokenHandlers.handleSolanaBalance(
+                '3y8JYyF8HPPK5YeUzxPPEvAahdPX4Z5wdZTiVc1atuQi'
+            );
+        }
+        // WBTC balance on Marginifi (wbtc-portal-solana -> marginifi)
+        else if (sourceId === 'wbtc-portal-solana' && targetId === 'marginifi') {
+            label = await TokenHandlers.handleSolanaBalance(
+                'CMNdnjfaDQZo3VMoX31wZQBnSGu5FMmb1CnBaU4tApZk'
+            );
+        }
         // Babylon staking (btc -> babylon)
         else if (sourceId === 'btc' && targetId === 'babylon') {
             label = await TokenHandlers.handleBabylonStaking();

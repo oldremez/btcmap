@@ -36,7 +36,7 @@ class GraphData {
                 {
                     id: "solana-frame", 
                     label: "Solana",
-                    nodes: ["wbtc-solana", "wbtc-portal-solana", "jupiter-perps"],
+                    nodes: ["wbtc-solana", "wbtc-portal-solana", "tbtc-portal-solana", "jupiter-perps", "drift", "orca", "kamino", "marginifi"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -146,7 +146,12 @@ class GraphData {
                 { id: "wbtc-osmosis", name: "WBTC", type: "token" },
                 { id: "wbtc-solana", name: "WBTC", type: "token" },
                 { id: "wbtc-portal-solana", name: "WBTC.portal", type: "token" },
+                { id: "tbtc-portal-solana", name: "tBTC.portal", type: "token" },
                 { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
+                { id: "drift", name: "Drift", type: "protocol" },
+                { id: "orca", name: "Orca", type: "protocol" },
+                { id: "kamino", name: "Kamino", type: "protocol" },
+                { id: "marginifi", name: "Marginifi", type: "protocol" },
                 { id: "wbtc-base", name: "WBTC", type: "token" },
                 { id: "wbtc-kava", name: "WBTC", type: "token" },
                 { id: "wbtc-arbitrum", name: "WBTC", type: "token" },
@@ -219,9 +224,9 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base", text: true },
                 { source: "bitgo", target: "wbtc-kava", text: true },
-                { source: "wbtc-eth", target: "wbtc-arbitrum", text: true },
-                { source: "wbtc-eth", target: "wbtc-polygon", text: true },
-                { source: "wbtc-eth", target: "wbtc-optimism", text: true },
+                { source: "wbtc-eth", target: "wbtc-arbitrum" },
+                { source: "wbtc-eth", target: "wbtc-polygon" },
+                { source: "wbtc-eth", target: "wbtc-optimism" },
                 { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
@@ -267,6 +272,7 @@ class GraphData {
                 
                 { source: "tbtc", target: "aave", text: true },
                 { source: "tbtc", target: "portal-bridge-tbtc", text: true },
+                { source: "portal-bridge-tbtc", target: "tbtc-portal-solana", text: true },
                 
                 { source: "cbbtc", target: "aave", text: true },
                 { source: "cbbtc", target: "morpho", text: true },
@@ -276,6 +282,10 @@ class GraphData {
                 
                 // Solana ecosystem
                 { source: "wbtc-portal-solana", target: "jupiter-perps", text: true },
+                { source: "wbtc-portal-solana", target: "drift", text: true },
+                { source: "wbtc-portal-solana", target: "orca", text: true },
+                { source: "wbtc-portal-solana", target: "kamino", text: true },
+                { source: "wbtc-portal-solana", target: "marginifi", text: true },
                 
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },
