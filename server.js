@@ -98,8 +98,9 @@ const TokenHandlers = {
         'ethereum': 'https://eth.llamarpc.com',
         'base': 'https://mainnet.base.org',
         'bsc': 'https://bsc-dataseed1.binance.org',
-        'sonic': 'https://mainnet.sonic.game',
-        'katana': 'https://rpc.katana.roninchain.com'
+        'sonic': 'https://rpc.sonic.game',
+        'katana': 'https://rpc.katana.roninchain.com',
+        'kava': 'https://evm.kava.io'
     },
 
     // Generic ERC20 token supply handler
@@ -345,6 +346,22 @@ app.post('/api/link-label', async (req, res) => {
                 '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
                 8,
                 'ethereum'
+            );
+        }
+        // WBTC supply on Base (bitgo -> wbtc-base)
+        else if (sourceId === 'bitgo' && targetId === 'wbtc-base') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0x1cea84203673764244e05693e42e6ace62be9ba5',
+                8,
+                'base'
+            );
+        }
+        // WBTC supply on Kava (bitgo -> wbtc-kava)
+        else if (sourceId === 'bitgo' && targetId === 'wbtc-kava') {
+            label = await TokenHandlers.handleERC20Supply(
+                '0xb5c4423a65B953905949548276654C96fcaE6992',
+                8,
+                'kava'
             );
         }
         // WBTC supply (bitgo -> wbtc-osmosis)

@@ -190,8 +190,8 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-eth", text: true },
                 { source: "bitgo", target: "wbtc-osmosis", text: true },
                 { source: "bitgo", target: "wbtc-solana", text: true },
-                { source: "bitgo", target: "wbtc-base" },
-                { source: "bitgo", target: "wbtc-kava" },
+                { source: "bitgo", target: "wbtc-base", text: true },
+                { source: "bitgo", target: "wbtc-kava", text: true },
                 { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
