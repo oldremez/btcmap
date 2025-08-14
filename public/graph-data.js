@@ -36,7 +36,7 @@ class GraphData {
                 {
                     id: "solana-frame", 
                     label: "Solana",
-                    nodes: ["wbtc-solana", "wbtc-portal-solana", "tbtc-portal-solana", "jupiter-perps", "drift", "orca", "kamino", "marginifi"],
+                    nodes: ["wbtc-solana", "wbtc-portal-solana", "tbtc-portal-solana", "jupiter-perps", "drift", "orca", "kamino", "marginifi", "cbbtc-solana"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -44,7 +44,7 @@ class GraphData {
                 {
                     id: "base-frame", 
                     label: "Base",
-                    nodes: ["wbtc-base", "lbtc-base"],
+                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -52,7 +52,7 @@ class GraphData {
                 {
                     id: "arbitrum-frame",
                     label: "Arbitrum",
-                    nodes: ["wbtc-arbitrum"],
+                    nodes: ["wbtc-arbitrum", "cbbtc-arbitrum"],
                     color: "#28a745",
                     strokeWidth: 2,
                     padding: 20
@@ -169,6 +169,9 @@ class GraphData {
                 
                 // Wrapped BTC Tokens
                 { id: "cbbtc", name: "cbBTC", type: "token" },
+                { id: "cbbtc-solana", name: "cbBTC", type: "token" },
+                { id: "cbbtc-base", name: "cbBTC", type: "token" },
+                { id: "cbbtc-arbitrum", name: "cbBTC", type: "token" },
                 { id: "tbtc", name: "tBTC", type: "token" },
                 { id: "solvbtc-eth", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
@@ -224,14 +227,17 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base", text: true },
                 { source: "bitgo", target: "wbtc-kava", text: true },
-                { source: "wbtc-eth", target: "wbtc-arbitrum" },
-                { source: "wbtc-eth", target: "wbtc-polygon" },
-                { source: "wbtc-eth", target: "wbtc-optimism" },
+                { source: "wbtc-eth", target: "wbtc-arbitrum", text: true },
+                { source: "wbtc-eth", target: "wbtc-polygon", text: true },
+                { source: "wbtc-eth", target: "wbtc-optimism", text: true },
                 { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
                 
                 { source: "coinbase", target: "cbbtc", text: true },
+                { source: "coinbase", target: "cbbtc-solana", text: true },
+                { source: "coinbase", target: "cbbtc-base", text: true },
+                { source: "coinbase", target: "cbbtc-arbitrum", text: true },
                 
                 // Ethereum ecosystem
                 { source: "wbtc-eth", target: "solvbtc" },

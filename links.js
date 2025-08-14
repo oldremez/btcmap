@@ -12,6 +12,8 @@ const ADDRESSES = {
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+    CBTC_BASE: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
+    CBTC_ARBITRUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
     TBTC_ETHEREUM: '0x18084fba666a33d37592fa2633fd49a74dd93a88',
     FBTC_ETHEREUM: '0xc96de26018a54d51c097160568752c4e3bd6c364',
     SOLVBTC_ETH: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
@@ -27,6 +29,7 @@ const ADDRESSES = {
     WBTC_SOLANA: '5XZw2LKTyrfvfiskJ78AMpackRjPcyCif1WhUsPDuVqQ',
     WBTC_PORTAL_SOLANA: '3NZ9JMVBmGAqocybic2c7LQCJScmgsAZ6vQqTDzcqmJh',
     TBTC_PORTAL_SOLANA: '6DNSN2BJsaPFdFFc1zP37kkeNe4Usc1Sqkzr9C9vPWcU',
+    CBTC_SOLANA: 'cbbtcf3aa214zXHbiAZQwf4122FBYbraNdFqgw4iMij',
     
     // Solana token accounts
     JUPITER_PERPS_WBTC: 'FgpXg2J3TzSs7w3WGYYE7aWePdrxBVLCXSxmAKnCZNtZ',
@@ -107,19 +110,19 @@ const LINK_LABEL_HANDLERS = {
     // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
     'bitgo->wbtc-arbitrum': {
         handler: TokenHandlers.handleERC20Balance,
-        args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.ARBITRUM_WBTC_WALLET, 8, 'arbitrum']
+        args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.ARBITRUM_WBTC_WALLET, 8, 'ethereum']
     },
     
     // WBTC balance on Polygon (bitgo -> wbtc-polygon)
     'bitgo->wbtc-polygon': {
         handler: TokenHandlers.handleERC20Balance,
-        args: [ADDRESSES.WBTC_POLYGON, ADDRESSES.POLYGON_WBTC_WALLET, 8, 'polygon']
+        args: [ADDRESSES.WBTC_POLYGON, ADDRESSES.POLYGON_WBTC_WALLET, 8, 'ethereum']
     },
     
     // WBTC balance on Optimism (bitgo -> wbtc-optimism)
     'bitgo->wbtc-optimism': {
         handler: TokenHandlers.handleERC20Balance,
-        args: [ADDRESSES.WBTC_OPTIMISM, ADDRESSES.OPTIMISM_WBTC_WALLET, 8, 'optimism']
+        args: [ADDRESSES.WBTC_OPTIMISM, ADDRESSES.OPTIMISM_WBTC_WALLET, 8, 'ethereum']
     },
     
     // WBTC supply (bitgo -> wbtc-osmosis)
@@ -138,6 +141,24 @@ const LINK_LABEL_HANDLERS = {
     'coinbase->cbbtc': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.CBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // cbBTC supply on Base (coinbase -> cbbtc-base)
+    'coinbase->cbbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.CBTC_BASE, 8, 'base']
+    },
+    
+    // cbBTC supply on Solana (coinbase -> cbbtc-solana)
+    'coinbase->cbbtc-solana': {
+        handler: TokenHandlers.handleSolanaSupply,
+        args: [ADDRESSES.CBTC_SOLANA]
+    },
+    
+    // cbBTC supply on Arbitrum (coinbase -> cbbtc-arbitrum)
+    'coinbase->cbbtc-arbitrum': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.CBTC_ARBITRUM, 8, 'arbitrum']
     },
     
     // tBTC supply (btc -> tbtc)
