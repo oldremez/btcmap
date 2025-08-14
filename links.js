@@ -374,6 +374,9 @@ const LINK_LABEL_HANDLERS = {
     }
 };
 
+// In-memory cache for link labels with automatic expiration
+const linkLabelCache = {};
+
 /**
  * Determines the label for a link between two nodes based on their source and target IDs
  * @param {string} sourceId - The source node ID
@@ -382,14 +385,40 @@ const LINK_LABEL_HANDLERS = {
  */
 async function getLinkLabel(sourceId, targetId) {
     const key = `${sourceId}->${targetId}`;
+    
+    // Check if we have a cached result and if it's still valid (less than 1 minute old)
+    const cached = linkLabelCache[key];
+    const now = Date.now();
+    const oneMinute = 60 * 1000; // 1 minute in milliseconds
+    
+    if (cached && (now - cached.timestamp) < oneMinute) {
+        // Return cached result if it's still valid
+        return cached.label;
+    }
+    
+    // If cached result exists but is expired, remove it
+    if (cached) {
+        delete linkLabelCache[key];
+    }
+    
+    // Check if we have a handler for this link
     const handlerConfig = LINK_LABEL_HANDLERS[key];
     
     if (!handlerConfig) {
         return null;
     }
     
+    // Query the handler and cache the result
     const { handler, args } = handlerConfig;
-    return await handler.apply(TokenHandlers, args);
+    const label = await handler.apply(TokenHandlers, args);
+    
+    // Cache the result with timestamp
+    linkLabelCache[key] = {
+        label: label,
+        timestamp: now
+    };
+    
+    return label;
 }
 
 module.exports = {
