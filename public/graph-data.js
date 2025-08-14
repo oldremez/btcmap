@@ -237,6 +237,7 @@ class GraphData {
                 { source: "coinbase", target: "cbbtc", text: true },
                 { source: "coinbase", target: "cbbtc-solana", text: true },
                 { source: "coinbase", target: "cbbtc-base", text: true },
+                { source: "cbbtc-solana", target: "kamino", text: true },
                 { source: "coinbase", target: "cbbtc-arbitrum", text: true },
                 
                 // Ethereum ecosystem

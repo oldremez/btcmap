@@ -36,6 +36,7 @@ const ADDRESSES = {
     DRIFT_WBTC: '3Zaz6vATY8br9WceXWD1Xa7fcyCpKSNanWFDRTEjjPqb',
     ORCA_WBTC: '5xXtGXq5JHB3grdgTGQ4yt7YmJBqBxdffhnkZ8vc6xLB',
     KAMINO_WBTC: '3y8JYyF8HPPK5YeUzxPPEvAahdPX4Z5wdZTiVc1atuQi',
+    KAMINO_CBBTC: 'BcPpdmg4vxXSenvkp12XbVp6XnzwKChnzfNa6cQXLW96',
     MARGINIFI_WBTC: 'CMNdnjfaDQZo3VMoX31wZQBnSGu5FMmb1CnBaU4tApZk',
     
     // WBTC bridge addresses
@@ -333,6 +334,11 @@ const LINK_LABEL_HANDLERS = {
     'wbtc-portal-solana->kamino': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.KAMINO_WBTC]
+    },
+
+    'cbbtc-solana->kamino': {
+        handler: TokenHandlers.handleSolanaBalance,
+        args: [ADDRESSES.KAMINO_CBBTC]
     },
     
     // WBTC balance on Marginifi (wbtc-portal-solana -> marginifi)
