@@ -6,7 +6,7 @@ const ADDRESSES = {
     WBTC_ETHEREUM: '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
     WBTC_BASE: '0x1cea84203673764244e05693e42e6ace62be9ba5',
     WBTC_KAVA: '0xb5c4423a65B953905949548276654C96fcaE6992',
-    WBTC_ARBITRUM: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+    WBTC_ARBITRUM: '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f',
     WBTC_POLYGON: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     WBTC_OPTIMISM: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     
@@ -109,9 +109,9 @@ const LINK_LABEL_HANDLERS = {
     },
     
     // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
-    'bitgo->wbtc-arbitrum': {
-        handler: TokenHandlers.handleERC20Balance,
-        args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.ARBITRUM_WBTC_WALLET, 8, 'ethereum']
+    'wbtc-eth->wbtc-arbitrum': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_ARBITRUM, 8, 'arbitrum']
     },
     
     // WBTC balance on Polygon (bitgo -> wbtc-polygon)
