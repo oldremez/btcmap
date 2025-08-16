@@ -249,14 +249,12 @@ class GraphData {
                 { source: "cbbtc-solana", target: "kamino", text: true },
                 { source: "coinbase", target: "cbbtc-arbitrum", text: true },
                 
-                // Ethereum ecosystem
-                { source: "wbtc-eth", target: "solvbtc" },
                 { source: "wbtc-eth", target: "axelar", text: true },
                 
-                // Cross-chain connections
-                { source: "tbtc", target: "solvbtc" },
-                { source: "cbbtc", target: "solvbtc" },
-                { source: "fbtc", target: "solvbtc" },
+                { source: "wbtc-eth", target: "solvbtc", text: true },
+                { source: "tbtc", target: "solvbtc", text: true },
+                { source: "cbbtc", target: "solvbtc", text: true },
+                { source: "fbtc", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },

@@ -62,7 +62,13 @@ const ADDRESSES = {
     ARBITRUM_WBTC_WALLET: '0xa3A7B6F88361F48403514059F1F16C8E78d60EeC',
     POLYGON_WBTC_WALLET: '0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf',
     OPTIMISM_WBTC_WALLET: '0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1',
-    ALLBTC_ISSUER_OSMO: 'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3'
+    ALLBTC_ISSUER_OSMO: 'osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3',
+
+    SOLVBTC_ETH_CBBTC_VAULT: '0xAd713bd85E8bff9CE85Ca03a8A930e4a38f6893D',
+    SOLVBTC_ETH_TBTC_VAULT: '0xb4378d4e3528c12c83821b21c99b43336a543613',
+    SOLVBTC_ETH_FBTC_VAULT: '0xBE6297731720B7E218031Ca8970921f9b41f3D00',
+    SOLVBTC_ETH_WBTC_VAULT: '0x9Bc8EF6bb09e3D0F3F3a6CD02D2B9dC3115C7c5C'
+
 };
 
 const DENOMS = {
@@ -166,12 +172,6 @@ const LINK_LABEL_HANDLERS = {
     'btc->tbtc': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.TBTC_ETHEREUM, 18, 'ethereum']
-    },
-    
-    // FBTC supply (fbtc -> solvbtc)
-    'fbtc->solvbtc': {
-        handler: TokenHandlers.handleERC20Supply,
-        args: [ADDRESSES.FBTC_ETHEREUM, 8, 'ethereum']
     },
     
     // FBTC supply (function -> fbtc)
@@ -403,7 +403,28 @@ const LINK_LABEL_HANDLERS = {
     'internet-computer->ckbtc-icp': {
         handler: TokenHandlers.handleCkBTCSupply,
         args: []
-    }
+    },
+    
+    'wbtc-eth->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_WBTC_VAULT, 8, 'ethereum']
+    },
+
+    'tbtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_TBTC_VAULT, 18, 'ethereum']
+    },
+
+    'fbtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.FBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_FBTC_VAULT, 8, 'ethereum']
+    },
+
+    'cbbtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_CBBTC_VAULT, 8, 'ethereum']
+    },
+
 };
 
 // In-memory cache for link labels with automatic expiration
