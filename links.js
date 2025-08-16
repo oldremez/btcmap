@@ -398,6 +398,11 @@ const LINK_LABEL_HANDLERS = {
     'allbtc-issuer->allbtc': {
         handler: TokenHandlers.handleCosmosSupply,
         args: [DENOMS.ALLBTC_ISSUER, 8]
+    },
+
+    'internet-computer->ckbtc-icp': {
+        handler: TokenHandlers.handleCkBTCSupply,
+        args: []
     }
 };
 

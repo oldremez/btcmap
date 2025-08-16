@@ -337,6 +337,26 @@ const TokenHandlers = {
             console.error('Error fetching multiple WBTC balances:', error);
             return 'Error';
         }
+    },
+
+    // ckBTC supply handler for Internet Computer
+    async handleCkBTCSupply() {
+        try {
+            const response = await fetch('https://icrc-api.internetcomputer.org/api/v1/ledgers/mxzaz-hqaaa-aaaar-qaada-cai/total-supply');
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.data && data.data.length > 0 && data.data[0].length > 1) {
+                    const supply = parseInt(data.data[0][1]);
+                    const tokenSupply = supply / Math.pow(10, 8); // ckBTC has 8 decimals
+                    return formatNumber(tokenSupply);
+                }
+            }
+            return 'Loading...';
+        } catch (error) {
+            console.error('Error fetching ckBTC supply:', error);
+            return 'Error';
+        }
     }
 };
 

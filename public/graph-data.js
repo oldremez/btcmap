@@ -128,6 +128,14 @@ class GraphData {
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
+                },
+                {
+                    id: "icp-frame", 
+                    label: "Internet Computer",
+                    nodes: ["ckbtc-icp"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
                 }
             ],
             nodes: [
@@ -195,6 +203,7 @@ class GraphData {
                 { id: "allbtc", name: "allBTC", type: "token" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
+                { id: "ckbtc-icp", name: "ckBTC", type: "token" },
                 { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
                 { id: "nbtc", name: "nBTC", type: "token" },
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
@@ -280,7 +289,7 @@ class GraphData {
                 { source: "tbtc", target: "aave", text: true },
                 { source: "tbtc", target: "portal-bridge-tbtc", text: true },
                 { source: "portal-bridge-tbtc", target: "tbtc-portal-solana", text: true },
-                
+                { source: "internet-computer", target: "ckbtc-icp", text: true },
                 { source: "cbbtc", target: "aave", text: true },
                 { source: "cbbtc", target: "morpho", text: true },
 
