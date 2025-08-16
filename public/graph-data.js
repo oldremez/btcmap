@@ -210,6 +210,7 @@ class GraphData {
                 { source: "btc", target: "function" },
                 { source: "btc", target: "coinbase" },
                 { source: "btc", target: "internet-computer" },
+                { source: "btc", target: "solvbtc" },
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "solvbtc-bbn" },
