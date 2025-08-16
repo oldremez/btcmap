@@ -7,25 +7,9 @@
     "x": 256,
     "y": 900
   },
-  "babylon": {
-    "x": 231,
-    "y": 653
-  },
   "bitgo": {
     "x": 372,
     "y": 680
-  },
-  "solvbtc": {
-    "x": 570,
-    "y": 414
-  },
-  "function": {
-    "x": 681,
-    "y": 483
-  },
-  "nomic": {
-    "x": 438,
-    "y": 951
   },
   "wbtc-eth": {
     "x": 372,
@@ -38,34 +22,6 @@
   "wbtc-solana": {
     "x": 72,
     "y": -34
-  },
-  "wbtc-portal-solana": {
-    "x": 72,
-    "y": -98
-  },
-  "tbtc-portal-solana": {
-    "x": 108,
-    "y": -242
-  },
-  "jupiter-perps": {
-    "x": -159,
-    "y": -89
-  },
-  "drift": {
-    "x": -10,
-    "y": -335
-  },
-  "orca": {
-    "x": -156,
-    "y": -171
-  },
-  "kamino": {
-    "x": -103,
-    "y": -314
-  },
-  "marginifi": {
-    "x": -160,
-    "y": -252
   },
   "wbtc-base": {
     "x": 39,
@@ -87,9 +43,49 @@
     "x": 204,
     "y": 170
   },
+  "wbtc-eureka-neutron": {
+    "x": 636,
+    "y": 1149
+  },
+  "wbtc-axl-neutron": {
+    "x": 834,
+    "y": 1145
+  },
+  "wbtc-portal-solana": {
+    "x": 72,
+    "y": -98
+  },
+  "wbtc-eth-axl-osmo": {
+    "x": 1040,
+    "y": 860
+  },
+  "wbtc-eth-eur-osmo": {
+    "x": 913,
+    "y": 860
+  },
+  "portal-bridge-wbtc": {
+    "x": 194,
+    "y": -63
+  },
   "coinbase": {
     "x": 324,
     "y": 482
+  },
+  "cbbtc": {
+    "x": 488,
+    "y": 301
+  },
+  "cbbtc-solana": {
+    "x": -64,
+    "y": -27
+  },
+  "cbbtc-base": {
+    "x": 38,
+    "y": 341
+  },
+  "cbbtc-arbitrum": {
+    "x": -124,
+    "y": 161
   },
   "lombard": {
     "x": 34,
@@ -119,25 +115,65 @@
     "x": -242,
     "y": 475
   },
-  "cbbtc": {
-    "x": 488,
-    "y": 301
-  },
-  "cbbtc-solana": {
-    "x": -64,
-    "y": -27
-  },
-  "cbbtc-base": {
-    "x": 38,
-    "y": 341
-  },
-  "cbbtc-arbitrum": {
-    "x": -124,
-    "y": 161
-  },
   "tbtc": {
     "x": 721,
     "y": 320
+  },
+  "tbtc-portal-solana": {
+    "x": 108,
+    "y": -242
+  },
+  "portal-bridge-tbtc": {
+    "x": 197,
+    "y": -127
+  },
+  "aave": {
+    "x": 620,
+    "y": 3
+  },
+  "morpho": {
+    "x": 488,
+    "y": 207
+  },
+  "compound": {
+    "x": 378,
+    "y": 146
+  },
+  "jupiter-perps": {
+    "x": -96,
+    "y": -305
+  },
+  "drift": {
+    "x": -10,
+    "y": -335
+  },
+  "orca": {
+    "x": -156,
+    "y": -171
+  },
+  "kamino": {
+    "x": -161,
+    "y": -95
+  },
+  "marginifi": {
+    "x": -160,
+    "y": -252
+  },
+  "solvbtc": {
+    "x": 570,
+    "y": 414
+  },
+  "function": {
+    "x": 681,
+    "y": 483
+  },
+  "nomic": {
+    "x": 479,
+    "y": 857
+  },
+  "babylon": {
+    "x": 231,
+    "y": 653
   },
   "solvbtc-eth": {
     "x": 594,
@@ -160,59 +196,27 @@
     "y": 963
   },
   "internet-computer": {
-    "x": 444,
-    "y": 868
+    "x": 455,
+    "y": 947
+  },
+  "ckbtc-icp": {
+    "x": 361,
+    "y": 1073
   },
   "ckbtc-osmosis": {
-    "x": 815,
-    "y": 723
+    "x": 834,
+    "y": 799
   },
   "nbtc": {
-    "x": 857,
-    "y": 802
+    "x": 826,
+    "y": 705
   },
   "solvbtc-bbn": {
     "x": 287,
     "y": 306
   },
-  "wbtc-eth-axl-osmo": {
-    "x": 1040,
-    "y": 860
-  },
-  "wbtc-eth-eur-osmo": {
-    "x": 913,
-    "y": 860
-  },
-  "portal-bridge-wbtc": {
-    "x": 194,
-    "y": -63
-  },
-  "portal-bridge-tbtc": {
-    "x": 197,
-    "y": -127
-  },
-  "aave": {
-    "x": 620,
-    "y": 3
-  },
-  "morpho": {
-    "x": 488,
-    "y": 207
-  },
-  "compound": {
-    "x": 378,
-    "y": 146
-  },
   "eureka": {
     "x": 562,
     "y": 989
-  },
-  "wbtc-eureka-neutron": {
-    "x": 636,
-    "y": 1149
-  },
-  "wbtc-axl-neutron": {
-    "x": 834,
-    "y": 1145
   }
 }
