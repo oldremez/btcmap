@@ -129,6 +129,70 @@
 
         
         <div id="graph"></div>
+        
+        <!-- Footer -->
+        <footer style="margin-top: 30px; text-align: center; padding: 20px 0; border-top: 1px solid #eee;">
+            <a href="#" id="aboutLink" style="color: #4ecdc4; text-decoration: none; font-weight: 500;">About</a>
+            <span style="margin: 0 15px; color: #ccc;">|</span>
+            <a href="#" id="legendLink" style="color: #4ecdc4; text-decoration: none; font-weight: 500;">Legend</a>
+        </footer>
+    </div>
+
+    <!-- About popup -->
+    <div class="popup-overlay" id="aboutOverlay"></div>
+    <div class="node-popup" id="aboutPopup">
+        <div class="popup-header">
+            <h3 class="popup-title">About Bitcoin Map</h3>
+            <button class="popup-close" id="aboutClose">&times;</button>
+        </div>
+        <div class="popup-content">
+            <h4>Welcome to The Map of Bitcoin</h4>
+            <p>This project is aimed to give an overview of the different flavors of Bitcoin on different blockchains.</p>
+            <p>I made it for myself as a side project sinse I found the current state of the information about BTC flavors to be quite a mess.</p>
+            <p>The source code is available <a href="https://github.com/oldremez/btcmap">here</a> and your contributions are welcome.</p>
+        </div>
+    </div>
+
+    <!-- Legend popup -->
+    <div class="popup-overlay" id="legendOverlay"></div>
+    <div class="node-popup" id="legendPopup">
+        <div class="popup-header">
+            <h3 class="popup-title">Node Types Legend</h3>
+            <button class="popup-close" id="legendClose">&times;</button>
+        </div>
+        <div class="popup-content">
+            <h4>Understanding the Bitcoin Map</h4>
+            <p>This map shows different types of nodes representing various aspects of the Bitcoin ecosystem across multiple blockchains.</p>
+            
+            <h4>Node Types</h4>
+            
+            <div style="margin-bottom: 20px;">
+                <h5 style="color: #f49c13; margin-bottom: 10px;">🟠 Issuer Nodes</h5>
+                <p>Companies and protocols that create and manage Bitcoin tokens.</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h5 style="color: #4ecdc4; margin-bottom: 10px;">🔵 Token Nodes</h5>
+                <p>Represent actual Bitcoin tokens on different blockchains.</p>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <h5 style="color: #a72896; margin-bottom: 10px;">🟣 Protocol Nodes</h5>
+                <p>DeFi protocols and platforms that use Bitcoin tokens.</p>
+            </div>
+            
+            <h4>Network Frames</h4>
+            <p>Nodes are grouped by blockchain networks, each with its own color and border. The connections between nodes show how Bitcoin moves between different blockchains and protocols.</p>
+        
+            <h4>Node links</h4>
+            <p>The connection from one node to another means one of the who:</p>
+            <ul>
+                <li>Issuer -> Token link means that the token is minted by an issuer</li>
+                <li>Token -> Issuer link means that the token is used as collateral/backing by the issuer (usually issuer is a wrapper or bridge)</li>
+                <li>Token -> Protocol link means that the token is locked in a prototol</li>
+            </ul>
+            <p>The number on the link represents the number of tokens minted/locked</p>
+        </div>
     </div>
 
     <!-- Node description popup -->
@@ -155,5 +219,67 @@
     <script src="graph-data.js"></script>
     <!-- Custom graph logic -->
     <script src="graph.js"></script>
+    
+    <!-- About popup functionality -->
+    <script>
+        // About popup functionality
+        const aboutLink = document.getElementById('aboutLink');
+        const aboutPopup = document.getElementById('aboutPopup');
+        const aboutOverlay = document.getElementById('aboutOverlay');
+        const aboutClose = document.getElementById('aboutClose');
+        
+        // Open about popup
+        aboutLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            aboutPopup.classList.add('active');
+            aboutOverlay.classList.add('active');
+        });
+        
+        // Close about popup
+        function closeAboutPopup() {
+            aboutPopup.classList.remove('active');
+            aboutOverlay.classList.remove('active');
+        }
+        
+        aboutClose.addEventListener('click', closeAboutPopup);
+        aboutOverlay.addEventListener('click', closeAboutPopup);
+        
+        // Close on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAboutPopup();
+            }
+        });
+        
+        // Legend popup functionality
+        const legendLink = document.getElementById('legendLink');
+        const legendPopup = document.getElementById('legendPopup');
+        const legendOverlay = document.getElementById('legendOverlay');
+        const legendClose = document.getElementById('legendClose');
+        
+        // Open legend popup
+        legendLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            legendPopup.classList.add('active');
+            legendOverlay.classList.add('active');
+        });
+        
+        // Close legend popup
+        function closeLegendPopup() {
+            legendPopup.classList.remove('active');
+            legendOverlay.classList.remove('active');
+        }
+        
+        legendClose.addEventListener('click', closeLegendPopup);
+        legendOverlay.addEventListener('click', closeLegendPopup);
+        
+        // Close on escape key (update to handle both popups)
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAboutPopup();
+                closeLegendPopup();
+            }
+        });
+    </script>
 </body>
 </html>
