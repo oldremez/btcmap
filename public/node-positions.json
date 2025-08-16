@@ -24,16 +24,16 @@
     "y": -34
   },
   "wbtc-base": {
-    "x": 39,
-    "y": 412
+    "x": 935,
+    "y": -210
   },
   "wbtc-kava": {
     "x": 147,
     "y": 779
   },
   "wbtc-arbitrum": {
-    "x": -125,
-    "y": 94
+    "x": 678,
+    "y": -191
   },
   "wbtc-polygon": {
     "x": 200,
@@ -68,8 +68,8 @@
     "y": -63
   },
   "coinbase": {
-    "x": 324,
-    "y": 482
+    "x": 305,
+    "y": 413
   },
   "cbbtc": {
     "x": 488,
@@ -80,12 +80,12 @@
     "y": -27
   },
   "cbbtc-base": {
-    "x": 38,
-    "y": 341
+    "x": 927,
+    "y": -83
   },
   "cbbtc-arbitrum": {
-    "x": -124,
-    "y": 161
+    "x": 581,
+    "y": -117
   },
   "lombard": {
     "x": 34,
@@ -96,12 +96,12 @@
     "y": 18
   },
   "lbtc-base": {
-    "x": -47,
-    "y": 341
+    "x": 951,
+    "y": -142
   },
   "lbtc-bsc": {
-    "x": -242,
-    "y": 398
+    "x": 895,
+    "y": 497
   },
   "lbtc-sui": {
     "x": -237,
@@ -160,12 +160,164 @@
     "y": -252
   },
   "solvbtc": {
-    "x": 570,
-    "y": 414
+    "x": 1404,
+    "y": -21
+  },
+  "xsolvbtc": {
+    "x": 1463,
+    "y": 38
+  },
+  "btc-plus": {
+    "x": 1389,
+    "y": 86
+  },
+  "solvbtc-bsc": {
+    "x": 953,
+    "y": 433
+  },
+  "xsolvbtc-bsc": {
+    "x": 971,
+    "y": 488
+  },
+  "btc-plus-bsc": {
+    "x": 1010,
+    "y": 423
+  },
+  "solvbtc-arbitrum": {
+    "x": 656,
+    "y": -94
+  },
+  "xsolvbtc-arbitrum": {
+    "x": 585,
+    "y": -185
+  },
+  "btc-plus-arbitrum": {
+    "x": 640,
+    "y": -133
+  },
+  "solvbtc-avalanche": {
+    "x": 1177,
+    "y": 489
+  },
+  "xsolvbtc-avalanche": {
+    "x": 1107,
+    "y": 533
+  },
+  "btc-plus-avalanche": {
+    "x": 1234,
+    "y": 492
+  },
+  "solvbtc-mantle": {
+    "x": 1595,
+    "y": 652
+  },
+  "xsolvbtc-mantle": {
+    "x": 1532,
+    "y": 662
+  },
+  "btc-plus-mantle": {
+    "x": 1682,
+    "y": 641
+  },
+  "solvbtc-bob": {
+    "x": 878,
+    "y": -421
+  },
+  "xsolvbtc-bob": {
+    "x": 791,
+    "y": -424
+  },
+  "btc-plus-bob": {
+    "x": 944,
+    "y": -441
+  },
+  "solvbtc-base": {
+    "x": 991,
+    "y": -54
+  },
+  "xsolvbtc-base": {
+    "x": 996,
+    "y": -106
+  },
+  "btc-plus-base": {
+    "x": 1000,
+    "y": -166
+  },
+  "solvbtc-linea": {
+    "x": 1896,
+    "y": 531
+  },
+  "xsolvbtc-linea": {
+    "x": 1820,
+    "y": 508
+  },
+  "btc-plus-linea": {
+    "x": 1920,
+    "y": 488
+  },
+  "solvbtc-rootstock": {
+    "x": 1909,
+    "y": 312
+  },
+  "xsolvbtc-rootstock": {
+    "x": 1889,
+    "y": 329
+  },
+  "btc-plus-rootstock": {
+    "x": 1853,
+    "y": 375
+  },
+  "solvbtc-soneium": {
+    "x": 1906,
+    "y": 9
+  },
+  "xsolvbtc-soneium": {
+    "x": 1908,
+    "y": -50
+  },
+  "btc-plus-soneium": {
+    "x": 1908,
+    "y": 72
+  },
+  "solvbtc-ink": {
+    "x": 1838,
+    "y": -283
+  },
+  "xsolvbtc-ink": {
+    "x": 1873,
+    "y": -216
+  },
+  "btc-plus-ink": {
+    "x": 1912,
+    "y": -164
+  },
+  "solvbtc-bera": {
+    "x": 1694,
+    "y": -454
+  },
+  "xsolvbtc-bera": {
+    "x": 1744,
+    "y": -374
+  },
+  "btc-plus-bera": {
+    "x": 1674,
+    "y": -385
+  },
+  "solvbtc-hyperevm": {
+    "x": 1111,
+    "y": -458
+  },
+  "xsolvbtc-hyperevm": {
+    "x": 1188,
+    "y": -425
+  },
+  "btc-plus-hyperevm": {
+    "x": 1251,
+    "y": -376
   },
   "function": {
-    "x": 681,
-    "y": 483
+    "x": 657,
+    "y": 575
   },
   "nomic": {
     "x": 479,
@@ -211,12 +363,16 @@
     "x": 826,
     "y": 705
   },
-  "solvbtc-bbn": {
-    "x": 287,
-    "y": 306
-  },
   "eureka": {
     "x": 562,
     "y": 989
+  },
+  "binance": {
+    "x": 300,
+    "y": 700
+  },
+  "btcb": {
+    "x": 250,
+    "y": 600
   }
 }

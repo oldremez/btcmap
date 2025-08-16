@@ -49,10 +49,10 @@ class GraphData {
                     strokeWidth: 2,
                     padding: 20
                 },
-                {
-                    id: "arbitrum-frame",
+                                {
+                    id: "arbitrum-frame", 
                     label: "Arbitrum",
-                    nodes: ["wbtc-arbitrum", "cbbtc-arbitrum"],
+                    nodes: ["wbtc-arbitrum", "cbbtc-arbitrum", "solvbtc-arbitrum", "xsolvbtc-arbitrum", "btc-plus-arbitrum"],
                     color: "#28a745",
                     strokeWidth: 2,
                     padding: 20
@@ -76,7 +76,7 @@ class GraphData {
                 {
                     id: "bsc-frame", 
                     label: "Binance Smart Chain",
-                    nodes: ["lbtc-bsc"],
+                    nodes: ["lbtc-bsc", "solvbtc-bsc", "xsolvbtc-bsc", "btc-plus-bsc"],
                     color: "#f39c12",
                     strokeWidth: 2,
                     padding: 20
@@ -136,6 +136,94 @@ class GraphData {
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
+                },
+                {
+                    id: "solvbtc-frame", 
+                    label: "SolvBTC",
+                    nodes: ["solvbtc", "xsolvbtc", "btc-plus"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "avalanche-frame", 
+                    label: "Avalanche",
+                    nodes: ["solvbtc-avalanche", "xsolvbtc-avalanche", "btc-plus-avalanche"],
+                    color: "#E84142",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "mantle-frame", 
+                    label: "Mantle",
+                    nodes: ["solvbtc-mantle", "xsolvbtc-mantle", "btc-plus-mantle"],
+                    color: "#000000",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "bob-frame", 
+                    label: "BOB",
+                    nodes: ["solvbtc-bob", "xsolvbtc-bob", "btc-plus-bob"],
+                    color: "#FF6B35",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "base-frame", 
+                    label: "Base",
+                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base", "solvbtc-base", "xsolvbtc-base", "btc-plus-base"],
+                    color: "#f49c13",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "linea-frame", 
+                    label: "Linea",
+                    nodes: ["solvbtc-linea", "xsolvbtc-linea", "btc-plus-linea"],
+                    color: "#61D9FA",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "rootstock-frame", 
+                    label: "Rootstock",
+                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock", "btc-plus-rootstock"],
+                    color: "#00C851",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "soneium-frame", 
+                    label: "Soneium",
+                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium", "btc-plus-soneium"],
+                    color: "#8B5CF6",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "ink-frame", 
+                    label: "Ink",
+                    nodes: ["solvbtc-ink", "xsolvbtc-ink", "btc-plus-ink"],
+                    color: "#1A1A1A",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "bera-frame", 
+                    label: "Bera",
+                    nodes: ["solvbtc-bera", "xsolvbtc-bera", "btc-plus-bera"],
+                    color: "#00D4AA",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "hyperevm-frame", 
+                    label: "HyperEVM",
+                    nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm"],
+                    color: "#FF6B6B",
+                    strokeWidth: 2,
+                    padding: 20
                 }
             ],
             nodes: [
@@ -193,7 +281,71 @@ class GraphData {
                 { id: "kamino", name: "Kamino", type: "protocol" },
                 { id: "marginifi", name: "Marginifi", type: "protocol" },
 
+                // SolvBTC
                 { id: "solvbtc", name: "SolvBTC", type: "issuer" },
+                { id: "xsolvbtc", name: "xSolvBTC", type: "issuer" },
+                { id: "btc-plus", name: "BTC+", type: "issuer" },
+                
+                // SolvBTC tokens for BSC
+                { id: "solvbtc-bsc", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-bsc", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-bsc", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Arbitrum
+                { id: "solvbtc-arbitrum", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-arbitrum", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-arbitrum", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Avalanche
+                { id: "solvbtc-avalanche", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-avalanche", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-avalanche", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Mantle
+                { id: "solvbtc-mantle", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-mantle", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-mantle", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for BOB
+                { id: "solvbtc-bob", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-bob", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-bob", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Base
+                { id: "solvbtc-base", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-base", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-base", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Linea
+                { id: "solvbtc-linea", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-linea", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-linea", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Rootstock
+                { id: "solvbtc-rootstock", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-rootstock", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-rootstock", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Soneium
+                { id: "solvbtc-soneium", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-soneium", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-soneium", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Ink
+                { id: "solvbtc-ink", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-ink", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-ink", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for Bera
+                { id: "solvbtc-bera", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-bera", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-bera", name: "BTC+", type: "token" },
+                
+                // SolvBTC tokens for HyperEVM
+                { id: "solvbtc-hyperevm", name: "SolvBTC", type: "token" },
+                { id: "xsolvbtc-hyperevm", name: "xSolvBTC", type: "token" },
+                { id: "btc-plus-hyperevm", name: "BTC+", type: "token" },
+
                 { id: "function", name: "Function", type: "issuer" },
                 { id: "nomic", name: "Nomic", type: "issuer" },
                 { id: "babylon", name: "Babylon", type: "issuer" },
@@ -206,8 +358,9 @@ class GraphData {
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
                 { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
                 { id: "nbtc", name: "nBTC", type: "token" },
-                { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
-                { id: "eureka", name: "Eureka", type: "issuer" }
+                { id: "eureka", name: "Eureka", type: "issuer" },
+                { id: "binance", name: "Binance", type: "issuer" },
+                { id: "btcb", name: "BTCB", type: "token" }
             ],
             links: [
                 // Central connections
@@ -222,7 +375,6 @@ class GraphData {
                 { source: "btc", target: "solvbtc" },
                 
                 // Bridge to wrapped tokens
-                { source: "babylon", target: "solvbtc-bbn" },
                 { source: "babylon", target: "lombard", text: true },
                 { source: "lombard", target: "lbtc", text: true },
                 { source: "lombard", target: "lbtc-base", text: true },
@@ -304,7 +456,53 @@ class GraphData {
                 // New routes for Neutron
                 { source: "wbtc-eth", target: "eureka" },
                 { source: "eureka", target: "wbtc-eureka-neutron" },
-                { source: "axelar", target: "wbtc-axl-neutron" }
+                { source: "axelar", target: "wbtc-axl-neutron" },
+
+                { source: "btc", target: "binance" },
+                { source: "binance", target: "btcb" },
+                { source: "babylon", target: "xsolvbtc" },
+                
+                // SolvBTC issuer connections to all networks
+                { source: "solvbtc", target: "solvbtc-bsc", text: true },
+                { source: "solvbtc", target: "solvbtc-arbitrum", text: true },
+                { source: "solvbtc", target: "solvbtc-avalanche", text: true },
+                { source: "solvbtc", target: "solvbtc-mantle", text: true },
+                { source: "solvbtc", target: "solvbtc-bob", text: true },
+                { source: "solvbtc", target: "solvbtc-base", text: true },
+                { source: "solvbtc", target: "solvbtc-linea", text: true },
+                { source: "solvbtc", target: "solvbtc-rootstock", text: true },
+                { source: "solvbtc", target: "solvbtc-soneium", text: true },
+                { source: "solvbtc", target: "solvbtc-ink", text: true },
+                { source: "solvbtc", target: "solvbtc-bera", text: true },
+                { source: "solvbtc", target: "solvbtc-hyperevm", text: true },
+                
+                // xSolvBTC issuer connections to all networks
+                { source: "xsolvbtc", target: "xsolvbtc-bsc", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-arbitrum", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-avalanche", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-mantle", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-bob", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-base", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-linea", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-rootstock", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-soneium", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-ink", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-bera", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-hyperevm", text: true },
+                
+                // BTC+ issuer connections to all networks
+                { source: "btc-plus", target: "btc-plus-bsc", text: true },
+                { source: "btc-plus", target: "btc-plus-arbitrum", text: true },
+                { source: "btc-plus", target: "btc-plus-avalanche", text: true },
+                { source: "btc-plus", target: "btc-plus-mantle", text: true },
+                { source: "btc-plus", target: "btc-plus-bob", text: true },
+                { source: "btc-plus", target: "btc-plus-base", text: true },
+                { source: "btc-plus", target: "btc-plus-linea", text: true },
+                { source: "btc-plus", target: "btc-plus-rootstock", text: true },
+                { source: "btc-plus", target: "btc-plus-soneium", text: true },
+                { source: "btc-plus", target: "btc-plus-ink", text: true },
+                { source: "btc-plus", target: "btc-plus-bera", text: true },
+                { source: "btc-plus", target: "btc-plus-hyperevm", text: true }
             ]
         };
     }
