@@ -378,8 +378,40 @@ class GraphVisualization {
                         .attr('stroke-dasharray', '5,5')
                         .attr('opacity', 0.6);
                     
-                    // Add frame label
-                    frameGroup.append('text')
+                    // Add frame label with icon
+                    const labelGroup = frameGroup.append('g')
+                        .attr('class', 'frame-label-group');
+                    
+                    // Add icon if it exists (based on frame ID)
+                    let iconSize = 0;
+                    let iconSpacing = 0;
+                    const iconPath = `/icons/${frame.id}.svg`;
+                    
+                    // Check if icon exists by trying to load it
+                    fetch(iconPath, { method: 'HEAD' })
+                        .then(response => {
+                            if (response.ok) {
+                                iconSize = 16;
+                                iconSpacing = 5;
+                                labelGroup.append('image')
+                                    .attr('x', minX + 10)
+                                    .attr('y', minY - 20)
+                                    .attr('width', iconSize)
+                                    .attr('height', iconSize)
+                                    .attr('href', iconPath)
+                                    .attr('class', 'frame-icon');
+                                
+                                // Update text position to account for icon
+                                labelGroup.select('text')
+                                    .attr('x', minX + 10 + iconSize + iconSpacing);
+                            }
+                        })
+                        .catch(() => {
+                            // Icon doesn't exist, keep text at start position
+                        });
+                    
+                    // Add text label (initially positioned at start)
+                    labelGroup.append('text')
                         .attr('x', minX + 10)
                         .attr('y', minY - 5)
                         .attr('font-size', '12px')
@@ -586,10 +618,26 @@ class GraphVisualization {
                             .attr('width', width)
                             .attr('height', height);
                         
-                        // Update frame label
-                        this.mainGroup.select(`[data-frame-id="${frame.id}"] text`)
-                            .attr('x', minX + 10)
-                            .attr('y', minY - 5);
+                        // Update frame label group
+                        const labelGroup = this.mainGroup.select(`[data-frame-id="${frame.id}"] .frame-label-group`);
+                        if (!labelGroup.empty()) {
+                            // Update icon position if it exists
+                            const icon = labelGroup.select('.frame-icon');
+                            if (!icon.empty()) {
+                                icon.attr('x', minX + 10)
+                                    .attr('y', minY - 20);
+                                
+                                // Update text position with icon spacing
+                                labelGroup.select('text')
+                                    .attr('x', minX + 10 + 21) // 16px icon + 5px spacing
+                                    .attr('y', minY - 5);
+                            } else {
+                                // No icon, position text at start
+                                labelGroup.select('text')
+                                    .attr('x', minX + 10)
+                                    .attr('y', minY - 5);
+                            }
+                        }
                     }
                 });
             }
@@ -605,6 +653,8 @@ class GraphVisualization {
             default: return 20;
         }
     }
+
+
 
     calculateArrowEndPosition(source, target) {
         // Calculate the position where the arrow should end (before the target node's border)
