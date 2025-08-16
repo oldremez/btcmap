@@ -135,30 +135,31 @@ class GraphData {
                 { id: "btc", name: "BTC", type: "token" },
                 { id: "bitcoin", name: "Bitcoin", type: "issuer" },
                 
-                // Major Bridge Protocols
-                { id: "babylon", name: "Babylon", type: "issuer" },
+                // WBTC
                 { id: "bitgo", name: "BitGo", type: "issuer" },
-                { id: "solvbtc", name: "SolvBTC", type: "issuer" },
-                { id: "function", name: "Function", type: "issuer" },
-                { id: "nomic", name: "Nomic", type: "issuer" },
-
                 { id: "wbtc-eth", name: "WBTC", type: "token" },
                 { id: "wbtc-osmosis", name: "WBTC", type: "token" },
                 { id: "wbtc-solana", name: "WBTC", type: "token" },
-                { id: "wbtc-portal-solana", name: "WBTC.portal", type: "token" },
-                { id: "tbtc-portal-solana", name: "tBTC.portal", type: "token" },
-                { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
-                { id: "drift", name: "Drift", type: "protocol" },
-                { id: "orca", name: "Orca", type: "protocol" },
-                { id: "kamino", name: "Kamino", type: "protocol" },
-                { id: "marginifi", name: "Marginifi", type: "protocol" },
                 { id: "wbtc-base", name: "WBTC", type: "token" },
                 { id: "wbtc-kava", name: "WBTC", type: "token" },
                 { id: "wbtc-arbitrum", name: "WBTC", type: "token" },
                 { id: "wbtc-polygon", name: "WBTC", type: "token" },
                 { id: "wbtc-optimism", name: "WBTC", type: "token" },
+                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka)", type: "token" },
+                { id: "wbtc-axl-neutron", name: "WBTC (Axelar)", type: "token" },
+                { id: "wbtc-portal-solana", name: "WBTC.portal", type: "token" },
+                { id: "wbtc-eth-axl-osmo", name: "WBTC.eth.axl", type: "token" },
+                { id: "wbtc-eth-eur-osmo", name: "WBTC.eth.atom", type: "token" },
+                { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
 
+                // cbBTC
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
+                { id: "cbbtc", name: "cbBTC", type: "token" },
+                { id: "cbbtc-solana", name: "cbBTC", type: "token" },
+                { id: "cbbtc-base", name: "cbBTC", type: "token" },
+                { id: "cbbtc-arbitrum", name: "cbBTC", type: "token" },
+
+                // LBTC
                 { id: "lombard", name: "Lombard", type: "issuer" },
                 { id: "lbtc", name: "LBTC", type: "token" },
                 { id: "lbtc-base", name: "LBTC", type: "token" },
@@ -166,13 +167,28 @@ class GraphData {
                 { id: "lbtc-sui", name: "LBTC", type: "token" },
                 { id: "lbtc-sonic", name: "LBTC", type: "token" },
                 { id: "lbtc-katana", name: "LBTC", type: "token" },
-                
-                // Wrapped BTC Tokens
-                { id: "cbbtc", name: "cbBTC", type: "token" },
-                { id: "cbbtc-solana", name: "cbBTC", type: "token" },
-                { id: "cbbtc-base", name: "cbBTC", type: "token" },
-                { id: "cbbtc-arbitrum", name: "cbBTC", type: "token" },
+
+                // tBTC
                 { id: "tbtc", name: "tBTC", type: "token" },
+                { id: "tbtc-portal-solana", name: "tBTC.portal", type: "token" },
+                { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" },
+
+                // Ethereum protocols
+                { id: "aave", name: "AAVE", type: "protocol" },
+                { id: "morpho", name: "Morpho", type: "protocol" },
+                { id: "compound", name: "Compound", type: "protocol" },
+
+                // Solana protocols
+                { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
+                { id: "drift", name: "Drift", type: "protocol" },
+                { id: "orca", name: "Orca", type: "protocol" },
+                { id: "kamino", name: "Kamino", type: "protocol" },
+                { id: "marginifi", name: "Marginifi", type: "protocol" },
+
+                { id: "solvbtc", name: "SolvBTC", type: "issuer" },
+                { id: "function", name: "Function", type: "issuer" },
+                { id: "nomic", name: "Nomic", type: "issuer" },
+                { id: "babylon", name: "Babylon", type: "issuer" },
                 { id: "solvbtc-eth", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
                 { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
@@ -182,24 +198,7 @@ class GraphData {
                 { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
                 { id: "nbtc", name: "nBTC", type: "token" },
                 { id: "solvbtc-bbn", name: "SolvBTC.BBN", type: "token" },
-                
-                // Special nodes
-                { id: "wbtc-eth-axl-osmo", name: "WBTC.eth.axl", type: "token" },
-                { id: "wbtc-eth-eur-osmo", name: "WBTC.eth.atom", type: "token" },
-                { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
-                { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" },
-                
-                // DeFi Protocol nodes
-                { id: "aave", name: "AAVE", type: "protocol" },
-                { id: "morpho", name: "Morpho", type: "protocol" },
-                { id: "compound", name: "Compound", type: "protocol" },
-                
-                // Eureka node (outside all frames)
-                { id: "eureka", name: "Eureka", type: "issuer" },
-                
-                // Neutron nodes
-                { id: "wbtc-eureka-neutron", name: "WBTC (Eureka)", type: "token" },
-                { id: "wbtc-axl-neutron", name: "WBTC (Axelar)", type: "token" }
+                { id: "eureka", name: "Eureka", type: "issuer" }
             ],
             links: [
                 // Central connections
