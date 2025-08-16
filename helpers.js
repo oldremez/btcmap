@@ -256,18 +256,14 @@ const TokenHandlers = {
     // Babylon staking handler
     async handleBabylonStaking() {
         try {
-            const response = await fetch('https://babylon-api.polkachu.com/babylon/btcstaking/v1/btc_delegations/ACTIVE');
+            const response = await fetch('https://staking-api.babylonlabs.io/v2/stats');
             
             if (response.ok) {
                 const data = await response.json();
-                if (data.btc_delegations && Array.isArray(data.btc_delegations)) {
-                    const totalSats = data.btc_delegations.reduce((sum, delegation) => {
-                        const stakedAmountSats = parseInt(delegation.total_sat) || 0;
-                        return sum + stakedAmountSats;
-                    }, 0);
-                    
-                    const stakedAmount = totalSats / 100000000;
-                    return formatNumber(stakedAmount);
+                if (data.data && data.data.total_active_tvl) {
+                    const totalTvlSats = parseInt(data.data.total_active_tvl);
+                    const totalTvlBTC = totalTvlSats / Math.pow(10, 8); // Convert from satoshis to BTC
+                    return formatNumber(totalTvlBTC);
                 }
                 return '0.00';
             }
