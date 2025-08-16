@@ -42,14 +42,6 @@ class GraphData {
                     padding: 20
                 },
                 {
-                    id: "base-frame", 
-                    label: "Base",
-                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base"],
-                    color: "#f49c13",
-                    strokeWidth: 2,
-                    padding: 20
-                },
-                                {
                     id: "arbitrum-frame", 
                     label: "Arbitrum",
                     nodes: ["wbtc-arbitrum", "cbbtc-arbitrum", "solvbtc-arbitrum", "xsolvbtc-arbitrum", "btc-plus-arbitrum"],
