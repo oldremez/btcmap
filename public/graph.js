@@ -504,6 +504,14 @@ class GraphVisualization {
             .on('click', (event, d) => {
                 // Handle node click to show description
                 this.nodePopup.show(d.id, d.name);
+            })
+            .on('mouseenter', (event, d) => {
+                // Highlight links connected to this node
+                this.highlightNodeLinks(d);
+            })
+            .on('mouseleave', (event, d) => {
+                // Restore normal link appearance
+                this.restoreLinkAppearance();
             });
 
         // Enable dragging in dev mode
@@ -654,7 +662,42 @@ class GraphVisualization {
         }
     }
 
+    highlightNodeLinks(hoveredNode) {
+        // Find all links connected to the hovered node
+        const connectedLinks = this.links.filter(link => 
+            link.source.id === hoveredNode.id || link.target.id === hoveredNode.id
+        );
+        
+        // Get the link elements from the DOM
+        const linkElements = this.mainGroup.selectAll('line');
+        
+        linkElements.each((d, i, nodes) => {
+            const linkElement = d3.select(nodes[i]);
+            const isConnected = connectedLinks.includes(d);
+            
+            if (isConnected) {
+                // Highlight connected links
+                linkElement
+                    .attr('stroke', '#4ecdc4') // Bright cyan color
+                    .attr('stroke-width', 4)
+                    .attr('stroke-opacity', 1);
+            } else {
+                // Dim unconnected links
+                linkElement
+                    .attr('stroke-opacity', 0.2);
+            }
+        });
+    }
 
+    restoreLinkAppearance() {
+        // Restore normal link appearance
+        const linkElements = this.mainGroup.selectAll('line');
+        
+        linkElements
+            .attr('stroke', '#999')
+            .attr('stroke-width', 2.5)
+            .attr('stroke-opacity', 0.8);
+    }
 
     calculateArrowEndPosition(source, target) {
         // Calculate the position where the arrow should end (before the target node's border)
