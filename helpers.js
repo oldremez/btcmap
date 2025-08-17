@@ -83,7 +83,17 @@ const TokenHandlers = {
         'optimism': 'https://mainnet.optimism.io',
         'sonic': 'https://rpc.sonic.game',
         'katana': 'https://rpc.katana.roninchain.com',
-        'kava': 'https://evm.kava.io'
+        'kava': 'https://evm.kava.io',
+        'avalanche': 'https://api.avax.network/ext/bc/C/rpc',
+        'mantle': 'https://rpc.mantle.xyz',
+        'bob': 'https://rpc.gobob.xyz/',
+        'linea': 'https://rpc.linea.build',
+        'rootstock': 'https://public-node.rsk.co',
+        'soneium': 'https://rpc.soneium.org/',
+        'inkonchain': 'https://rpc.inkonchain.com',
+        'bera': 'https://rpc.berachain.com',
+        'hyperevm': 'https://hyperliquid.drpc.org',
+        'ink': 'https://ink.drpc.org/'
     },
 
     // Generic ERC20 token supply handler

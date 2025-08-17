@@ -67,7 +67,24 @@ const ADDRESSES = {
     SOLVBTC_ETH_CBBTC_VAULT: '0xAd713bd85E8bff9CE85Ca03a8A930e4a38f6893D',
     SOLVBTC_ETH_TBTC_VAULT: '0xb4378d4e3528c12c83821b21c99b43336a543613',
     SOLVBTC_ETH_FBTC_VAULT: '0xBE6297731720B7E218031Ca8970921f9b41f3D00',
-    SOLVBTC_ETH_WBTC_VAULT: '0x9Bc8EF6bb09e3D0F3F3a6CD02D2B9dC3115C7c5C'
+    SOLVBTC_ETH_WBTC_VAULT: '0x9Bc8EF6bb09e3D0F3F3a6CD02D2B9dC3115C7c5C',
+
+    // SolvBTC contracts on other networks
+    SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
+    SOLVBTC_ARBITRUM: '0x3647c54c4c2c65bc7a2d63c0da2809b399dbbdc0',
+    SOLVBTC_AVALANCHE: '0xbc78d84ba0c46dfe32cf2895a19939c86b81a777',
+    SOLVBTC_MANTLE: '0xa68d25fc2af7278db4bcdcaabce31814252642a9',
+    SOLVBTC_BOB: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+    SOLVBTC_BASE: '0x3b86ad95859b6ab773f55f8d94b4b9d443ee931f',
+    SOLVBTC_LINEA: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+    SOLVBTC_ROOTSTOCK: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+
+    // Additional SolvBTC contracts
+    SOLVBTC_SONEIUM: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+    SOLVBTC_INKONCHAIN: '0xae4efbc7736f963982aacb17efa37fcbab924cb3',
+    SOLVBTC_BERACHAIN: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
+    SOLVBTC_ETHEREUM: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
+    SOLVBTC_HYPEREVM: '0xae4efbc7736f963982aacb17efa37fcbab924cb3'
 
 };
 
@@ -424,6 +441,78 @@ const LINK_LABEL_HANDLERS = {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_CBBTC_VAULT, 8, 'ethereum']
     },
+
+    // SolvBTC supply on BSC (solvbtc -> solvbtc-bsc)
+    'solvbtc->solvbtc-bsc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_BSC, 18, 'bsc']
+    },
+
+    // SolvBTC supply on Arbitrum (solvbtc -> solvbtc-arbitrum)
+    'solvbtc->solvbtc-arbitrum': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_ARBITRUM, 18, 'arbitrum']
+    },
+
+    // SolvBTC supply on Avalanche (solvbtc -> solvbtc-avalanche)
+    'solvbtc->solvbtc-avalanche': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_AVALANCHE, 18, 'avalanche']
+    },
+
+    // SolvBTC supply on Mantle (solvbtc -> solvbtc-mantle)
+    'solvbtc->solvbtc-mantle': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_MANTLE, 18, 'mantle']
+    },
+
+    // SolvBTC supply on Boba Network (solvbtc -> solvbtc-boba)
+    'solvbtc->solvbtc-bob': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_BOB, 18, 'bob']
+    },
+
+    // SolvBTC supply on Base (solvbtc -> solvbtc-base)
+    'solvbtc->solvbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_BASE, 18, 'base']
+    },
+
+    // SolvBTC supply on Linea (solvbtc -> solvbtc-linea)
+    'solvbtc->solvbtc-linea': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_LINEA, 18, 'linea']
+    },
+
+    // SolvBTC supply on Rootstock (solvbtc -> solvbtc-rootstock)
+    'solvbtc->solvbtc-rootstock': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_ROOTSTOCK, 18, 'rootstock']
+    },
+
+    // SolvBTC supply on Soneium (solvbtc -> solvbtc-soneium)
+    'solvbtc->solvbtc-soneium': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_SONEIUM, 18, 'soneium']
+    },
+
+    // SolvBTC supply on Inkonchain (solvbtc -> solvbtc-inkonchain)
+    'solvbtc->solvbtc-ink': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_INKONCHAIN, 18, 'ink']
+    },
+
+    // SolvBTC supply on Berachain (solvbtc -> solvbtc-berachain)
+    'solvbtc->solvbtc-bera': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_BERACHAIN, 18, 'bera']
+    },
+
+    // SolvBTC supply on HyperEVM (solvbtc -> solvbtc-hyperevm)
+    'solvbtc->solvbtc-hyperevm': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.SOLVBTC_HYPEREVM, 18, 'hyperevm']
+    }
 
 };
 
