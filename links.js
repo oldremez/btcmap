@@ -99,7 +99,17 @@ const ADDRESSES = {
     XSOLVBTC_INKONCHAIN: '0xc99f5c922dae05b6e2ff83463ce705ef7c91f077',
     XSOLVBTC_BERACHAIN: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
     XSOLVBTC_HYPEREVM: '0xc99f5c922dae05b6e2ff83463ce705ef7c91f077',
-    XSOLVBTC_MERLIN: '0x1760900aca15b90fa2eca70ce4b4ec441c2cf6c5'
+    XSOLVBTC_MERLIN: '0x1760900aca15b90fa2eca70ce4b4ec441c2cf6c5',
+
+    // BTC+ contracts on various networks
+    BTCPLUS_ETHEREUM: '0xcea2daf93617b97504e05affc5bcf9b3922d3034',
+    BTCPLUS_BSC: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_BASE: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_ARBITRUM: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_BOB: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_AVALANCHE: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_BERACHAIN: '0x4ca70811e831db42072cba1f0d03496ef126faad',
+    BTCPLUS_HYPEREVM: '0x4ca70811e831db42072cba1f0d03496ef126faad'
 
 };
 
@@ -605,6 +615,54 @@ const LINK_LABEL_HANDLERS = {
     'xsolvbtc->xsolvbtc-merlin': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.XSOLVBTC_MERLIN, 18, 'merlin']
+    },
+
+    // BTC+ supply on Ethereum (btc+ -> btc-plus-eth)
+    'btc-plus->btc-plus-eth': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_ETHEREUM, 18, 'ethereum']
+    },
+
+    // BTC+ supply on BSC (btc+ -> btc-plus-bsc)
+    'btc-plus->btc-plus-bsc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_BSC, 18, 'bsc']
+    },
+
+    // BTC+ supply on Base (btc+ -> btc-plus-base)
+    'btc-plus->btc-plus-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_BASE, 18, 'base']
+    },
+
+    // BTC+ supply on Arbitrum (btc+ -> btc-plus-arbitrum)
+    'btc-plus->btc-plus-arbitrum': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_ARBITRUM, 18, 'arbitrum']
+    },
+
+    // BTC+ supply on Boba Network (btc+ -> btc-plus-bob)
+    'btc-plus->btc-plus-bob': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_BOB, 18, 'bob']
+    },
+
+    // BTC+ supply on Avalanche (btc+ -> btc-plus-avalanche)
+    'btc-plus->btc-plus-avalanche': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_AVALANCHE, 18, 'avalanche']
+    },
+
+    // BTC+ supply on Berachain (btc+ -> btc-plus-bera)
+    'btc-plus->btc-plus-bera': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_BERACHAIN, 18, 'bera']
+    },
+
+    // BTC+ supply on HyperEVM (btc+ -> btc-plus-hyperevm)
+    'btc-plus->btc-plus-hyperevm': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCPLUS_HYPEREVM, 18, 'hyperevm']
     }
 
 };
