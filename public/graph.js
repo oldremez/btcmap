@@ -670,6 +670,7 @@ class GraphVisualization {
         
         // Get the link elements from the DOM
         const linkElements = this.mainGroup.selectAll('line');
+        const linkLabels = this.mainGroup.selectAll('.link-label');
         
         linkElements.each((d, i, nodes) => {
             const linkElement = d3.select(nodes[i]);
@@ -687,16 +688,41 @@ class GraphVisualization {
                     .attr('stroke-opacity', 0.2);
             }
         });
+        
+        // Also highlight link labels
+        linkLabels.each((d, i, nodes) => {
+            const labelElement = d3.select(nodes[i]);
+            const isConnected = connectedLinks.includes(d);
+            
+            if (isConnected) {
+                // Highlight connected link labels
+                labelElement
+                    .attr('font-size', '12px')
+                    .attr('font-weight', 'bold')
+            } else {
+                // Dim unconnected link labels
+                labelElement
+                    .attr('opacity', 0.3);
+            }
+        });
     }
 
     restoreLinkAppearance() {
         // Restore normal link appearance
         const linkElements = this.mainGroup.selectAll('line');
+        const linkLabels = this.mainGroup.selectAll('.link-label');
         
         linkElements
             .attr('stroke', '#999')
             .attr('stroke-width', 2.5)
             .attr('stroke-opacity', 0.8);
+        
+        // Restore normal link label appearance
+        linkLabels
+            .attr('font-size', '9px')
+            .attr('font-weight', 'normal')
+            .attr('fill', '#666')
+            .attr('opacity', 1);
     }
 
     calculateArrowEndPosition(source, target) {
