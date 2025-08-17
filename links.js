@@ -70,6 +70,7 @@ const ADDRESSES = {
     SOLVBTC_ETH_WBTC_VAULT: '0x9Bc8EF6bb09e3D0F3F3a6CD02D2B9dC3115C7c5C',
 
     SOLVBTC_BSC_BTCB_VAULT: '0x9537bc0546506785bd1ebd19fd67d1f06800d185',
+    SOLVBTC_ARBITRUM_WBTC_VAULT: '0x032470abbb896b1255299d5165c1a5e9ef26bcd2',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -676,6 +677,11 @@ const LINK_LABEL_HANDLERS = {
     'btcb->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.BTCB_BINANCE, ADDRESSES.SOLVBTC_BSC_BTCB_VAULT, 18, 'bsc']
+    },
+
+    'wbtc-arbitrum->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.SOLVBTC_ARBITRUM_WBTC_VAULT, 8, 'arbitrum']
     }
 };
 
