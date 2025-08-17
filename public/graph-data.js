@@ -140,7 +140,7 @@ class GraphData {
                 {
                     id: "avalanche-frame", 
                     label: "Avalanche",
-                    nodes: ["solvbtc-avalanche", "xsolvbtc-avalanche", "btc-plus-avalanche"],
+                    nodes: ["solvbtc-avalanche", "xsolvbtc-avalanche", "btc-plus-avalanche", "btc.b"],
                     color: "#E84142",
                     strokeWidth: 2,
                     padding: 20
@@ -365,7 +365,9 @@ class GraphData {
                 { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
 
                 { id: "binance", name: "Binance", type: "issuer" },
-                { id: "btcb", name: "BTCB", type: "token" }
+                { id: "btcb", name: "BTCB", type: "token" },
+
+                { id: "btc.b", name: "BTC.b", type: "token" }
             ],
             links: [
                 // Central connections
@@ -378,6 +380,7 @@ class GraphData {
                 { source: "btc", target: "coinbase" },
                 { source: "btc", target: "internet-computer" },
                 { source: "btc", target: "solvbtc" },
+                { source: "btc", target: "btc.b", text: true },
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "lombard", text: true },
@@ -413,6 +416,7 @@ class GraphData {
                 { source: "fbtc", target: "solvbtc", text: true },
                 { source: "btcb", target: "solvbtc", text: true },
                 { source: "wbtc-arbitrum", target: "solvbtc", text: true },
+                { source: "btc.b", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },

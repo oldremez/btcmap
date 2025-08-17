@@ -71,6 +71,7 @@ const ADDRESSES = {
 
     SOLVBTC_BSC_BTCB_VAULT: '0x9537bc0546506785bd1ebd19fd67d1f06800d185',
     SOLVBTC_ARBITRUM_WBTC_VAULT: '0x032470abbb896b1255299d5165c1a5e9ef26bcd2',
+    SOLVBTC_AVALANCHE_BTC_B_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -114,7 +115,8 @@ const ADDRESSES = {
     BTCPLUS_BERACHAIN: '0x4ca70811e831db42072cba1f0d03496ef126faad',
     BTCPLUS_HYPEREVM: '0x4ca70811e831db42072cba1f0d03496ef126faad',
 
-    BTCB_BINANCE: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
+    BTCB_BINANCE: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
+    BTCDOTB_AVALANCHE: '0x152b9d0FdC40C096757F570A51E494bd4b943E50'
 };
 
 const DENOMS = {
@@ -682,6 +684,16 @@ const LINK_LABEL_HANDLERS = {
     'wbtc-arbitrum->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.SOLVBTC_ARBITRUM_WBTC_VAULT, 8, 'arbitrum']
+    },
+
+    'btc->btc.b': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCDOTB_AVALANCHE, 8, 'avalanche']
+    },  
+
+    'btc.b->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.BTCDOTB_AVALANCHE, ADDRESSES.SOLVBTC_AVALANCHE_BTC_B_VAULT, 8, 'avalanche']
     }
 };
 
