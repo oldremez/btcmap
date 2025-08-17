@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc", "btc-plus-eth"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -148,7 +148,7 @@ class GraphData {
                 {
                     id: "mantle-frame", 
                     label: "Mantle",
-                    nodes: ["solvbtc-mantle", "xsolvbtc-mantle", "btc-plus-mantle"],
+                    nodes: ["solvbtc-mantle", "xsolvbtc-mantle"],
                     color: "#000000",
                     strokeWidth: 2,
                     padding: 20
@@ -172,7 +172,7 @@ class GraphData {
                 {
                     id: "linea-frame", 
                     label: "Linea",
-                    nodes: ["solvbtc-linea", "xsolvbtc-linea", "btc-plus-linea"],
+                    nodes: ["solvbtc-linea", "xsolvbtc-linea"],
                     color: "#61D9FA",
                     strokeWidth: 2,
                     padding: 20
@@ -180,7 +180,7 @@ class GraphData {
                 {
                     id: "rootstock-frame", 
                     label: "Rootstock",
-                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock", "btc-plus-rootstock"],
+                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock"],
                     color: "#00C851",
                     strokeWidth: 2,
                     padding: 20
@@ -188,7 +188,7 @@ class GraphData {
                 {
                     id: "soneium-frame", 
                     label: "Soneium",
-                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium", "btc-plus-soneium"],
+                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium"],
                     color: "#8B5CF6",
                     strokeWidth: 2,
                     padding: 20
@@ -196,7 +196,7 @@ class GraphData {
                 {
                     id: "ink-frame", 
                     label: "Ink",
-                    nodes: ["solvbtc-ink", "xsolvbtc-ink", "btc-plus-ink"],
+                    nodes: ["solvbtc-ink", "xsolvbtc-ink"],
                     color: "#1A1A1A",
                     strokeWidth: 2,
                     padding: 20
@@ -213,6 +213,14 @@ class GraphData {
                     id: "hyperevm-frame", 
                     label: "HyperEVM",
                     nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm"],
+                    color: "#FF6B6B",
+                    strokeWidth: 2,
+                    padding: 20
+                },
+                {
+                    id: "merlin-frame", 
+                    label: "Merlin",
+                    nodes: ["xsolvbtc-merlin"],
                     color: "#FF6B6B",
                     strokeWidth: 2,
                     padding: 20
@@ -296,7 +304,6 @@ class GraphData {
                 // SolvBTC tokens for Mantle
                 { id: "solvbtc-mantle", name: "SolvBTC", type: "token" },
                 { id: "xsolvbtc-mantle", name: "xSolvBTC", type: "token" },
-                { id: "btc-plus-mantle", name: "BTC+", type: "token" },
                 
                 // SolvBTC tokens for BOB
                 { id: "solvbtc-bob", name: "SolvBTC", type: "token" },
@@ -311,22 +318,18 @@ class GraphData {
                 // SolvBTC tokens for Linea
                 { id: "solvbtc-linea", name: "SolvBTC", type: "token" },
                 { id: "xsolvbtc-linea", name: "xSolvBTC", type: "token" },
-                { id: "btc-plus-linea", name: "BTC+", type: "token" },
                 
                 // SolvBTC tokens for Rootstock
                 { id: "solvbtc-rootstock", name: "SolvBTC", type: "token" },
                 { id: "xsolvbtc-rootstock", name: "xSolvBTC", type: "token" },
-                { id: "btc-plus-rootstock", name: "BTC+", type: "token" },
                 
                 // SolvBTC tokens for Soneium
                 { id: "solvbtc-soneium", name: "SolvBTC", type: "token" },
                 { id: "xsolvbtc-soneium", name: "xSolvBTC", type: "token" },
-                { id: "btc-plus-soneium", name: "BTC+", type: "token" },
                 
                 // SolvBTC tokens for Ink
                 { id: "solvbtc-ink", name: "SolvBTC", type: "token" },
                 { id: "xsolvbtc-ink", name: "xSolvBTC", type: "token" },
-                { id: "btc-plus-ink", name: "BTC+", type: "token" },
                 
                 // SolvBTC tokens for Bera
                 { id: "solvbtc-bera", name: "SolvBTC", type: "token" },
@@ -338,10 +341,14 @@ class GraphData {
                 { id: "xsolvbtc-hyperevm", name: "xSolvBTC", type: "token" },
                 { id: "btc-plus-hyperevm", name: "BTC+", type: "token" },
 
+                { id: "solvbtc-eth", name: "SolvBTC", type: "token" },
+                { id: "btc-plus-eth", name: "BTC+", type: "token" },
+
+                { id: "xsolvbtc-merlin", name: "xSolvBTC", type: "token" },
+
                 { id: "function", name: "Function", type: "issuer" },
                 { id: "nomic", name: "Nomic", type: "issuer" },
                 { id: "babylon", name: "Babylon", type: "issuer" },
-                { id: "solvbtc-eth", name: "SolvBTC", type: "token" },
                 { id: "fbtc", name: "FBTC", type: "token" },
                 { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
                 { id: "allbtc", name: "allBTC", type: "token" },
@@ -481,18 +488,15 @@ class GraphData {
                 { source: "xsolvbtc", target: "xsolvbtc-ink", text: true },
                 { source: "xsolvbtc", target: "xsolvbtc-bera", text: true },
                 { source: "xsolvbtc", target: "xsolvbtc-hyperevm", text: true },
+                { source: "xsolvbtc", target: "xsolvbtc-merlin", text: true },
                 
                 // BTC+ issuer connections to all networks
+                { source: "btc-plus", target: "btc-plus-eth", text: true },
                 { source: "btc-plus", target: "btc-plus-bsc", text: true },
                 { source: "btc-plus", target: "btc-plus-arbitrum", text: true },
                 { source: "btc-plus", target: "btc-plus-avalanche", text: true },
-                { source: "btc-plus", target: "btc-plus-mantle", text: true },
                 { source: "btc-plus", target: "btc-plus-bob", text: true },
                 { source: "btc-plus", target: "btc-plus-base", text: true },
-                { source: "btc-plus", target: "btc-plus-linea", text: true },
-                { source: "btc-plus", target: "btc-plus-rootstock", text: true },
-                { source: "btc-plus", target: "btc-plus-soneium", text: true },
-                { source: "btc-plus", target: "btc-plus-ink", text: true },
                 { source: "btc-plus", target: "btc-plus-bera", text: true },
                 { source: "btc-plus", target: "btc-plus-hyperevm", text: true }
             ]

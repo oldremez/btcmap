@@ -84,7 +84,22 @@ const ADDRESSES = {
     SOLVBTC_INKONCHAIN: '0xae4efbc7736f963982aacb17efa37fcbab924cb3',
     SOLVBTC_BERACHAIN: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
     SOLVBTC_ETHEREUM: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
-    SOLVBTC_HYPEREVM: '0xae4efbc7736f963982aacb17efa37fcbab924cb3'
+    SOLVBTC_HYPEREVM: '0xae4efbc7736f963982aacb17efa37fcbab924cb3',
+
+    // xSolvBTC contracts on various networks
+    XSOLVBTC_BSC: '0x1346b618dc92810ec74163e4c27004c921d446a5',
+    XSOLVBTC_ARBITRUM: '0x346c574c56e1a4aaa8dc88cda8f7eb12b39947ab',
+    XSOLVBTC_AVALANCHE: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_MANTLE: '0x1d40bafc49c37cda49f2a5427e2fb95e1e3fcf20',
+    XSOLVBTC_BOB: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_BASE: '0xc26c9099bd3789107888c35bb41178079b282561',
+    XSOLVBTC_LINEA: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_ROOTSTOCK: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_SONEIUM: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_INKONCHAIN: '0xc99f5c922dae05b6e2ff83463ce705ef7c91f077',
+    XSOLVBTC_BERACHAIN: '0xcc0966d8418d412c599a6421b760a847eb169a8c',
+    XSOLVBTC_HYPEREVM: '0xc99f5c922dae05b6e2ff83463ce705ef7c91f077',
+    XSOLVBTC_MERLIN: '0x1760900aca15b90fa2eca70ce4b4ec441c2cf6c5'
 
 };
 
@@ -512,6 +527,84 @@ const LINK_LABEL_HANDLERS = {
     'solvbtc->solvbtc-hyperevm': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.SOLVBTC_HYPEREVM, 18, 'hyperevm']
+    },
+
+    // xSolvBTC supply on BSC (xsolvbtc -> xsolvbtc-bsc)
+    'xsolvbtc->xsolvbtc-bsc': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_BSC, 18, 'bsc']
+    },
+
+    // xSolvBTC supply on Arbitrum (xsolvbtc -> xsolvbtc-arbitrum)
+    'xsolvbtc->xsolvbtc-arbitrum': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_ARBITRUM, 18, 'arbitrum']
+    },
+
+    // xSolvBTC supply on Avalanche (xsolvbtc -> xsolvbtc-avalanche)
+    'xsolvbtc->xsolvbtc-avalanche': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_AVALANCHE, 18, 'avalanche']
+    },
+
+    // xSolvBTC supply on Mantle (xsolvbtc -> xsolvbtc-mantle)
+    'xsolvbtc->xsolvbtc-mantle': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_MANTLE, 18, 'mantle']
+    },
+
+    // xSolvBTC supply on Boba Network (xsolvbtc -> xsolvbtc-boba)
+    'xsolvbtc->xsolvbtc-bob': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_BOB, 18, 'bob']
+    },
+
+    // xSolvBTC supply on Base (xsolvbtc -> xsolvbtc-base)
+    'xsolvbtc->xsolvbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_BASE, 18, 'base']
+    },
+
+    // xSolvBTC supply on Linea (xsolvbtc -> xsolvbtc-linea)
+    'xsolvbtc->xsolvbtc-linea': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_LINEA, 18, 'linea']
+    },
+
+    // xSolvBTC supply on Rootstock (xsolvbtc -> xsolvbtc-rootstock)
+    'xsolvbtc->xsolvbtc-rootstock': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_ROOTSTOCK, 18, 'rootstock']
+    },
+
+    // xSolvBTC supply on Soneium (xsolvbtc -> xsolvbtc-soneium)
+    'xsolvbtc->xsolvbtc-soneium': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_SONEIUM, 18, 'soneium']
+    },
+
+    // xSolvBTC supply on Inkonchain (xsolvbtc -> xsolvbtc-inkonchain)
+    'xsolvbtc->xsolvbtc-ink': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_INKONCHAIN, 18, 'ink']
+    },
+
+    // xSolvBTC supply on Berachain (xsolvbtc -> xsolvbtc-berachain)
+    'xsolvbtc->xsolvbtc-bera': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_BERACHAIN, 18, 'bera']
+    },
+
+    // xSolvBTC supply on HyperEVM (xsolvbtc -> xsolvbtc-hyperevm)
+    'xsolvbtc->xsolvbtc-hyperevm': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_HYPEREVM, 18, 'hyperevm']
+    },
+
+    // xSolvBTC supply on Merlin Chain (xsolvbtc -> xsolvbtc-merlin)
+    'xsolvbtc->xsolvbtc-merlin': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.XSOLVBTC_MERLIN, 18, 'merlin']
     }
 
 };
