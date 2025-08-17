@@ -457,7 +457,7 @@ class GraphData {
                 { source: "axelar", target: "wbtc-axl-neutron" },
 
                 { source: "btc", target: "binance" },
-                { source: "binance", target: "btcb" },
+                { source: "binance", target: "btcb", text: true },
                 { source: "babylon", target: "xsolvbtc" },
                 
                 // SolvBTC issuer connections to all networks

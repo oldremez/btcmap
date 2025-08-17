@@ -109,8 +109,9 @@ const ADDRESSES = {
     BTCPLUS_BOB: '0x4ca70811e831db42072cba1f0d03496ef126faad',
     BTCPLUS_AVALANCHE: '0x4ca70811e831db42072cba1f0d03496ef126faad',
     BTCPLUS_BERACHAIN: '0x4ca70811e831db42072cba1f0d03496ef126faad',
-    BTCPLUS_HYPEREVM: '0x4ca70811e831db42072cba1f0d03496ef126faad'
+    BTCPLUS_HYPEREVM: '0x4ca70811e831db42072cba1f0d03496ef126faad',
 
+    BTCB_BINANCE: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c'
 };
 
 const DENOMS = {
@@ -663,8 +664,12 @@ const LINK_LABEL_HANDLERS = {
     'btc-plus->btc-plus-hyperevm': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.BTCPLUS_HYPEREVM, 18, 'hyperevm']
-    }
+    },
 
+    'binance->btcb': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.BTCB_BINANCE, 18, 'bsc']
+    }
 };
 
 // In-memory cache for link labels with automatic expiration
