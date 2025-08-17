@@ -347,17 +347,23 @@ class GraphData {
                 { id: "xsolvbtc-merlin", name: "xSolvBTC", type: "token" },
 
                 { id: "function", name: "Function", type: "issuer" },
-                { id: "nomic", name: "Nomic", type: "issuer" },
-                { id: "babylon", name: "Babylon", type: "issuer" },
                 { id: "fbtc", name: "FBTC", type: "token" },
+
+                { id: "nomic", name: "Nomic", type: "issuer" },
+                { id: "nbtc", name: "nBTC", type: "token" },
+
+                { id: "babylon", name: "Babylon", type: "issuer" },
+
                 { id: "allbtc-issuer", name: "allBTC", type: "issuer" },
                 { id: "allbtc", name: "allBTC", type: "token" },
+
+                { id: "eureka", name: "Eureka", type: "issuer" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
+
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
                 { id: "ckbtc-osmosis", name: "ckBTC", type: "token" },
-                { id: "nbtc", name: "nBTC", type: "token" },
-                { id: "eureka", name: "Eureka", type: "issuer" },
+
                 { id: "binance", name: "Binance", type: "issuer" },
                 { id: "btcb", name: "BTCB", type: "token" }
             ],
@@ -405,6 +411,7 @@ class GraphData {
                 { source: "tbtc", target: "solvbtc", text: true },
                 { source: "cbbtc", target: "solvbtc", text: true },
                 { source: "fbtc", target: "solvbtc", text: true },
+                { source: "btcb", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -474,6 +481,7 @@ class GraphData {
                 { source: "solvbtc", target: "solvbtc-ink", text: true },
                 { source: "solvbtc", target: "solvbtc-bera", text: true },
                 { source: "solvbtc", target: "solvbtc-hyperevm", text: true },
+
                 
                 // xSolvBTC issuer connections to all networks
                 { source: "xsolvbtc", target: "xsolvbtc-bsc", text: true },
