@@ -677,9 +677,22 @@ class GraphVisualization {
             const isConnected = connectedLinks.includes(d);
             
             if (isConnected) {
+                // Determine if this is an incoming or outgoing link
+                const isOutgoing = d.source.id === hoveredNode.id;
+                const isIncoming = d.target.id === hoveredNode.id;
+                
+                let linkColor;
+                if (isOutgoing) {
+                    // Outgoing links: bright green
+                    linkColor = '#2ecc71';
+                } else if (isIncoming) {
+                    // Incoming links: bright blue
+                    linkColor = '#3498db';
+                }
+                
                 // Highlight connected links
                 linkElement
-                    .attr('stroke', '#4ecdc4') // Bright cyan color
+                    .attr('stroke', linkColor)
                     .attr('stroke-width', 4)
                     .attr('stroke-opacity', 1);
             } else {
