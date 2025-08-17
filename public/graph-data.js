@@ -383,7 +383,6 @@ class GraphData {
                 { source: "wbtc-eth", target: "wbtc-arbitrum", text: true },
                 { source: "wbtc-eth", target: "wbtc-polygon", text: true },
                 { source: "wbtc-eth", target: "wbtc-optimism", text: true },
-                { source: "solvbtc", target: "solvbtc-eth", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
                 
@@ -455,6 +454,7 @@ class GraphData {
                 { source: "babylon", target: "xsolvbtc" },
                 
                 // SolvBTC issuer connections to all networks
+                { source: "solvbtc", target: "solvbtc-eth", text: true },
                 { source: "solvbtc", target: "solvbtc-bsc", text: true },
                 { source: "solvbtc", target: "solvbtc-arbitrum", text: true },
                 { source: "solvbtc", target: "solvbtc-avalanche", text: true },
