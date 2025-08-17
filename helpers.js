@@ -93,7 +93,8 @@ const TokenHandlers = {
         'inkonchain': 'https://rpc.inkonchain.com',
         'bera': 'https://rpc.berachain.com',
         'hyperevm': 'https://hyperliquid.drpc.org',
-        'ink': 'https://ink.drpc.org/'
+        'ink': 'https://ink.drpc.org/',
+        'merlin': 'https://merlin.drpc.org/'
     },
 
     // Generic ERC20 token supply handler
