@@ -2,6 +2,8 @@
 
 A comprehensive visualization of Bitcoin's liquidity across different blockchain networks and protocols.
 
+See the public deployment on https://btcmap.tech/
+
 ## Features
 
 - **Interactive Graph**: D3.js-based visualization of Bitcoin liquidity flows
@@ -124,3 +126,11 @@ To add a new node:
 ## Support
 
 For questions or support, please [create an issue](link-to-issues) or contact the development team.
+
+## Thanks
+
+Kudos to projects that were useful during the development:
+
+- [Crypto Logos](https://cryptologos.cc/) for svg logos
+- [Chainlist](https://chainlist.org/) for API
+- [dRPC](https://drpc.org/) for RPCs
