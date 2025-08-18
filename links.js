@@ -16,6 +16,7 @@ const ADDRESSES = {
     CBTC_ARBITRUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
     TBTC_ETHEREUM: '0x18084fba666a33d37592fa2633fd49a74dd93a88',
     FBTC_ETHEREUM: '0xc96de26018a54d51c097160568752c4e3bd6c364',
+    FBTC_MANTLE: '0xc96de26018a54d51c097160568752c4e3bd6c364',
     SOLVBTC_ETH: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
     LBTC_ETHEREUM: '0x8236a87084f8b84306f72007f36f2618a5634494',
     
@@ -694,6 +695,11 @@ const LINK_LABEL_HANDLERS = {
     'btc.b->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.BTCDOTB_AVALANCHE, ADDRESSES.SOLVBTC_AVALANCHE_BTC_B_VAULT, 8, 'avalanche']
+    },
+
+    'function->fbtc-mantle': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.FBTC_MANTLE, 8, 'mantle']
     }
 };
 

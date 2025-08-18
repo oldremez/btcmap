@@ -148,7 +148,7 @@ class GraphData {
                 {
                     id: "mantle-frame", 
                     label: "Mantle",
-                    nodes: ["solvbtc-mantle", "xsolvbtc-mantle"],
+                    nodes: ["solvbtc-mantle", "xsolvbtc-mantle", "fbtc-mantle"],
                     color: "#000000",
                     strokeWidth: 2,
                     padding: 20
@@ -348,6 +348,7 @@ class GraphData {
 
                 { id: "function", name: "Function", type: "issuer" },
                 { id: "fbtc", name: "FBTC", type: "token" },
+                { id: "fbtc-mantle", name: "FBTC", type: "token" },
 
                 { id: "nomic", name: "Nomic", type: "issuer" },
                 { id: "nbtc", name: "nBTC", type: "token" },
@@ -401,6 +402,7 @@ class GraphData {
                 { source: "wbtc-eth", target: "wbtc-optimism", text: true },
                 
                 { source: "function", target: "fbtc", text: true },
+                { source: "function", target: "fbtc-mantle", text: true },
                 
                 { source: "coinbase", target: "cbbtc", text: true },
                 { source: "coinbase", target: "cbbtc-solana", text: true },
