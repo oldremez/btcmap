@@ -380,7 +380,12 @@ class GraphVisualization {
                     
                     // Add frame label with icon
                     const labelGroup = frameGroup.append('g')
-                        .attr('class', 'frame-label-group');
+                        .attr('class', 'frame-label-group')
+                        .style('cursor', 'pointer')
+                        .on('click', (event) => {
+                            // Handle frame label click to show description
+                            this.nodePopup.show(frame.id, frame.label);
+                        });
                     
                     // Add icon if it exists (based on frame ID)
                     let iconSize = 0;
@@ -418,7 +423,13 @@ class GraphVisualization {
                         .attr('font-weight', 'bold')
                         .attr('fill', frame.color)
                         .attr('background-color', 'white')
-                        .text(frame.label);
+                        .attr('class', 'frame-label')
+                        .attr('cursor', 'pointer')
+                        .text(frame.label)
+                        .on('click', (event) => {
+                            // Handle frame label click to show description
+                            this.nodePopup.show(frame.id, frame.label);
+                        });
                 }
             });
         }

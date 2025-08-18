@@ -126,7 +126,15 @@
         }
 
         .frame-label-group {
-            pointer-events: none;
+            cursor: pointer;
+        }
+
+        .frame-label-group:hover {
+            opacity: 0.8;
+        }
+
+        .frame-label {
+            cursor: pointer;
         }
 
     </style>
@@ -191,7 +199,7 @@
                 <p>DeFi protocols and platforms that use Bitcoin tokens.</p>
             </div>
 
-            <p>Nodes are clickable! Click on them to see the details about the node.</p>
+            <p>Nodes and frame labels are clickable! Click on them to see the details about the node or network.</p>
             
             <h4>Network Frames</h4>
             <p>Nodes are grouped by blockchain networks, each with its own color and border. The connections between nodes show how Bitcoin moves between different blockchains and protocols.</p>
