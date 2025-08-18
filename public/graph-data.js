@@ -360,6 +360,7 @@ class GraphData {
 
                 { id: "eureka", name: "Eureka", type: "issuer" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
+                { id: "stargate", name: "Stargate", type: "issuer" },
 
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
@@ -425,6 +426,7 @@ class GraphData {
                 { source: "wbtc-arbitrum", target: "solvbtc", text: true },
                 { source: "btc.b", target: "solvbtc", text: true },
                 { source: "fbtc-mantle", target: "solvbtc", text: true },
+                { source: "wbtc-bob", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -519,7 +521,10 @@ class GraphData {
                 { source: "btc-plus", target: "btc-plus-bob", text: true },
                 { source: "btc-plus", target: "btc-plus-base", text: true },
                 { source: "btc-plus", target: "btc-plus-bera", text: true },
-                { source: "btc-plus", target: "btc-plus-hyperevm", text: true }
+                { source: "btc-plus", target: "btc-plus-hyperevm", text: true },
+
+                { source: "stargate", target: "wbtc-bob", text: true },
+                { source: "wbtc-eth", target: "stargate" }
             ]
         };
     }

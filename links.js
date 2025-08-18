@@ -9,6 +9,7 @@ const ADDRESSES = {
     WBTC_ARBITRUM: '0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f',
     WBTC_POLYGON: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     WBTC_OPTIMISM: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
+    WBTC_BOB: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -73,6 +74,7 @@ const ADDRESSES = {
     SOLVBTC_BSC_BTCB_VAULT: '0x9537bc0546506785bd1ebd19fd67d1f06800d185',
     SOLVBTC_ARBITRUM_WBTC_VAULT: '0x032470abbb896b1255299d5165c1a5e9ef26bcd2',
     SOLVBTC_AVALANCHE_BTC_B_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
+    SOLVBTC_BOB_WBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -706,6 +708,16 @@ const LINK_LABEL_HANDLERS = {
     'fbtc-mantle->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.FBTC_MANTLE, ADDRESSES.SOLVBTC_MANTLE_FBTC_VAULT, 8, 'mantle']
+    },
+
+    'wbtc-bob->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_BOB, ADDRESSES.SOLVBTC_BOB_WBTC_VAULT, 8, 'bob']
+    },
+
+    'stargate->wbtc-bob': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_BOB, 8, 'bob']
     },
 };
 
