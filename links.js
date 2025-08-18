@@ -90,6 +90,7 @@ const ADDRESSES = {
     SOLVBTC_BERACHAIN: '0x541fd749419ca806a8bc7da8ac23d346f2df8b77',
     SOLVBTC_ETHEREUM: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
     SOLVBTC_HYPEREVM: '0xae4efbc7736f963982aacb17efa37fcbab924cb3',
+    SOLVBTC_MANTLE_FBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
 
     // xSolvBTC contracts on various networks
     XSOLVBTC_BSC: '0x1346b618dc92810ec74163e4c27004c921d446a5',
@@ -700,7 +701,12 @@ const LINK_LABEL_HANDLERS = {
     'function->fbtc-mantle': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.FBTC_MANTLE, 8, 'mantle']
-    }
+    },  
+
+    'fbtc-mantle->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.FBTC_MANTLE, ADDRESSES.SOLVBTC_MANTLE_FBTC_VAULT, 8, 'mantle']
+    },
 };
 
 // In-memory cache for link labels with automatic expiration

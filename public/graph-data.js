@@ -401,6 +401,7 @@ class GraphData {
                 { source: "wbtc-eth", target: "wbtc-polygon", text: true },
                 { source: "wbtc-eth", target: "wbtc-optimism", text: true },
                 
+                // FBTC
                 { source: "function", target: "fbtc", text: true },
                 { source: "function", target: "fbtc-mantle", text: true },
                 
@@ -412,6 +413,7 @@ class GraphData {
                 
                 { source: "wbtc-eth", target: "axelar", text: true },
                 
+                // SolvBTC backing
                 { source: "wbtc-eth", target: "solvbtc", text: true },
                 { source: "tbtc", target: "solvbtc", text: true },
                 { source: "cbbtc", target: "solvbtc", text: true },
@@ -419,6 +421,7 @@ class GraphData {
                 { source: "btcb", target: "solvbtc", text: true },
                 { source: "wbtc-arbitrum", target: "solvbtc", text: true },
                 { source: "btc.b", target: "solvbtc", text: true },
+                { source: "fbtc-mantle", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
