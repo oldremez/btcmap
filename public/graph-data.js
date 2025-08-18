@@ -360,7 +360,8 @@ class GraphData {
 
                 { id: "eureka", name: "Eureka", type: "issuer" },
                 { id: "axelar", name: "Axelar", type: "issuer" },
-                { id: "stargate", name: "Stargate", type: "issuer" },
+                { id: "stargate", name: "Stargate (LayerZero)", type: "issuer" },
+                { id: "bob-bridge", name: "BOB Bridge (?)", type: "issuer" },
 
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
@@ -524,7 +525,9 @@ class GraphData {
                 { source: "btc-plus", target: "btc-plus-hyperevm", text: true },
 
                 { source: "stargate", target: "wbtc-bob", text: true },
-                { source: "wbtc-eth", target: "stargate" }
+                { source: "wbtc-eth", target: "stargate" },
+                { source: "wbtc-eth", target: "bob-bridge" },
+                { source: "bob-bridge", target: "wbtc-bob-old", text: true }
             ]
         };
     }

@@ -10,6 +10,7 @@ const ADDRESSES = {
     WBTC_POLYGON: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     WBTC_OPTIMISM: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     WBTC_BOB: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
+    WBTC_BOB_OLD: '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -718,6 +719,11 @@ const LINK_LABEL_HANDLERS = {
     'stargate->wbtc-bob': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_BOB, 8, 'bob']
+    },
+
+    'bob-bridge->wbtc-bob-old': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_BOB_OLD, 8, 'bob']
     },
 };
 
