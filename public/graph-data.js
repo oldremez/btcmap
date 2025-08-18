@@ -156,7 +156,7 @@ class GraphData {
                 {
                     id: "bob-frame", 
                     label: "BOB",
-                    nodes: ["solvbtc-bob", "xsolvbtc-bob", "btc-plus-bob"],
+                    nodes: ["solvbtc-bob", "xsolvbtc-bob", "btc-plus-bob", "wbtc-bob-old", "wbtc-bob"],
                     color: "#FF6B35",
                     strokeWidth: 2,
                     padding: 20
@@ -368,7 +368,10 @@ class GraphData {
                 { id: "binance", name: "Binance", type: "issuer" },
                 { id: "btcb", name: "BTCB", type: "token" },
 
-                { id: "btc.b", name: "BTC.b", type: "token" }
+                { id: "btc.b", name: "BTC.b", type: "token" },
+
+                { id: "wbtc-bob-old", name: "WBTC (old)", type: "token" },
+                { id: "wbtc-bob", name: "WBTC", type: "token" }
             ],
             links: [
                 // Central connections
