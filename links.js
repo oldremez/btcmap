@@ -12,6 +12,7 @@ const ADDRESSES = {
     WBTC_BOB: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
     WBTC_BOB_OLD: '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
     WBTC_LINEA: '0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4',
+    WBTC_SONEIUM: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -82,6 +83,7 @@ const ADDRESSES = {
     SOLVBTC_BASE_CBTC_VAULT: '0xcdaaaa09e6e0de3e7171259cf6962e4d44f983f9',
     SOLVBTC_LINEA_WBTC_VAULT: '0x35ce7fa5623b8a5cf1cf87a8bf8d64ad8da1443e',
     SOLVBTC_ROOTSTOCK_RBTC_VAULT: '0xA26DDc188b1c07D7F0dcB90827424B14DDA2E372',
+    SOLVBTC_SONEIUM_WBTC_VAULT: '0xeDCD3B3E3d7724908aBf5341427143Fd2D258E48',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -132,6 +134,8 @@ const ADDRESSES = {
     LINEA_BRIDGE_WBTC: '0x051f1d88f0af5763fb888ec4378b4d8b29ea3319',
 
     RBTC_ROOTSTOCK: '0x542FDA317318eBf1d3DeAF76E0B632741a7e677d',
+
+    STARGATE_WBTC: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
 };
 
 const DENOMS = {
@@ -774,7 +778,22 @@ const LINK_LABEL_HANDLERS = {
     'rbtc->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.RBTC_ROOTSTOCK, ADDRESSES.SOLVBTC_ROOTSTOCK_RBTC_VAULT, 18, 'rootstock']
-    }
+    },
+
+    'wbtc-eth->stargate': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.STARGATE_WBTC, 8, 'ethereum']
+    },
+
+    'stargate->wbtc-soneium': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_SONEIUM, 8, 'soneium']
+    },
+
+    'wbtc-soneium->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_SONEIUM, ADDRESSES.SOLVBTC_SONEIUM_WBTC_VAULT, 8, 'soneium']
+    },
 };
 
 // In-memory cache for link labels with automatic expiration

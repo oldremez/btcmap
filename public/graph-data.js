@@ -188,7 +188,7 @@ class GraphData {
                 {
                     id: "soneium-frame", 
                     label: "Soneium",
-                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium"],
+                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium", "wbtc-soneium"],
                     color: "#8B5CF6",
                     strokeWidth: 2,
                     padding: 20
@@ -247,6 +247,7 @@ class GraphData {
                 { id: "wbtc-eth-axl-osmo", name: "WBTC.eth.axl", type: "token" },
                 { id: "wbtc-eth-eur-osmo", name: "WBTC.eth.atom", type: "token" },
                 { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
+                { id: "wbtc-soneium", name: "WBTC", type: "token" },
 
                 // cbBTC
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
@@ -442,6 +443,7 @@ class GraphData {
                 { source: "tbtc-base", target: "solvbtc", text: true },
                 { source: "cbbtc-base", target: "solvbtc", text: true },
                 { source: "wbtc-linea", target: "solvbtc", text: true },
+                { source: "wbtc-soneium", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -540,7 +542,7 @@ class GraphData {
                 { source: "btc-plus", target: "btc-plus-hyperevm", text: true },
 
                 { source: "stargate", target: "wbtc-bob", text: true },
-                { source: "wbtc-eth", target: "stargate" },
+                { source: "wbtc-eth", target: "stargate", text: true },
                 { source: "wbtc-eth", target: "bob-bridge" },
                 { source: "bob-bridge", target: "wbtc-bob-old", text: true },
                 { source: "linea-bridge", target: "wbtc-linea", text: true },
@@ -553,7 +555,8 @@ class GraphData {
 
                 { source: "powpeg", target: "rbtc", text: true },
                 { source: "rbtc", target: "solvbtc", text: true },
-                { source: "btc", target: "powpeg" }
+                { source: "btc", target: "powpeg" },
+                { source: "stargate", target: "wbtc-soneium", text: true }
             ]
         };
     }
