@@ -20,7 +20,7 @@ class GraphData {
                 {
                     id: "osmosis-frame", 
                     label: "Osmosis",
-                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc", "nbtc", "wbtc-eth-axl-osmo", "wbtc-eth-eur-osmo"],
+                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc", "nbtc", "wbtc-eth-axl-osmo", "wbtc-eth-eur-osmo", "btc-int3-osmosis"],
                     color: "#45b7d1",
                     strokeWidth: 2,
                     padding: 20
@@ -108,7 +108,7 @@ class GraphData {
                 {
                     id: "neutron-frame", 
                     label: "Neutron",
-                    nodes: ["wbtc-eureka-neutron", "wbtc-axl-neutron"],
+                    nodes: ["wbtc-eureka-neutron", "wbtc-axl-neutron", "btc-int3-neutron"],
                     color: "#9b59b6",
                     strokeWidth: 2,
                     padding: 20
@@ -362,6 +362,7 @@ class GraphData {
                 { id: "axelar", name: "Axelar", type: "issuer" },
                 { id: "stargate", name: "Stargate (LayerZero)", type: "issuer" },
                 { id: "bob-bridge", name: "BOB Bridge (?)", type: "issuer" },
+                { id: "int3face", name: "Int3Face (BitFrost)", type: "issuer" },
 
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
@@ -373,7 +374,10 @@ class GraphData {
                 { id: "btc.b", name: "BTC.b", type: "token" },
 
                 { id: "wbtc-bob-old", name: "WBTC (old)", type: "token" },
-                { id: "wbtc-bob", name: "WBTC", type: "token" }
+                { id: "wbtc-bob", name: "WBTC", type: "token" },
+
+                { id: "btc-int3-osmosis", name: "BTC.in3", type: "token" },
+                { id: "btc-int3-neutron", name: "BTC.in3", type: "token" }
             ],
             links: [
                 // Central connections
@@ -527,7 +531,12 @@ class GraphData {
                 { source: "stargate", target: "wbtc-bob", text: true },
                 { source: "wbtc-eth", target: "stargate" },
                 { source: "wbtc-eth", target: "bob-bridge" },
-                { source: "bob-bridge", target: "wbtc-bob-old", text: true }
+                { source: "bob-bridge", target: "wbtc-bob-old", text: true },
+
+                { source: "btc", target: "int3face" },
+                { source: "int3face", target: "btc-int3-osmosis", text: true },
+                { source: "int3face", target: "btc-int3-neutron", text: true },
+                { source: "btc-int3-osmosis", target: "allbtc-issuer", text: true }
             ]
         };
     }
