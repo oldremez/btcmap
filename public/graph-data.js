@@ -434,6 +434,7 @@ class GraphData {
                 { source: "fbtc-mantle", target: "solvbtc", text: true },
                 { source: "wbtc-bob", target: "solvbtc", text: true },
                 { source: "tbtc-base", target: "solvbtc", text: true },
+                { source: "cbbtc-base", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },

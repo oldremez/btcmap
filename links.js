@@ -78,6 +78,7 @@ const ADDRESSES = {
     SOLVBTC_AVALANCHE_BTC_B_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
     SOLVBTC_BOB_WBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
     SOLVBTC_BASE_TBTC_VAULT: '0xf2416c264aa4068ff4d1949383366458f295f205',
+    SOLVBTC_BASE_CBTC_VAULT: '0xcdaaaa09e6e0de3e7171259cf6962e4d44f983f9',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -736,6 +737,11 @@ const LINK_LABEL_HANDLERS = {
     'tbtc-base->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.TBTC_BASE, ADDRESSES.SOLVBTC_BASE_TBTC_VAULT, 18, 'base']
+    },
+
+    'cbbtc-base->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.CBTC_BASE, ADDRESSES.SOLVBTC_BASE_CBTC_VAULT, 8, 'base']
     },
 };
 
