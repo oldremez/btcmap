@@ -180,7 +180,7 @@ class GraphData {
                 {
                     id: "rootstock-frame", 
                     label: "Rootstock",
-                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock"],
+                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock", "rbtc"],
                     color: "#00C851",
                     strokeWidth: 2,
                     padding: 20
@@ -364,6 +364,7 @@ class GraphData {
                 { id: "stargate", name: "Stargate (LayerZero)", type: "issuer" },
                 { id: "bob-bridge", name: "BOB Bridge (?)", type: "issuer" },
                 { id: "int3face", name: "Int3Face (BitFrost)", type: "issuer" },
+                { id: "powpeg", name: "PowPeg", type: "issuer" },
 
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
@@ -381,7 +382,9 @@ class GraphData {
                 { id: "btc-int3-neutron", name: "BTC.in3", type: "token" },
 
                 { id: "linea-bridge", name: "Linea Bridge", type: "issuer" },
-                { id: "wbtc-linea", name: "WBTC", type: "token" }
+                { id: "wbtc-linea", name: "WBTC", type: "token" },
+
+                { id: "rbtc", name: "RBTC", type: "token" }
             ],
             links: [
                 // Central connections
@@ -546,7 +549,11 @@ class GraphData {
                 { source: "btc", target: "int3face" },
                 { source: "int3face", target: "btc-int3-osmosis", text: true },
                 { source: "int3face", target: "btc-int3-neutron", text: true },
-                { source: "btc-int3-osmosis", target: "allbtc-issuer", text: true }
+                { source: "btc-int3-osmosis", target: "allbtc-issuer", text: true },
+
+                { source: "powpeg", target: "rbtc", text: true },
+                { source: "rbtc", target: "solvbtc", text: true },
+                { source: "btc", target: "powpeg" }
             ]
         };
     }

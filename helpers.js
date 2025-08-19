@@ -305,6 +305,28 @@ const TokenHandlers = {
         }
     },
 
+    // rBTC supply handler for Rootstock
+    async handleRBTCSupply() {
+        try {
+            const response = await fetch('https://be.explorer.rootstock.io/circulating');
+            
+            if (response.ok) {
+                const data = await response.json();
+                if (data.circulatingSupply) {
+                    const supply = parseFloat(data.circulatingSupply);
+                    if (!isNaN(supply)) {
+                        return formatNumber(supply);
+                    }
+                }
+                return 'Error';
+            }
+            return 'Error';
+        } catch (error) {
+            console.error('Error fetching rBTC supply:', error);
+            return 'Error';
+        }
+    },
+
     // WBTC balance handler
     async handleWBTCBalance(walletAddress) {
         return this.handleERC20Balance(

@@ -81,6 +81,7 @@ const ADDRESSES = {
     SOLVBTC_BASE_TBTC_VAULT: '0xf2416c264aa4068ff4d1949383366458f295f205',
     SOLVBTC_BASE_CBTC_VAULT: '0xcdaaaa09e6e0de3e7171259cf6962e4d44f983f9',
     SOLVBTC_LINEA_WBTC_VAULT: '0x35ce7fa5623b8a5cf1cf87a8bf8d64ad8da1443e',
+    SOLVBTC_ROOTSTOCK_RBTC_VAULT: '0xA26DDc188b1c07D7F0dcB90827424B14DDA2E372',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -129,6 +130,8 @@ const ADDRESSES = {
     BTCDOTB_AVALANCHE: '0x152b9d0FdC40C096757F570A51E494bd4b943E50',
 
     LINEA_BRIDGE_WBTC: '0x051f1d88f0af5763fb888ec4378b4d8b29ea3319',
+
+    RBTC_ROOTSTOCK: '0x542FDA317318eBf1d3DeAF76E0B632741a7e677d',
 };
 
 const DENOMS = {
@@ -762,6 +765,16 @@ const LINK_LABEL_HANDLERS = {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_LINEA, ADDRESSES.SOLVBTC_LINEA_WBTC_VAULT, 8, 'linea']
     },
+
+    'powpeg->rbtc': {
+        handler: TokenHandlers.handleRBTCSupply,
+        args: []
+    },
+
+    'rbtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.RBTC_ROOTSTOCK, ADDRESSES.SOLVBTC_ROOTSTOCK_RBTC_VAULT, 18, 'rootstock']
+    }
 };
 
 // In-memory cache for link labels with automatic expiration
