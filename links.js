@@ -11,6 +11,7 @@ const ADDRESSES = {
     WBTC_OPTIMISM: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
     WBTC_BOB: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
     WBTC_BOB_OLD: '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
+    WBTC_LINEA: '0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4',
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -79,6 +80,7 @@ const ADDRESSES = {
     SOLVBTC_BOB_WBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
     SOLVBTC_BASE_TBTC_VAULT: '0xf2416c264aa4068ff4d1949383366458f295f205',
     SOLVBTC_BASE_CBTC_VAULT: '0xcdaaaa09e6e0de3e7171259cf6962e4d44f983f9',
+    SOLVBTC_LINEA_WBTC_VAULT: '0x35ce7fa5623b8a5cf1cf87a8bf8d64ad8da1443e',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -124,7 +126,9 @@ const ADDRESSES = {
     BTCPLUS_HYPEREVM: '0x4ca70811e831db42072cba1f0d03496ef126faad',
 
     BTCB_BINANCE: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
-    BTCDOTB_AVALANCHE: '0x152b9d0FdC40C096757F570A51E494bd4b943E50'
+    BTCDOTB_AVALANCHE: '0x152b9d0FdC40C096757F570A51E494bd4b943E50',
+
+    LINEA_BRIDGE_WBTC: '0x051f1d88f0af5763fb888ec4378b4d8b29ea3319',
 };
 
 const DENOMS = {
@@ -742,6 +746,21 @@ const LINK_LABEL_HANDLERS = {
     'cbbtc-base->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.CBTC_BASE, ADDRESSES.SOLVBTC_BASE_CBTC_VAULT, 8, 'base']
+    },
+
+    'linea-bridge->wbtc-linea': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_LINEA, 8, 'linea']
+    },
+
+    'wbtc-eth->linea-bridge': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.LINEA_BRIDGE_WBTC, 8, 'ethereum']
+    },
+
+    'wbtc-linea->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_LINEA, ADDRESSES.SOLVBTC_LINEA_WBTC_VAULT, 8, 'linea']
     },
 };
 

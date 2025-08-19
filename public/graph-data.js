@@ -172,7 +172,7 @@ class GraphData {
                 {
                     id: "linea-frame", 
                     label: "Linea",
-                    nodes: ["solvbtc-linea", "xsolvbtc-linea"],
+                    nodes: ["solvbtc-linea", "xsolvbtc-linea", "wbtc-linea"],
                     color: "#61D9FA",
                     strokeWidth: 2,
                     padding: 20
@@ -378,7 +378,10 @@ class GraphData {
                 { id: "wbtc-bob", name: "WBTC", type: "token" },
 
                 { id: "btc-int3-osmosis", name: "BTC.in3", type: "token" },
-                { id: "btc-int3-neutron", name: "BTC.in3", type: "token" }
+                { id: "btc-int3-neutron", name: "BTC.in3", type: "token" },
+
+                { id: "linea-bridge", name: "Linea Bridge", type: "issuer" },
+                { id: "wbtc-linea", name: "WBTC", type: "token" }
             ],
             links: [
                 // Central connections
@@ -435,6 +438,7 @@ class GraphData {
                 { source: "wbtc-bob", target: "solvbtc", text: true },
                 { source: "tbtc-base", target: "solvbtc", text: true },
                 { source: "cbbtc-base", target: "solvbtc", text: true },
+                { source: "wbtc-linea", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -536,6 +540,8 @@ class GraphData {
                 { source: "wbtc-eth", target: "stargate" },
                 { source: "wbtc-eth", target: "bob-bridge" },
                 { source: "bob-bridge", target: "wbtc-bob-old", text: true },
+                { source: "linea-bridge", target: "wbtc-linea", text: true },
+                { source: "wbtc-eth", target: "linea-bridge", text: true },
 
                 { source: "btc", target: "int3face" },
                 { source: "int3face", target: "btc-int3-osmosis", text: true },
