@@ -17,6 +17,7 @@ const ADDRESSES = {
     CBTC_BASE: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
     CBTC_ARBITRUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
     TBTC_ETHEREUM: '0x18084fba666a33d37592fa2633fd49a74dd93a88',
+    TBTC_BASE: '0x236aa50979d5f3de3bd1eeb40e81137f22ab794b',
     FBTC_ETHEREUM: '0xc96de26018a54d51c097160568752c4e3bd6c364',
     FBTC_MANTLE: '0xc96de26018a54d51c097160568752c4e3bd6c364',
     SOLVBTC_ETH: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
@@ -76,6 +77,7 @@ const ADDRESSES = {
     SOLVBTC_ARBITRUM_WBTC_VAULT: '0x032470abbb896b1255299d5165c1a5e9ef26bcd2',
     SOLVBTC_AVALANCHE_BTC_B_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
     SOLVBTC_BOB_WBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
+    SOLVBTC_BASE_TBTC_VAULT: '0xf2416c264aa4068ff4d1949383366458f295f205',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -724,6 +726,16 @@ const LINK_LABEL_HANDLERS = {
     'bob-bridge->wbtc-bob-old': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_BOB_OLD, 8, 'bob']
+    },
+
+    'portal-bridge-tbtc->tbtc-base': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.TBTC_BASE, 18, 'base']
+    },
+
+    'tbtc-base->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.TBTC_BASE, ADDRESSES.SOLVBTC_BASE_TBTC_VAULT, 18, 'base']
     },
 };
 

@@ -164,7 +164,7 @@ class GraphData {
                 {
                     id: "base-frame", 
                     label: "Base",
-                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base", "solvbtc-base", "xsolvbtc-base", "btc-plus-base"],
+                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base", "solvbtc-base", "xsolvbtc-base", "btc-plus-base", "tbtc-base"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -267,6 +267,7 @@ class GraphData {
                 // tBTC
                 { id: "tbtc", name: "tBTC", type: "token" },
                 { id: "tbtc-portal-solana", name: "tBTC.portal", type: "token" },
+                { id: "tbtc-base", name: "tBTC", type: "token" },
                 { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" },
 
                 // Ethereum protocols
@@ -432,6 +433,7 @@ class GraphData {
                 { source: "btc.b", target: "solvbtc", text: true },
                 { source: "fbtc-mantle", target: "solvbtc", text: true },
                 { source: "wbtc-bob", target: "solvbtc", text: true },
+                { source: "tbtc-base", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -464,6 +466,7 @@ class GraphData {
                 { source: "tbtc", target: "aave", text: true },
                 { source: "tbtc", target: "portal-bridge-tbtc", text: true },
                 { source: "portal-bridge-tbtc", target: "tbtc-portal-solana", text: true },
+                { source: "portal-bridge-tbtc", target: "tbtc-base", text: true },
                 { source: "internet-computer", target: "ckbtc-icp", text: true },
                 { source: "cbbtc", target: "aave", text: true },
                 { source: "cbbtc", target: "morpho", text: true },
