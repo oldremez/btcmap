@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <title>The map of Bitcoin</title>
     <style>
@@ -42,6 +42,20 @@
             border-top: 1px solid #eee;
             padding: 16px;
             text-align: center;
+            /* iOS safe area support */
+            padding-bottom: calc(16px + env(safe-area-inset-bottom));
+        }
+
+        /* iOS safe area support for the entire body */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            /* Add safe area support for iOS */
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         /* Node description popup styles */
