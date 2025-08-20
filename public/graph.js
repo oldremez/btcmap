@@ -86,8 +86,8 @@ class NodePopup {
 
 class GraphVisualization {
     constructor() {
-        this.width = document.getElementById('graph').clientWidth;
-        this.height = 600;
+        this.width = 0;
+        this.height = 0;
         this.nodes = [];
         this.links = [];
         this.simulation = null;
@@ -101,6 +101,9 @@ class GraphVisualization {
     async init() {
         // Clear existing content
         d3.select('#graph').selectAll('*').remove();
+
+        // Calculate container dimensions
+        this.updateDimensions();
 
         // Create SVG container
         this.svg = d3.select('#graph')
@@ -122,6 +125,9 @@ class GraphVisualization {
 
         this.svg.call(zoom);
 
+        // Resize handling
+        window.addEventListener('resize', () => this.onResize());
+
         // Add dev mode controls if enabled
         if (this.devMode) {
             this.addDevControls();
@@ -131,6 +137,28 @@ class GraphVisualization {
         await this.loadNodePositions();
         this.generateSampleGraph();
         this.render();
+    }
+
+    updateDimensions() {
+        const graphEl = document.getElementById('graph');
+        if (graphEl) {
+            this.width = graphEl.clientWidth;
+            this.height = graphEl.clientHeight || window.innerHeight;
+        }
+    }
+
+    onResize() {
+        this.updateDimensions();
+        if (this.svg) {
+            this.svg.attr('width', this.width).attr('height', this.height);
+        }
+        if (this.simulation) {
+            this.simulation
+                .force('center', d3.forceCenter(this.width / 2, this.height / 2))
+                .force('x', d3.forceX(this.width / 2).strength(0.1))
+                .force('y', d3.forceY(this.height / 2).strength(0.1));
+            this.simulation.alpha(0.3).restart();
+        }
     }
 
     addDevControls() {
