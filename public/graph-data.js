@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc", "btc-plus-eth"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc", "btc-plus-eth", "kbtc-eth"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -60,7 +60,7 @@ class GraphData {
                 {
                     id: "optimism-frame",
                     label: "Optimism",
-                    nodes: ["wbtc-optimism"],
+                    nodes: ["wbtc-optimism", "kbtc-optimism"],
                     color: "#dc3545",
                     strokeWidth: 2,
                     padding: 20
@@ -196,7 +196,7 @@ class GraphData {
                 {
                     id: "ink-frame", 
                     label: "Ink",
-                    nodes: ["solvbtc-ink", "xsolvbtc-ink"],
+                    nodes: ["solvbtc-ink", "xsolvbtc-ink", "kbtc-ink"],
                     color: "#1A1A1A",
                     strokeWidth: 2,
                     padding: 20
@@ -224,12 +224,27 @@ class GraphData {
                     color: "#FF6B6B",
                     strokeWidth: 2,
                     padding: 20
+                },
+                {
+                    id: "unichain-frame", 
+                    label: "Unichain",
+                    nodes: ["kbtc-unichain"],
+                    color: "#9B59B6",
+                    strokeWidth: 2,
+                    padding: 20
                 }
             ],
             nodes: [
                 // Central Bitcoin nodes
                 { id: "btc", name: "BTC", type: "token" },
                 { id: "bitcoin", name: "Bitcoin", type: "issuer" },
+                
+                // Kraken
+                { id: "kraken", name: "Kraken", type: "issuer" },
+                { id: "kbtc-eth", name: "kBTC", type: "token" },
+                { id: "kbtc-optimism", name: "kBTC", type: "token" },
+                { id: "kbtc-unichain", name: "kBTC", type: "token" },
+                { id: "kbtc-ink", name: "kBTC", type: "token" },
                 
                 // WBTC
                 { id: "bitgo", name: "BitGo", type: "issuer" },
@@ -398,6 +413,7 @@ class GraphData {
                 { source: "btc", target: "coinbase" },
                 { source: "btc", target: "internet-computer" },
                 { source: "btc", target: "solvbtc" },
+                { source: "btc", target: "kraken" },
                 { source: "btc", target: "btc.b", text: true },
                 
                 // Bridge to wrapped tokens
@@ -444,6 +460,7 @@ class GraphData {
                 { source: "cbbtc-base", target: "solvbtc", text: true },
                 { source: "wbtc-linea", target: "solvbtc", text: true },
                 { source: "wbtc-soneium", target: "solvbtc", text: true },
+                { source: "kbtc-ink", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -499,6 +516,12 @@ class GraphData {
                 { source: "btc", target: "binance" },
                 { source: "binance", target: "btcb", text: true },
                 { source: "babylon", target: "xsolvbtc" },
+                
+                // Kraken kBTC connections
+                { source: "kraken", target: "kbtc-eth", text: true },
+                { source: "kraken", target: "kbtc-optimism", text: true },
+                { source: "kraken", target: "kbtc-unichain", text: true },
+                { source: "kraken", target: "kbtc-ink", text: true },
                 
                 // SolvBTC issuer connections to all networks
                 { source: "solvbtc", target: "solvbtc-eth", text: true },

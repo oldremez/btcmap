@@ -84,6 +84,7 @@ const ADDRESSES = {
     SOLVBTC_LINEA_WBTC_VAULT: '0x35ce7fa5623b8a5cf1cf87a8bf8d64ad8da1443e',
     SOLVBTC_ROOTSTOCK_RBTC_VAULT: '0xA26DDc188b1c07D7F0dcB90827424B14DDA2E372',
     SOLVBTC_SONEIUM_WBTC_VAULT: '0xeDCD3B3E3d7724908aBf5341427143Fd2D258E48',
+    SOLVBTC_INK_KBTC_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -136,6 +137,12 @@ const ADDRESSES = {
     RBTC_ROOTSTOCK: '0x542FDA317318eBf1d3DeAF76E0B632741a7e677d',
 
     STARGATE_WBTC: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
+
+    // kBTC contracts
+    KBTC_ETHEREUM: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
+    KBTC_OPTIMISM: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
+    KBTC_UNICHAIN: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
+    KBTC_INK: '0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98'
 };
 
 const DENOMS = {
@@ -251,6 +258,35 @@ const LINK_LABEL_HANDLERS = {
     'solvbtc->solvbtc-eth': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.SOLVBTC_ETH, 18, 'ethereum']
+    },
+    
+    // kBTC supply (kraken -> kbtc-eth)
+    'kraken->kbtc-eth': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.KBTC_ETHEREUM, 8, 'ethereum']
+    },
+    
+    // kBTC supply on Optimism (kraken -> kbtc-optimism)
+    'kraken->kbtc-optimism': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.KBTC_OPTIMISM, 8, 'optimism']
+    },
+    
+    // kBTC supply on Unichain (kraken -> kbtc-unichain)
+    'kraken->kbtc-unichain': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.KBTC_UNICHAIN, 8, 'unichain']
+    },
+    
+    // kBTC supply on Ink (kraken -> kbtc-ink)
+    'kraken->kbtc-ink': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.KBTC_INK, 8, 'ink']
+    },
+
+    'kbtc-ink->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.KBTC_INK, ADDRESSES.SOLVBTC_INKONCHAIN, 8, 'ink']
     },
     
     // WBTC balance (wbtc-eth -> axelar)

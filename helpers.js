@@ -94,7 +94,8 @@ const TokenHandlers = {
         'bera': 'https://rpc.berachain.com',
         'hyperevm': 'https://hyperliquid.drpc.org',
         'ink': 'https://ink.drpc.org/',
-        'merlin': 'https://merlin.drpc.org/'
+        'merlin': 'https://merlin.drpc.org/',
+        'unichain': 'https://unichain-rpc.publicnode.com'
     },
 
     // Generic ERC20 token supply handler
