@@ -61,6 +61,43 @@
             border: 1px solid #ddd;
         }
 
+        /* Mobile responsive popup styles */
+        @media (max-width: 768px) {
+            .node-popup {
+                max-width: 95vw;
+                width: 95vw;
+                left: 2.5vw;
+                transform: translateX(0) translateY(-50%);
+                margin: 0;
+            }
+            
+            .popup-content {
+                padding: 15px;
+                max-height: 70vh;
+            }
+            
+            .popup-header {
+                padding: 12px 15px;
+            }
+            
+            .popup-title {
+                font-size: 16px;
+            }
+        }
+
+        /* Small mobile devices */
+        @media (max-width: 480px) {
+            .node-popup {
+                max-width: 98vw;
+                width: 98vw;
+                left: 1vw;
+            }
+            
+            .popup-content {
+                padding: 12px;
+            }
+        }
+
         .node-popup.active {
             display: block;
         }
