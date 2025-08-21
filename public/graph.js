@@ -134,12 +134,17 @@ class GraphVisualization {
         this.svg.on('click', (event) => {
             // Only clear if clicking on the SVG background (not on nodes or other elements)
             if (event.target === this.svg.node()) {
-                this.clearHighlight();
+                this.clearHighlightAndURL();
             }
         });
 
         // Resize handling
         window.addEventListener('resize', () => this.onResize());
+        
+        // Handle browser back/forward navigation
+        window.addEventListener('popstate', () => {
+            this.handleURLChange();
+        });
 
         // Add dev mode controls if enabled
         if (this.devMode) {
@@ -568,6 +573,14 @@ class GraphVisualization {
             .on('click', (event, d) => {
                 // Handle node click to show description
                 this.nodePopup.show(d.id, d.name);
+                
+                // Toggle highlighting: if already highlighted, clear it; otherwise highlight it
+                if (this.highlightedNode && this.highlightedNode.id === d.id) {
+                    this.clearHighlightAndURL();
+                } else {
+                    this.highlightNode(d);
+                    this.updateURL(d.id);
+                }
             })
             .on('mouseenter', (event, d) => {
                 // Only highlight on hover if no node is permanently highlighted
@@ -883,6 +896,17 @@ class GraphVisualization {
     highlightNode(node) {
         if (!node) return;
 
+        // Ensure node has valid positions before highlighting
+        if (node.x === undefined || node.y === undefined) {
+            console.warn(`Cannot highlight node ${node.id} - no valid position coordinates`);
+            return;
+        }
+
+        // Clear previous highlight if highlighting a different node
+        if (this.highlightedNode && this.highlightedNode.id !== node.id) {
+            this.clearHighlight();
+        }
+
         // Store the highlighted node
         this.highlightedNode = node;
 
@@ -954,6 +978,48 @@ class GraphVisualization {
 
         // Restore normal link appearance
         this.restoreLinkAppearance();
+    }
+
+    clearHighlightAndURL() {
+        this.clearHighlight();
+        this.clearURL();
+    }
+
+    updateURL(nodeId) {
+        if (!nodeId) return;
+        
+        const url = new URL(window.location);
+        url.searchParams.set('node', nodeId);
+        
+        // Update URL without reloading the page
+        window.history.pushState({}, '', url);
+        
+        console.log(`URL updated to highlight node: ${nodeId}`);
+    }
+
+    clearURL() {
+        const url = new URL(window.location);
+        url.searchParams.delete('node');
+        
+        // Update URL without reloading the page
+        window.history.pushState({}, '', url);
+        
+        console.log('URL cleared - no node highlighted');
+    }
+
+    handleURLChange() {
+        // Re-parse URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const newTargetNodeId = urlParams.get('node');
+        
+        // If URL changed to highlight a different node
+        if (newTargetNodeId && newTargetNodeId !== this.targetNodeId) {
+            this.targetNodeId = newTargetNodeId;
+            this.focusOnTargetNode();
+        } else if (!newTargetNodeId && this.highlightedNode) {
+            // If URL was cleared, clear the highlight
+            this.clearHighlight();
+        }
     }
 }
 

@@ -64,6 +64,8 @@ https://btcmap.tech/?node=solvbtc
 2. **Auto-Focus**: The graph will automatically center on the specified node
 3. **Highlighting**: The target node will be highlighted with a glowing effect
 4. **Link Highlighting**: Connected links will also be highlighted to show relationships
+5. **Click to Highlight**: Click on any node to highlight it and update the URL
+6. **Clear Highlight**: Click on empty space to clear highlighting and update URL
 
 ### Available Node IDs
 
@@ -77,6 +79,13 @@ You can link to any node in the graph. Common node IDs include:
 - And many more...
 
 **Tip**: You can find all available node IDs in the `public/node-positions.json` file or by inspecting the graph data.
+
+### Interactive Features
+
+- **Click any node** to highlight it and automatically update the URL
+- **Click empty space** to clear highlighting and remove the node parameter from URL
+- **Browser navigation** (back/forward buttons) works with highlighting state
+- **Shareable links** - any highlighted node state can be shared via URL
 
 ## Getting Started
 
