@@ -10,6 +10,7 @@ See the public deployment on https://btcmap.tech/
 - **Multi-Chain Support**: Covers Ethereum, Solana, Osmosis, Base, Kava, Neutron, and more
 - **Real-time Data**: Live token supply and balance information
 - **Clickable Nodes**: Click on any node to view detailed descriptions
+- **Link to Node**: Direct links to focus on specific nodes via URL parameters
 - **Responsive Design**: Works on desktop and mobile devices
 - **Developer Mode**: Advanced controls for graph manipulation and position saving
 
@@ -42,6 +43,40 @@ To add a description for a node:
 4. The popup will automatically load and display your content
 
 **Note**: If no description file exists for a node, clicking on it will not open the popup.
+
+## Link to Node Feature
+
+You can now create direct links to specific nodes in the graph using URL parameters. This feature allows users to share links that automatically focus on and highlight specific nodes.
+
+### Usage
+
+To link directly to a node, add the `node` parameter to the URL:
+
+```
+https://btcmap.tech/?node=bitcoin
+https://btcmap.tech/?node=wbtc-eth  
+https://btcmap.tech/?node=solvbtc
+```
+
+### How it works:
+
+1. **URL Parameter**: Add `?node=<node-id>` to any URL
+2. **Auto-Focus**: The graph will automatically center on the specified node
+3. **Highlighting**: The target node will be highlighted with a glowing effect
+4. **Link Highlighting**: Connected links will also be highlighted to show relationships
+
+### Available Node IDs
+
+You can link to any node in the graph. Common node IDs include:
+- `bitcoin` - Bitcoin native
+- `wbtc-eth` - Wrapped Bitcoin on Ethereum
+- `solvbtc` - Solv BTC
+- `tbtc` - Threshold Bitcoin
+- `cbbtc` - Coinbase Wrapped Bitcoin
+- `kraken` - Kraken exchange
+- And many more...
+
+**Tip**: You can find all available node IDs in the `public/node-positions.json` file or by inspecting the graph data.
 
 ## Getting Started
 

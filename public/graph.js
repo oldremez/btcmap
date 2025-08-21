@@ -95,10 +95,15 @@ class GraphVisualization {
         this.devMode = window.DEV_MODE === 'true'; // Enable dev mode only if environment variable is set
         this.nodePositions = {}; // Store loaded node positions
         this.nodePopup = new NodePopup(); // Initialize node popup
+        this.targetNodeId = null; // Node ID to focus on from URL parameter
+        this.highlightedNode = null; // Currently highlighted node
         this.init();
     }
 
     async init() {
+        // Parse URL parameters to check for node targeting
+        this.parseURLParameters();
+        
         // Clear existing content
         d3.select('#graph').selectAll('*').remove();
 
@@ -118,12 +123,20 @@ class GraphVisualization {
         this.mainGroup = this.svg.append('g');
 
         // Add zoom behavior to the main group
-        const zoom = d3.zoom()
+        this.zoom = d3.zoom()
             .on('zoom', (event) => {
                 this.mainGroup.attr('transform', event.transform);
             });
 
-        this.svg.call(zoom);
+        this.svg.call(this.zoom);
+
+        // Add click handler to clear highlights when clicking on empty space
+        this.svg.on('click', (event) => {
+            // Only clear if clicking on the SVG background (not on nodes or other elements)
+            if (event.target === this.svg.node()) {
+                this.clearHighlight();
+            }
+        });
 
         // Resize handling
         window.addEventListener('resize', () => this.onResize());
@@ -137,6 +150,18 @@ class GraphVisualization {
         await this.loadNodePositions();
         this.generateSampleGraph();
         this.render();
+        
+        // Focus on target node if specified in URL
+        this.focusOnTargetNode();
+    }
+
+    parseURLParameters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        this.targetNodeId = urlParams.get('node');
+        
+        if (this.targetNodeId) {
+            console.log(`Target node specified in URL: ${this.targetNodeId}`);
+        }
     }
 
     updateDimensions() {
@@ -545,12 +570,19 @@ class GraphVisualization {
                 this.nodePopup.show(d.id, d.name);
             })
             .on('mouseenter', (event, d) => {
-                // Highlight links connected to this node
-                this.highlightNodeLinks(d);
+                // Only highlight on hover if no node is permanently highlighted
+                if (!this.highlightedNode || this.highlightedNode.id !== d.id) {
+                    this.highlightNodeLinks(d);
+                }
             })
             .on('mouseleave', (event, d) => {
-                // Restore normal link appearance
-                this.restoreLinkAppearance();
+                // Only restore if no node is permanently highlighted
+                if (!this.highlightedNode) {
+                    this.restoreLinkAppearance();
+                } else if (this.highlightedNode.id !== d.id) {
+                    // Re-highlight the permanently highlighted node
+                    this.highlightNodeLinks(this.highlightedNode);
+                }
             });
 
         // Enable dragging in dev mode
@@ -794,6 +826,134 @@ class GraphVisualization {
             };
         }
         return { x: target.x, y: target.y };
+    }
+
+    focusOnTargetNode() {
+        if (!this.targetNodeId || !this.nodes.length) {
+            return;
+        }
+
+        // Find the target node
+        const targetNode = this.nodes.find(node => node.id === this.targetNodeId);
+        if (!targetNode) {
+            console.warn(`Target node '${this.targetNodeId}' not found in graph`);
+            return;
+        }
+
+        console.log(`Focusing on node: ${this.targetNodeId}`, targetNode);
+
+        // Wait a bit for the simulation to settle, then focus
+        setTimeout(() => {
+            this.centerOnNode(targetNode);
+            this.highlightNode(targetNode);
+        }, 1500); // Give simulation time to position nodes
+    }
+
+    centerOnNode(node) {
+        if (!node || !this.svg) return;
+        
+        // Check if node has valid position (allow 0 as valid coordinate)
+        if (node.x === undefined || node.y === undefined) {
+            console.warn(`Node ${node.id} does not have valid position coordinates`);
+            return;
+        }
+
+        // Calculate the transform to center the node
+        const centerX = this.width / 2;
+        const centerY = this.height / 2;
+        const scale = 1.5; // Zoom in a bit
+        
+        const x = centerX - node.x * scale;
+        const y = centerY - node.y * scale;
+
+        // Create zoom transform
+        const transform = d3.zoomIdentity
+            .translate(x, y)
+            .scale(scale);
+
+        // Apply the transform with animation
+        this.svg.transition()
+            .duration(1000)
+            .call(
+                this.zoom.transform,
+                transform
+            );
+    }
+
+    highlightNode(node) {
+        if (!node) return;
+
+        // Store the highlighted node
+        this.highlightedNode = node;
+
+        // Apply highlight styling to the node
+        this.nodeGroups.selectAll('circle').each((d, i, nodes) => {
+            const circle = d3.select(nodes[i]);
+            if (d.id === node.id) {
+                // Highlight the target node
+                circle
+                    .attr('stroke', '#ff6b35')
+                    .attr('stroke-width', 4)
+                    .attr('filter', 'url(#glow)');
+            }
+        });
+
+        // Highlight connected links (similar to hover effect)
+        this.highlightNodeLinks(node);
+
+        // Add glow effect filter if it doesn't exist
+        this.addGlowFilter();
+    }
+
+    addGlowFilter() {
+        // Check if glow filter already exists
+        if (this.svg.select('#glow').empty()) {
+            const defs = this.svg.select('defs').empty() ? this.svg.append('defs') : this.svg.select('defs');
+            
+            const filter = defs.append('filter')
+                .attr('id', 'glow')
+                .attr('x', '-50%')
+                .attr('y', '-50%')
+                .attr('width', '200%')
+                .attr('height', '200%');
+
+            filter.append('feGaussianBlur')
+                .attr('stdDeviation', '3')
+                .attr('result', 'coloredBlur');
+
+            const feMerge = filter.append('feMerge');
+            feMerge.append('feMergeNode')
+                .attr('in', 'coloredBlur');
+            feMerge.append('feMergeNode')
+                .attr('in', 'SourceGraphic');
+        }
+    }
+
+    clearHighlight() {
+        this.highlightedNode = null;
+
+        // Remove highlight styling from all nodes
+        this.nodeGroups.selectAll('circle').each((d, i, nodes) => {
+            const circle = d3.select(nodes[i]);
+            // Reset to original styling
+            circle
+                .attr('stroke', d => {
+                    switch(d.type) {
+                        case 'protocol': return '#6c5ce7';
+                        default: return '#fff';
+                    }
+                })
+                .attr('stroke-width', d => {
+                    switch(d.type) {
+                        case 'protocol': return 3;
+                        default: return 2;
+                    }
+                })
+                .attr('filter', null);
+        });
+
+        // Restore normal link appearance
+        this.restoreLinkAppearance();
     }
 }
 
