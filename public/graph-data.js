@@ -204,7 +204,7 @@ class GraphData {
                 {
                     id: "bera-frame", 
                     label: "Bera",
-                    nodes: ["solvbtc-bera", "xsolvbtc-bera", "btc-plus-bera"],
+                    nodes: ["solvbtc-bera", "xsolvbtc-bera", "btc-plus-bera", "wbtc-berachain"],
                     color: "#00D4AA",
                     strokeWidth: 2,
                     padding: 20
@@ -263,6 +263,7 @@ class GraphData {
                 { id: "wbtc-eth-eur-osmo", name: "WBTC.eth.atom", type: "token" },
                 { id: "portal-bridge-wbtc", name: "WBTC", type: "issuer" },
                 { id: "wbtc-soneium", name: "WBTC", type: "token" },
+                { id: "wbtc-berachain", name: "WBTC", type: "token" },
 
                 // cbBTC
                 { id: "coinbase", name: "Coinbase", type: "issuer" },
@@ -466,6 +467,7 @@ class GraphData {
                 { source: "wbtc-soneium", target: "solvbtc", text: true },
                 { source: "kbtc-ink", target: "solvbtc", text: true },
                 { source: "ubtc", target: "solvbtc", text: true },
+                { source: "wbtc-berachain", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -585,22 +587,10 @@ class GraphData {
                 { source: "rbtc", target: "solvbtc", text: true },
                 { source: "btc", target: "powpeg" },
                 { source: "stargate", target: "wbtc-soneium", text: true },
+                { source: "stargate", target: "wbtc-berachain", text: true },
 
                 { source: "unit", target: "ubtc", text: true },
             ]
-        };
-    }
-
-    static generateRandomGraph() {
-        // For now, return the BTC map instead of random data
-        return this.getSampleGraph();
-    }
-
-    static getEmptyGraph() {
-        return {
-            nodes: [],
-            links: [],
-            frames: []
         };
     }
 }

@@ -13,6 +13,7 @@ const ADDRESSES = {
     WBTC_BOB_OLD: '0x03C7054BCB39f7b2e5B2c7AcB37583e32D70Cfa3',
     WBTC_LINEA: '0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4',
     WBTC_SONEIUM: '0x0555E30da8f98308EdB960aa94C0Db47230d2B9c',
+    WBTC_BERACHAIN: '0x0555e30da8f98308edb960aa94c0db47230d2b9c',
     
     // Other BTC tokens
     CBTC_ETHEREUM: '0xcbB7C0000aB88B473b1f5aFd9ef808440eed33Bf',
@@ -104,6 +105,7 @@ const ADDRESSES = {
     SOLVBTC_ETHEREUM: '0x7a56e1c57c7475ccf742a1832b028f0456652f97',
     SOLVBTC_HYPEREVM: '0xae4efbc7736f963982aacb17efa37fcbab924cb3',
     SOLVBTC_MANTLE_FBTC_VAULT: '0x33b7A7a164B77433A61d4B49bD780a2718812e6e',
+    SOLVBTC_BERACHAIN_WBTC_VAULT: '0x52be8fe8fed6c8d52a9fd94a10dad12f4ffa9526',
 
     // xSolvBTC contracts on various networks
     XSOLVBTC_BSC: '0x1346b618dc92810ec74163e4c27004c921d446a5',
@@ -843,6 +845,16 @@ const LINK_LABEL_HANDLERS = {
     'ubtc->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.UBTC_HYPEREVM, ADDRESSES.SOLVBTC_HYPEREVM_UBTC_VAULT, 8, 'hyperevm']
+    },
+
+    'stargate->wbtc-berachain': {
+        handler: TokenHandlers.handleERC20Supply,
+        args: [ADDRESSES.WBTC_BERACHAIN, 8, 'bera']
+    },
+
+    'wbtc-berachain->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.WBTC_BERACHAIN, ADDRESSES.SOLVBTC_BERACHAIN_WBTC_VAULT, 8, 'bera']
     },
 
 };
