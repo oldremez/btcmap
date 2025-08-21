@@ -80,12 +80,28 @@ You can link to any node in the graph. Common node IDs include:
 
 **Tip**: You can find all available node IDs in the `public/node-positions.json` file or by inspecting the graph data.
 
+### Copy Link Feature
+
+When viewing a node's description popup, you'll see a copy link icon (📋) in the header next to the close button. Clicking this icon will copy a direct link to that specific node to your clipboard.
+
+**How it works:**
+1. **Click any node** to open its description popup
+2. **Click the copy link icon** (📋) in the popup header
+3. **Link copied** - the button will briefly show a checkmark (✓) to confirm
+4. **Share the link** - paste the copied URL anywhere to share that specific node
+
+**Example copied links:**
+- `https://btcmap.tech/?node=bitcoin` - Direct link to Bitcoin node
+- `https://btcmap.tech/?node=wbtc-eth` - Direct link to WBTC Ethereum token
+- `https://btcmap.tech/?node=kraken` - Direct link to Kraken issuer
+
 ### Interactive Features
 
 - **Click any node** to highlight it and automatically update the URL
 - **Click empty space** to clear highlighting and remove the node parameter from URL
 - **Browser navigation** (back/forward buttons) works with highlighting state
 - **Shareable links** - any highlighted node state can be shared via URL
+- **Copy link button** - click the copy icon in node popups to copy direct links
 
 ## Getting Started
 

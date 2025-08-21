@@ -33,6 +33,8 @@ class NodePopup {
         this.title = document.getElementById('popupTitle');
         this.content = document.getElementById('popupContent');
         this.closeBtn = document.getElementById('popupClose');
+        this.copyLinkBtn = document.getElementById('popupCopyLink');
+        this.currentNodeId = null;
         
         this.setupEventListeners();
     }
@@ -44,6 +46,9 @@ class NodePopup {
         // Close popup when overlay is clicked
         this.overlay.addEventListener('click', () => this.hide());
         
+        // Copy link when copy button is clicked
+        this.copyLinkBtn.addEventListener('click', () => this.copyLink());
+        
         // Close popup when Escape key is pressed
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') this.hide();
@@ -52,6 +57,9 @@ class NodePopup {
 
     async show(nodeId, nodeName) {
         try {
+            // Store the current node ID for copy link functionality
+            this.currentNodeId = nodeId;
+            
             // Try to load the description HTML file
             const response = await fetch(`/descriptions/${nodeId}.html`);
             
@@ -81,6 +89,68 @@ class NodePopup {
         this.overlay.classList.remove('active');
         this.popup.classList.remove('active');
         this.content.innerHTML = '';
+        this.currentNodeId = null;
+    }
+
+    copyLink() {
+        if (!this.currentNodeId) {
+            console.warn('No node ID available to copy link');
+            return;
+        }
+
+        // Create the link with current domain and node parameter
+        const currentUrl = new URL(window.location);
+        currentUrl.searchParams.set('node', this.currentNodeId);
+        const linkToCopy = currentUrl.toString();
+
+        // Check if clipboard API is available
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            // Use modern clipboard API
+            navigator.clipboard.writeText(linkToCopy).then(() => {
+                this.showCopySuccess();
+            }).catch(err => {
+                console.error('Failed to copy link: ', err);
+                // Fallback for older browsers
+                this.fallbackCopy(linkToCopy);
+            });
+        } else {
+            // Use fallback method directly
+            this.fallbackCopy(linkToCopy);
+        }
+    }
+
+    showCopySuccess() {
+        // Temporarily change the copy button to show success
+        const originalHTML = this.copyLinkBtn.innerHTML;
+        this.copyLinkBtn.innerHTML = '✓';
+        this.copyLinkBtn.style.backgroundColor = 'rgba(255,255,255,0.3)';
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+            this.copyLinkBtn.innerHTML = originalHTML;
+            this.copyLinkBtn.style.backgroundColor = '';
+        }, 2000);
+    }
+
+    fallbackCopy(text) {
+        // Fallback copy method for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-999999px';
+        textArea.style.top = '-999999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        try {
+            document.execCommand('copy');
+            this.showCopySuccess();
+        } catch (err) {
+            console.error('Fallback copy failed: ', err);
+        }
+        
+        document.body.removeChild(textArea);
     }
 }
 

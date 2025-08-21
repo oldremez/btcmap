@@ -91,6 +91,17 @@
             .popup-title {
                 font-size: 16px;
             }
+
+            .popup-copy-link {
+                width: 24px;
+                height: 24px;
+                padding: 4px;
+            }
+
+            .popup-copy-link svg {
+                width: 14px;
+                height: 14px;
+            }
         }
 
         /* Small mobile devices */
@@ -103,6 +114,25 @@
             
             .popup-content {
                 padding: 12px;
+            }
+
+            .popup-header {
+                padding: 10px 12px;
+            }
+
+            .popup-title {
+                font-size: 14px;
+            }
+
+            .popup-copy-link {
+                width: 22px;
+                height: 22px;
+                padding: 3px;
+            }
+
+            .popup-copy-link svg {
+                width: 12px;
+                height: 12px;
             }
         }
 
@@ -118,6 +148,36 @@
             justify-content: space-between;
             align-items: center;
             border-radius: 8px 8px 0 0;
+        }
+
+        .popup-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .popup-copy-link {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            padding: 6px;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.2s;
+        }
+
+        .popup-copy-link:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        .popup-copy-link svg {
+            width: 16px;
+            height: 16px;
         }
 
         .popup-title {
@@ -277,7 +337,14 @@
     <div class="node-popup" id="nodePopup">
         <div class="popup-header">
             <h3 class="popup-title" id="popupTitle">Node Description</h3>
-            <button class="popup-close" id="popupClose">&times;</button>
+            <div class="popup-actions">
+                <button class="popup-copy-link" id="popupCopyLink" title="Copy link to this node">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+                    </svg>
+                </button>
+                <button class="popup-close" id="popupClose">&times;</button>
+            </div>
         </div>
         <div class="popup-content" id="popupContent">
             <!-- Content will be loaded here -->
