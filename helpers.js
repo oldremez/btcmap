@@ -387,6 +387,38 @@ const TokenHandlers = {
             console.error('Error fetching ckBTC supply:', error);
             return 'Error';
         }
+    },
+
+    // UBTC supply handler for HyperEVM
+    async handleUBTCSupply() {
+        try {
+            const contractAddress = '0x9fdbda0a5e284c32744d2f17ee5c74b284993463';
+            const excludedAddress = '0x20000000000000000000000000000000000000c5';
+            const decimals = 8; // Assuming UBTC has 8 decimals like most BTC-pegged tokens
+            
+            // Get total supply
+            const totalSupply = await BlockchainUtils.getERC20TotalSupply(contractAddress, this.chainRpcUrls['hyperevm']);
+            if (totalSupply === null) {
+                return 'Loading...';
+            }
+            
+            // Get balance of excluded address
+            const excludedBalance = await BlockchainUtils.getERC20Balance(contractAddress, excludedAddress, this.chainRpcUrls['hyperevm']);
+            if (excludedBalance === null) {
+                // If we can't get the excluded balance, just return total supply
+                const tokenSupply = totalSupply / Math.pow(10, decimals);
+                return formatNumber(tokenSupply);
+            }
+            
+            // Calculate circulating supply (total supply minus excluded balance)
+            const circulatingSupply = totalSupply - excludedBalance;
+            const tokenCirculatingSupply = circulatingSupply / Math.pow(10, decimals);
+            
+            return formatNumber(tokenCirculatingSupply);
+        } catch (error) {
+            console.error('Error fetching UBTC supply:', error);
+            return 'Error';
+        }
     }
 };
 

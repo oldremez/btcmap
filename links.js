@@ -85,6 +85,7 @@ const ADDRESSES = {
     SOLVBTC_ROOTSTOCK_RBTC_VAULT: '0xA26DDc188b1c07D7F0dcB90827424B14DDA2E372',
     SOLVBTC_SONEIUM_WBTC_VAULT: '0xeDCD3B3E3d7724908aBf5341427143Fd2D258E48',
     SOLVBTC_INK_KBTC_VAULT: '0x33b7a7a164b77433a61d4b49bd780a2718812e6e',
+    SOLVBTC_HYPEREVM_UBTC_VAULT: '0x4ec5bd156776ffbbcababe229a542340e666c1b7',
 
     // SolvBTC contracts on other networks
     SOLVBTC_BSC: '0x4aae823a6a0b376de6a78e74ecc5b079d38cbcf7',
@@ -142,7 +143,10 @@ const ADDRESSES = {
     KBTC_ETHEREUM: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
     KBTC_OPTIMISM: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
     KBTC_UNICHAIN: '0x73e0c0d45e048d25fc26fa3159b0aa04bfa4db98',
-    KBTC_INK: '0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98'
+    KBTC_INK: '0x73E0C0d45E048D25Fc26Fa3159b0aA04BfA4Db98',
+
+    // UBTC contracts
+    UBTC_HYPEREVM: '0x9fdbda0a5e284c32744d2f17ee5c74b284993463',
 };
 
 const DENOMS = {
@@ -830,6 +834,17 @@ const LINK_LABEL_HANDLERS = {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_SONEIUM, ADDRESSES.SOLVBTC_SONEIUM_WBTC_VAULT, 8, 'soneium']
     },
+
+    'unit->ubtc': {
+        handler: TokenHandlers.handleUBTCSupply,
+        args: []
+    },
+
+    'ubtc->solvbtc': {
+        handler: TokenHandlers.handleERC20Balance,
+        args: [ADDRESSES.UBTC_HYPEREVM, ADDRESSES.SOLVBTC_HYPEREVM_UBTC_VAULT, 8, 'hyperevm']
+    },
+
 };
 
 // In-memory cache for link labels with automatic expiration

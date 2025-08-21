@@ -212,7 +212,7 @@ class GraphData {
                 {
                     id: "hyperevm-frame", 
                     label: "HyperEVM",
-                    nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm"],
+                    nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm", "ubtc"],
                     color: "#FF6B6B",
                     strokeWidth: 2,
                     padding: 20
@@ -381,6 +381,7 @@ class GraphData {
                 { id: "bob-bridge", name: "BOB Bridge (?)", type: "issuer" },
                 { id: "int3face", name: "Int3Face (BitFrost)", type: "issuer" },
                 { id: "powpeg", name: "PowPeg", type: "issuer" },
+                { id: "unit", name: "Unit", type: "issuer" },
 
                 { id: "internet-computer", name: "Internet Computer", type: "issuer" },
                 { id: "ckbtc-icp", name: "ckBTC", type: "token" },
@@ -400,7 +401,9 @@ class GraphData {
                 { id: "linea-bridge", name: "Linea Bridge", type: "issuer" },
                 { id: "wbtc-linea", name: "WBTC", type: "token" },
 
-                { id: "rbtc", name: "RBTC", type: "token" }
+                { id: "rbtc", name: "RBTC", type: "token" },
+
+                { id: "ubtc", name: "UBTC", type: "token" },
             ],
             links: [
                 // Central connections
@@ -415,6 +418,7 @@ class GraphData {
                 { source: "btc", target: "solvbtc" },
                 { source: "btc", target: "kraken" },
                 { source: "btc", target: "btc.b", text: true },
+                { source: "btc", target: "unit" },
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "lombard", text: true },
@@ -461,6 +465,7 @@ class GraphData {
                 { source: "wbtc-linea", target: "solvbtc", text: true },
                 { source: "wbtc-soneium", target: "solvbtc", text: true },
                 { source: "kbtc-ink", target: "solvbtc", text: true },
+                { source: "ubtc", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
                 { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
@@ -579,7 +584,9 @@ class GraphData {
                 { source: "powpeg", target: "rbtc", text: true },
                 { source: "rbtc", target: "solvbtc", text: true },
                 { source: "btc", target: "powpeg" },
-                { source: "stargate", target: "wbtc-soneium", text: true }
+                { source: "stargate", target: "wbtc-soneium", text: true },
+
+                { source: "unit", target: "ubtc", text: true },
             ]
         };
     }
