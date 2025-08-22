@@ -68,7 +68,7 @@ class GraphData {
                 {
                     id: "bsc-frame", 
                     label: "Binance Smart Chain",
-                    nodes: ["lbtc-bsc", "solvbtc-bsc", "xsolvbtc-bsc", "btc-plus-bsc"],
+                    nodes: ["lbtc-bsc", "solvbtc-bsc", "xsolvbtc-bsc", "btc-plus-bsc", "btcb"],
                     color: "#f39c12",
                     strokeWidth: 2,
                     padding: 20
