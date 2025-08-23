@@ -853,7 +853,8 @@ class GraphVisualization {
                     strokeColor = '#3498db'; // Bright blue
                 }
                 strokeWidth = 4;
-                strokeOpacity = 1;
+                // If there's a hovered node, make highlighted links transparent
+                strokeOpacity = hoveredNode ? 0.3 : 1;
             } else if (hoveredNode || highlightedNode) {
                 // Blurred link (when any node is highlighted/hovered)
                 linkState = 'blurred';
@@ -887,7 +888,8 @@ class GraphVisualization {
                 // Highlighted label (permanent highlight)
                 fontSize = '12px';
                 fontWeight = 'bold';
-                opacity = 1;
+                // If there's a hovered node, make highlighted labels transparent
+                opacity = hoveredNode ? 0.3 : 1;
             } else if (hoveredNode || highlightedNode) {
                 // Blurred label (when any node is highlighted/hovered)
                 opacity = 0.3;
