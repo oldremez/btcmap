@@ -608,6 +608,9 @@ class GraphVisualization {
             .attr('pointer-events', 'none')
             .text('Loading...'); // Initial text while async functions load
 
+        // Apply initial link appearance
+        this.updateLinkAppearance();
+
         // Process link text asynchronously
         this.links.forEach(async (link, index) => {
             if (link.text === true) {
@@ -806,80 +809,104 @@ class GraphVisualization {
         }
     }
 
-    highlightNodeLinks(hoveredNode) {
-        // Find all links connected to the hovered node
-        const connectedLinks = this.links.filter(link => 
-            link.source.id === hoveredNode.id || link.target.id === hoveredNode.id
-        );
-        
+    updateLinkAppearance(hoveredNode = null, highlightedNode = null) {
         // Get the link elements from the DOM
         const linkElements = this.mainGroup.selectAll('line');
         const linkLabels = this.mainGroup.selectAll('.link-label');
         
+        // Determine which node takes priority for color decisions
+        const priorityNode = hoveredNode || highlightedNode;
+        
         linkElements.each((d, i, nodes) => {
             const linkElement = d3.select(nodes[i]);
-            const isConnected = connectedLinks.includes(d);
+            const isConnectedToHovered = hoveredNode && (d.source.id === hoveredNode.id || d.target.id === hoveredNode.id);
+            const isConnectedToHighlighted = highlightedNode && (d.source.id === highlightedNode.id || d.target.id === highlightedNode.id);
             
-            if (isConnected) {
-                // Determine if this is an incoming or outgoing link
+            // Determine link state and styling
+            let linkState = 'normal';
+            let strokeColor = '#999';
+            let strokeWidth = 2.5;
+            let strokeOpacity = 0.8;
+            
+            if (isConnectedToHovered) {
+                // Highlighted link (hover takes priority)
+                linkState = 'highlighted';
                 const isOutgoing = d.source.id === hoveredNode.id;
                 const isIncoming = d.target.id === hoveredNode.id;
                 
-                let linkColor;
                 if (isOutgoing) {
-                    // Outgoing links: bright green
-                    linkColor = '#2ecc71';
+                    strokeColor = '#2ecc71'; // Bright green
                 } else if (isIncoming) {
-                    // Incoming links: bright blue
-                    linkColor = '#3498db';
+                    strokeColor = '#3498db'; // Bright blue
                 }
+                strokeWidth = 4;
+                strokeOpacity = 1;
+            } else if (isConnectedToHighlighted) {
+                // Highlighted link (permanent highlight)
+                linkState = 'highlighted';
+                const isOutgoing = d.source.id === highlightedNode.id;
+                const isIncoming = d.target.id === highlightedNode.id;
                 
-                // Highlight connected links
-                linkElement
-                    .attr('stroke', linkColor)
-                    .attr('stroke-width', 4)
-                    .attr('stroke-opacity', 1);
-            } else {
-                // Dim unconnected links
-                linkElement
-                    .attr('stroke-opacity', 0.2);
+                if (isOutgoing) {
+                    strokeColor = '#2ecc71'; // Bright green
+                } else if (isIncoming) {
+                    strokeColor = '#3498db'; // Bright blue
+                }
+                strokeWidth = 4;
+                strokeOpacity = 1;
+            } else if (hoveredNode || highlightedNode) {
+                // Blurred link (when any node is highlighted/hovered)
+                linkState = 'blurred';
+                strokeOpacity = 0.2;
             }
+            
+            // Apply styling
+            linkElement
+                .attr('stroke', strokeColor)
+                .attr('stroke-width', strokeWidth)
+                .attr('stroke-opacity', strokeOpacity);
         });
         
-        // Also highlight link labels
+        // Update link labels
         linkLabels.each((d, i, nodes) => {
             const labelElement = d3.select(nodes[i]);
-            const isConnected = connectedLinks.includes(d);
+            const isConnectedToHovered = hoveredNode && (d.source.id === hoveredNode.id || d.target.id === hoveredNode.id);
+            const isConnectedToHighlighted = highlightedNode && (d.source.id === highlightedNode.id || d.target.id === highlightedNode.id);
             
-            if (isConnected) {
-                // Highlight connected link labels
-                labelElement
-                    .attr('font-size', '12px')
-                    .attr('font-weight', 'bold')
-            } else {
-                // Dim unconnected link labels
-                labelElement
-                    .attr('opacity', 0.3);
+            // Determine label state and styling
+            let fontSize = '9px';
+            let fontWeight = 'normal';
+            let opacity = 1;
+            
+            if (isConnectedToHovered) {
+                // Highlighted label (hover takes priority)
+                fontSize = '12px';
+                fontWeight = 'bold';
+                opacity = 1;
+            } else if (isConnectedToHighlighted) {
+                // Highlighted label (permanent highlight)
+                fontSize = '12px';
+                fontWeight = 'bold';
+                opacity = 1;
+            } else if (hoveredNode || highlightedNode) {
+                // Blurred label (when any node is highlighted/hovered)
+                opacity = 0.3;
             }
+            
+            // Apply styling
+            labelElement
+                .attr('font-size', fontSize)
+                .attr('font-weight', fontWeight)
+                .attr('opacity', opacity);
         });
     }
 
+    highlightNodeLinks(hoveredNode) {
+        this.updateLinkAppearance(hoveredNode, this.highlightedNode);
+    }
+
     restoreLinkAppearance() {
-        // Restore normal link appearance
-        const linkElements = this.mainGroup.selectAll('line');
-        const linkLabels = this.mainGroup.selectAll('.link-label');
-        
-        linkElements
-            .attr('stroke', '#999')
-            .attr('stroke-width', 2.5)
-            .attr('stroke-opacity', 0.8);
-        
-        // Restore normal link label appearance
-        linkLabels
-            .attr('font-size', '9px')
-            .attr('font-weight', 'normal')
-            .attr('fill', '#666')
-            .attr('opacity', 1);
+        this.updateLinkAppearance(null, this.highlightedNode);
     }
 
     calculateArrowEndPosition(source, target) {
