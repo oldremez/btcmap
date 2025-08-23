@@ -234,7 +234,11 @@ class GraphVisualization {
         const urlParams = new URLSearchParams(window.location.search);
         this.targetNodeId = urlParams.get('node');
         
-        if (this.targetNodeId) {
+        // If no node specified in URL, default to "btc"
+        if (!this.targetNodeId) {
+            this.targetNodeId = 'btc';
+            console.log('No target node specified in URL, defaulting to "btc"');
+        } else {
             console.log(`Target node specified in URL: ${this.targetNodeId}`);
         }
     }
