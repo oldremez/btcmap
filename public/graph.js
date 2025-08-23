@@ -705,16 +705,6 @@ class GraphVisualization {
                 }
             });
 
-        // Add additional visual elements for protocol nodes
-        node.filter(d => d.type === 'protocol')
-            .append('circle')
-            .attr('r', d => this.getNodeSize(d) + 4)
-            .attr('fill', 'none')
-            .attr('stroke', '#a29bfe')
-            .attr('stroke-width', 1)
-            .attr('stroke-dasharray', '3,3')
-            .attr('opacity', 0.6);
-
         // Add labels to nodes
         node.append('text')
             .text(d => d.name)
