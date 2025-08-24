@@ -201,13 +201,13 @@ const LINK_LABEL_HANDLERS = {
     },
     
     // WBTC balance on Polygon (bitgo -> wbtc-eth-polygon)
-    'bitgo->wbtc-eth-polygon': {
+    'wbtc-eth->wbtc-eth-polygon': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_POLYGON, ADDRESSES.POLYGON_WBTC_WALLET, 8, 'ethereum']
     },
     
     // WBTC balance on Optimism (bitgo -> wbtc-eth-optimism)
-    'bitgo->wbtc-eth-optimism': {
+    'wbtc-eth->wbtc-eth-optimism': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_OPTIMISM, ADDRESSES.OPTIMISM_WBTC_WALLET, 8, 'ethereum']
     },

@@ -414,9 +414,9 @@ class GraphData {
                 { source: "lombard", target: "lbtc-eth", text: true },
                 { source: "lombard", target: "lbtc-base", text: true },
                 { source: "lombard", target: "lbtc-bsc", text: true },
-                { source: "lombard", target: "lbtc-sui" },
-                { source: "lombard", target: "lbtc-sonic" },
-                { source: "lombard", target: "lbtc-katana" },
+                { source: "lombard", target: "lbtc-sui", text: true },
+                { source: "lombard", target: "lbtc-sonic", text: true },
+                { source: "lombard", target: "lbtc-katana", text: true },
                 
                 { source: "bitgo", target: "wbtc-eth", text: true },
                 { source: "bitgo", target: "wbtc-osmosis", text: true },
