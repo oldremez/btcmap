@@ -194,20 +194,20 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.WBTC_KAVA, 8, 'kava']
     },
     
-    // WBTC balance on Arbitrum (bitgo -> wbtc-arbitrum)
-    'wbtc-eth->wbtc-arbitrum': {
+    // WBTC balance on Arbitrum (bitgo -> wbtc-eth-arbitrum)
+    'wbtc-eth->wbtc-eth-arbitrum': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_ARBITRUM, 8, 'arbitrum']
     },
     
-    // WBTC balance on Polygon (bitgo -> wbtc-polygon)
-    'bitgo->wbtc-polygon': {
+    // WBTC balance on Polygon (bitgo -> wbtc-eth-polygon)
+    'bitgo->wbtc-eth-polygon': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_POLYGON, ADDRESSES.POLYGON_WBTC_WALLET, 8, 'ethereum']
     },
     
-    // WBTC balance on Optimism (bitgo -> wbtc-optimism)
-    'bitgo->wbtc-optimism': {
+    // WBTC balance on Optimism (bitgo -> wbtc-eth-optimism)
+    'bitgo->wbtc-eth-optimism': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_OPTIMISM, ADDRESSES.OPTIMISM_WBTC_WALLET, 8, 'ethereum']
     },
@@ -224,8 +224,8 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.WBTC_SOLANA]
     },
     
-    // cbBTC supply (coinbase -> cbbtc)
-    'coinbase->cbbtc': {
+    // cbBTC supply (coinbase -> cbbtc-eth)
+    'coinbase->cbbtc-eth': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.CBTC_ETHEREUM, 8, 'ethereum']
     },
@@ -248,14 +248,14 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.CBTC_ARBITRUM, 8, 'arbitrum']
     },
     
-    // tBTC supply (btc -> tbtc)
-    'btc->tbtc': {
+    // tBTC supply (btc -> tbtc-eth)
+    'btc->tbtc-eth': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.TBTC_ETHEREUM, 18, 'ethereum']
     },
     
-    // FBTC supply (function -> fbtc)
-    'function->fbtc': {
+    // FBTC supply (function -> fbtc-eth)
+    'function->fbtc-eth': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.FBTC_ETHEREUM, 8, 'ethereum']
     },
@@ -295,86 +295,86 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.KBTC_INK, ADDRESSES.SOLVBTC_INKONCHAIN, 8, 'ink']
     },
     
-    // WBTC balance (wbtc-eth -> axelar)
-    'wbtc-eth->axelar': {
+    // WBTC balance (wbtc-eth -> axelar-wbtc-eth)
+    'wbtc-eth->axelar-wbtc-eth': {
         handler: TokenHandlers.handleWBTCBalance,
         args: [ADDRESSES.AXELAR_WBTC]
     },
     
-    // WBTC balance (wbtc-eth -> portal-bridge-wbtc)
-    'wbtc-eth->portal-bridge-wbtc': {
+    // WBTC balance (wbtc-eth -> wbtc-eth-portal)
+    'wbtc-eth->wbtc-eth-portal': {
         handler: TokenHandlers.handleWBTCBalance,
         args: [ADDRESSES.PORTAL_BRIDGE_WBTC]
     },
     
-    // WBTC balance (wbtc-eth -> aave)
-    'wbtc-eth->aave': {
+    // WBTC balance (wbtc-eth -> aave-eth)
+    'wbtc-eth->aave-eth': {
         handler: TokenHandlers.handleWBTCBalance,
         args: [ADDRESSES.AAVE_WBTC]
     },
     
-    // tBTC balance (tbtc -> aave)
-    'tbtc->aave': {
+    // tBTC balance (tbtc-eth -> aave-eth)
+    'tbtc-eth->aave-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.AAVE_TBTC, 18, 'ethereum']
     },
     
-    // cbBTC balance (cbbtc -> aave)
-    'cbbtc->aave': {
+    // cbBTC balance (cbbtc-eth -> aave-eth)
+    'cbbtc-eth->aave-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.AAVE_CBTC, 8, 'ethereum']
     },
     
-    // FBTC balance (fbtc -> aave)
-    'fbtc->aave': {
+    // FBTC balance (fbtc-eth -> aave-eth)
+    'fbtc-eth->aave-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.FBTC_ETHEREUM, ADDRESSES.AAVE_FBTC, 8, 'ethereum']
     },
     
-    // LBTC balance (lbtc -> aave)
-    'lbtc->aave': {
+    // LBTC balance (lbtc-eth -> aave-eth)
+    'lbtc-eth->aave-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.LBTC_ETHEREUM, ADDRESSES.AAVE_LBTC, 8, 'ethereum']
     },
     
-    // cbBTC balance (cbbtc -> morpho)
-    'cbbtc->morpho': {
+    // cbBTC balance (cbbtc-eth -> morpho-eth)
+    'cbbtc-eth->morpho-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.MORPHO_CBTC, 8, 'ethereum']
     },
     
-    // tBTC balance (tbtc -> portal-bridge-tbtc)
-    'tbtc->portal-bridge-tbtc': {
+    // tBTC balance (tbtc-eth -> tbtc-eth-portal)
+    'tbtc-eth->tbtc-eth-portal': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.PORTAL_BRIDGE_TBTC, 18, 'ethereum']
     },
     
-    // WBTC balance (wbtc-eth -> morpho)
-    'wbtc-eth->morpho': {
+    // WBTC balance (wbtc-eth -> morpho-eth)
+    'wbtc-eth->morpho-eth': {
         handler: TokenHandlers.handleWBTCBalance,
         args: [ADDRESSES.MORPHO_WBTC]
     },
     
-    // WBTC balance (wbtc-eth -> compound)
-    'wbtc-eth->compound': {
+    // WBTC balance (wbtc-eth -> compound-eth)
+    'wbtc-eth->compound-eth': {
         handler: TokenHandlers.handleWBTCBalanceMultiple,
         args: [[ADDRESSES.COMPOUND_WBTC_1, ADDRESSES.COMPOUND_WBTC_2, ADDRESSES.COMPOUND_WBTC_3]]
     },
     
-    // IBC supply (axelar -> wbtc-eth-axl-osmo)
-    'axelar->wbtc-eth-axl-osmo': {
+    // IBC supply (axelar-wbtc-eth -> wbtc-eth-axl-osmo)
+    'axelar-wbtc-eth->wbtc-eth-axl-osmo': {
         handler: TokenHandlers.handleCosmosSupply,
         args: [DENOMS.WBTC_ETH_AXL_OSMO, 8]
     },
     
-    // IBC supply (eureka -> wbtc-eth-eur-osmo)
-    'eureka->wbtc-eth-eur-osmo': {
+    // IBC supply (eureka-wbtc-eth -> wbtc-eth-eureka-osmo)
+    'eureka-wbtc-eth->wbtc-eth-eureka-osmo': {
         handler: TokenHandlers.handleCosmosSupply,
         args: [DENOMS.WBTC_ETH_EUR_OSMO, 8]
     },
     
-    // LBTC supply (lombard -> lbtc)
-    'lombard->lbtc': {
+    // LBTC supply (lombard -> lbtc-eth)
+    'lombard->lbtc-eth': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.LBTC_ETHEREUM, 8, 'ethereum']
     },
@@ -409,38 +409,38 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.LBTC_KATANA, 8, 'katana']
     },
     
-    // WBTC supply on Solana via Axelar (portal-bridge-wbtc -> wbtc-portal-solana)
-    'portal-bridge-wbtc->wbtc-portal-solana': {
+    // WBTC supply on Solana via Axelar (wbtc-eth-portal -> wbtc-eth-portal-solana)
+    'wbtc-eth-portal->wbtc-eth-portal-solana': {
         handler: TokenHandlers.handleSolanaSupply,
         args: [ADDRESSES.WBTC_PORTAL_SOLANA]
     },
     
-    // WBTC balance on Jupiter Perps account (wbtc-portal-solana -> jupiter-perps)
-    'wbtc-portal-solana->jupiter-perps': {
+    // WBTC balance on Jupiter Perps account (wbtc-eth-portal-solana -> jupiter-perps)
+    'wbtc-eth-portal-solana->jupiter-perps': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.JUPITER_PERPS_WBTC]
     },
     
-    // tBTC supply on Solana via Portal (portal-bridge-tbtc -> tbtc-portal-solana)
-    'portal-bridge-tbtc->tbtc-portal-solana': {
+    // tBTC supply on Solana via Portal (tbtc-eth-portal -> tbtc-eth-portal-solana)
+    'tbtc-eth-portal->tbtc-eth-portal-solana': {
         handler: TokenHandlers.handleSolanaSupply,
         args: [ADDRESSES.TBTC_PORTAL_SOLANA]
     },
     
-    // WBTC balance on Drift (wbtc-portal-solana -> drift)
-    'wbtc-portal-solana->drift': {
+    // WBTC balance on Drift (wbtc-eth-portal-solana -> drift)
+    'wbtc-eth-portal-solana->drift': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.DRIFT_WBTC]
     },
     
-    // WBTC balance on Orca (wbtc-portal-solana -> orca)
-    'wbtc-portal-solana->orca': {
+    // WBTC balance on Orca (wbtc-eth-portal-solana -> orca)
+    'wbtc-eth-portal-solana->orca': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.ORCA_WBTC]
     },
     
-    // WBTC balance on Kamino (wbtc-portal-solana -> kamino)
-    'wbtc-portal-solana->kamino': {
+    // WBTC balance on Kamino (wbtc-eth-portal-solana -> kamino)
+    'wbtc-eth-portal-solana->kamino': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.KAMINO_WBTC]
     },
@@ -450,8 +450,8 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.KAMINO_CBBTC]
     },
     
-    // WBTC balance on Marginifi (wbtc-portal-solana -> marginifi)
-    'wbtc-portal-solana->marginifi': {
+    // WBTC balance on Marginifi (wbtc-eth-portal-solana -> marginifi)
+    'wbtc-eth-portal-solana->marginifi': {
         handler: TokenHandlers.handleSolanaBalance,
         args: [ADDRESSES.MARGINIFI_WBTC]
     },
@@ -732,27 +732,27 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.BTCPLUS_HYPEREVM, 18, 'hyperevm']
     },
 
-    'binance->btcb': {
+    'binance->btcb-bsc': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.BTCB_BINANCE, 18, 'bsc']
     },
 
-    'btcb->solvbtc': {
+    'btcb-bsc->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.BTCB_BINANCE, ADDRESSES.SOLVBTC_BSC_BTCB_VAULT, 18, 'bsc']
     },
 
-    'wbtc-arbitrum->solvbtc': {
+    'wbtc-eth-arbitrum->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_ARBITRUM, ADDRESSES.SOLVBTC_ARBITRUM_WBTC_VAULT, 8, 'arbitrum']
     },
 
-    'btc->btc.b': {
+    'btc->btc.b-avalanche': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.BTCDOTB_AVALANCHE, 8, 'avalanche']
     },  
 
-    'btc.b->solvbtc': {
+    'btc.b-avalanche->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.BTCDOTB_AVALANCHE, ADDRESSES.SOLVBTC_AVALANCHE_BTC_B_VAULT, 8, 'avalanche']
     },
@@ -767,27 +767,27 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.FBTC_MANTLE, ADDRESSES.SOLVBTC_MANTLE_FBTC_VAULT, 8, 'mantle']
     },
 
-    'wbtc-bob->solvbtc': {
+    'wbtc-eth-stargate-bob->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_BOB, ADDRESSES.SOLVBTC_BOB_WBTC_VAULT, 8, 'bob']
     },
 
-    'stargate->wbtc-bob': {
+    'stargate-wbtc-eth->wbtc-eth-stargate-bob': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_BOB, 8, 'bob']
     },
 
-    'bob-bridge->wbtc-bob-old': {
+    'bob-bridge->wbtc-eth-bob-bob': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_BOB_OLD, 8, 'bob']
     },
 
-    'portal-bridge-tbtc->tbtc-base': {
+    'tbtc-eth-portal->tbtc-eth-base': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.TBTC_BASE, 18, 'base']
     },
 
-    'tbtc-base->solvbtc': {
+    'tbtc-eth-base->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.TBTC_BASE, ADDRESSES.SOLVBTC_BASE_TBTC_VAULT, 18, 'base']
     },
@@ -797,62 +797,62 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.CBTC_BASE, ADDRESSES.SOLVBTC_BASE_CBTC_VAULT, 8, 'base']
     },
 
-    'linea-bridge->wbtc-linea': {
+    'linea-bridge-wbtc-eth->wbtc-eth-linea-linea': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_LINEA, 8, 'linea']
     },
 
-    'wbtc-eth->linea-bridge': {
+    'wbtc-eth->linea-bridge-wbtc-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.LINEA_BRIDGE_WBTC, 8, 'ethereum']
     },
 
-    'wbtc-linea->solvbtc': {
+    'wbtc-eth-linea-linea->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_LINEA, ADDRESSES.SOLVBTC_LINEA_WBTC_VAULT, 8, 'linea']
     },
 
-    'powpeg->rbtc': {
+    'powpeg->rbtc-rootstock': {
         handler: TokenHandlers.handleRBTCSupply,
         args: []
     },
 
-    'rbtc->solvbtc': {
+    'rbtc-rootstock->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.RBTC_ROOTSTOCK, ADDRESSES.SOLVBTC_ROOTSTOCK_RBTC_VAULT, 18, 'rootstock']
     },
 
-    'wbtc-eth->stargate': {
+    'wbtc-eth->stargate-wbtc-eth': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.STARGATE_WBTC, 8, 'ethereum']
     },
 
-    'stargate->wbtc-soneium': {
+    'stargate-wbtc-eth->wbtc-eth-stargate-soneium': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_SONEIUM, 8, 'soneium']
     },
 
-    'wbtc-soneium->solvbtc': {
+    'wbtc-eth-stargate-soneium->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_SONEIUM, ADDRESSES.SOLVBTC_SONEIUM_WBTC_VAULT, 8, 'soneium']
     },
 
-    'unit->ubtc': {
+    'unit->ubtc-hyperliquid': {
         handler: TokenHandlers.handleUBTCSupply,
         args: []
     },
 
-    'ubtc->solvbtc': {
+    'ubtc-hyperliquid->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.UBTC_HYPEREVM, ADDRESSES.SOLVBTC_HYPEREVM_UBTC_VAULT, 8, 'hyperevm']
     },
 
-    'stargate->wbtc-berachain': {
+    'stargate-wbtc-eth->wbtc-eth-stargate-berachain': {
         handler: TokenHandlers.handleERC20Supply,
         args: [ADDRESSES.WBTC_BERACHAIN, 8, 'bera']
     },
 
-    'wbtc-berachain->solvbtc': {
+    'wbtc-eth-stargate-berachain->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_BERACHAIN, ADDRESSES.SOLVBTC_BERACHAIN_WBTC_VAULT, 8, 'bera']
     },

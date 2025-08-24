@@ -12,7 +12,7 @@ class GraphData {
                 {
                     id: "ethereum-frame",
                     label: "Ethereum",
-                    nodes: ["wbtc-eth", "tbtc-eth", "solvbtc-eth", "fbtc-eth", "cbbtc-eth", "aave-eth", "morpho-eth", "compound-eth", "solvbtc-bbn", "lbtc-eth", "btc-plus-eth", "kbtc-eth"],
+                    nodes: ["wbtc-eth", "tbtc", "solvbtc-eth", "fbtc", "cbbtc", "aave", "morpho", "compound", "solvbtc-bbn", "lbtc", "btc-plus-eth", "kbtc-eth"],
                     color: "#4ecdc4",
                     strokeWidth: 2,
                     padding: 20
@@ -20,7 +20,7 @@ class GraphData {
                 {
                     id: "osmosis-frame", 
                     label: "Osmosis",
-                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc-osmosis", "nbtc-osmosis", "wbtc-eth-axl-osmo", "wbtc-eth-eureka-osmo", "btc-int3-osmosis"],
+                    nodes: ["wbtc-osmosis", "ckbtc-osmosis", "allbtc", "nbtc", "wbtc-eth-axl-osmo", "wbtc-eth-eur-osmo", "btc-int3-osmosis"],
                     color: "#45b7d1",
                     strokeWidth: 2,
                     padding: 20
@@ -36,7 +36,7 @@ class GraphData {
                 {
                     id: "solana-frame", 
                     label: "Solana",
-                    nodes: ["wbtc-solana", "wbtc-eth-portal-solana", "tbtc-eth-portal-solana", "jupiter-perps", "drift", "orca", "kamino", "marginifi", "cbbtc-solana"],
+                    nodes: ["wbtc-solana", "wbtc-portal-solana", "tbtc-portal-solana", "jupiter-perps", "drift", "orca", "kamino", "marginifi", "cbbtc-solana"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -44,7 +44,7 @@ class GraphData {
                 {
                     id: "arbitrum-frame", 
                     label: "Arbitrum",
-                    nodes: ["wbtc-eth-arbitrum", "cbbtc-arbitrum", "solvbtc-arbitrum", "xsolvbtc-arbitrum", "btc-plus-arbitrum"],
+                    nodes: ["wbtc-arbitrum", "cbbtc-arbitrum", "solvbtc-arbitrum", "xsolvbtc-arbitrum", "btc-plus-arbitrum"],
                     color: "#28a745",
                     strokeWidth: 2,
                     padding: 20
@@ -52,15 +52,15 @@ class GraphData {
                 {
                     id: "polygon-frame",
                     label: "Polygon",
-                    nodes: ["wbtc-eth-polygon"],
+                    nodes: ["wbtc-polygon"],
                     color: "#6f42c1",
                     strokeWidth: 2,
                     padding: 20
                 },
                 {
-                    id: "optimism-frame", 
+                    id: "optimism-frame",
                     label: "Optimism",
-                    nodes: ["wbtc-eth-optimism", "kbtc-optimism"],
+                    nodes: ["wbtc-optimism", "kbtc-optimism"],
                     color: "#dc3545",
                     strokeWidth: 2,
                     padding: 20
@@ -68,7 +68,7 @@ class GraphData {
                 {
                     id: "bsc-frame", 
                     label: "Binance Smart Chain",
-                    nodes: ["lbtc-bsc", "solvbtc-bsc", "xsolvbtc-bsc", "btc-plus-bsc", "btcb-bsc"],
+                    nodes: ["lbtc-bsc", "solvbtc-bsc", "xsolvbtc-bsc", "btc-plus-bsc", "btcb"],
                     color: "#f39c12",
                     strokeWidth: 2,
                     padding: 20
@@ -108,7 +108,7 @@ class GraphData {
                 {
                     id: "neutron-frame", 
                     label: "Neutron",
-                    nodes: ["wbtc-eth-eureka-neutron", "wbtc-eth-axl-neutron", "btc-int3-neutron"],
+                    nodes: ["wbtc-eureka-neutron", "wbtc-axl-neutron", "btc-int3-neutron"],
                     color: "#9b59b6",
                     strokeWidth: 2,
                     padding: 20
@@ -116,7 +116,7 @@ class GraphData {
                 {
                     id: "portal-frame", 
                     label: "Portal",
-                    nodes: ["wbtc-eth-portal", "tbtc-eth-portal"],
+                    nodes: ["portal-bridge-wbtc", "portal-bridge-tbtc"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -140,7 +140,7 @@ class GraphData {
                 {
                     id: "avalanche-frame", 
                     label: "Avalanche",
-                    nodes: ["solvbtc-avalanche", "xsolvbtc-avalanche", "btc-plus-avalanche", "btc.b-avalanche"],
+                    nodes: ["solvbtc-avalanche", "xsolvbtc-avalanche", "btc-plus-avalanche", "btc.b"],
                     color: "#E84142",
                     strokeWidth: 2,
                     padding: 20
@@ -156,7 +156,7 @@ class GraphData {
                 {
                     id: "bob-frame", 
                     label: "BOB",
-                    nodes: ["solvbtc-bob", "xsolvbtc-bob", "btc-plus-bob", "wbtc-eth-bob-bob", "wbtc-eth-stargate-bob"],
+                    nodes: ["solvbtc-bob", "xsolvbtc-bob", "btc-plus-bob", "wbtc-bob-old", "wbtc-bob"],
                     color: "#FF6B35",
                     strokeWidth: 2,
                     padding: 20
@@ -164,7 +164,7 @@ class GraphData {
                 {
                     id: "base-frame", 
                     label: "Base",
-                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base", "solvbtc-base", "xsolvbtc-base", "btc-plus-base", "tbtc-eth-base"],
+                    nodes: ["wbtc-base", "lbtc-base", "cbbtc-base", "solvbtc-base", "xsolvbtc-base", "btc-plus-base", "tbtc-base"],
                     color: "#f49c13",
                     strokeWidth: 2,
                     padding: 20
@@ -172,7 +172,7 @@ class GraphData {
                 {
                     id: "linea-frame", 
                     label: "Linea",
-                    nodes: ["solvbtc-linea", "xsolvbtc-linea", "wbtc-eth-linea-linea"],
+                    nodes: ["solvbtc-linea", "xsolvbtc-linea", "wbtc-linea"],
                     color: "#61D9FA",
                     strokeWidth: 2,
                     padding: 20
@@ -180,7 +180,7 @@ class GraphData {
                 {
                     id: "rootstock-frame", 
                     label: "Rootstock",
-                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock", "rbtc-rootstock"],
+                    nodes: ["solvbtc-rootstock", "xsolvbtc-rootstock", "rbtc"],
                     color: "#00C851",
                     strokeWidth: 2,
                     padding: 20
@@ -188,7 +188,7 @@ class GraphData {
                 {
                     id: "soneium-frame", 
                     label: "Soneium",
-                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium", "wbtc-eth-stargate-soneium"],
+                    nodes: ["solvbtc-soneium", "xsolvbtc-soneium", "wbtc-soneium"],
                     color: "#8B5CF6",
                     strokeWidth: 2,
                     padding: 20
@@ -204,7 +204,7 @@ class GraphData {
                 {
                     id: "bera-frame", 
                     label: "Bera",
-                    nodes: ["solvbtc-bera", "xsolvbtc-bera", "btc-plus-bera", "wbtc-eth-stargate-berachain"],
+                    nodes: ["solvbtc-bera", "xsolvbtc-bera", "btc-plus-bera", "wbtc-berachain"],
                     color: "#00D4AA",
                     strokeWidth: 2,
                     padding: 20
@@ -212,7 +212,7 @@ class GraphData {
                 {
                     id: "hyperevm-frame", 
                     label: "HyperEVM",
-                    nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm", "ubtc-hyperliquid"],
+                    nodes: ["solvbtc-hyperevm", "xsolvbtc-hyperevm", "btc-plus-hyperevm", "ubtc"],
                     color: "#FF6B6B",
                     strokeWidth: 2,
                     padding: 20
@@ -255,31 +255,31 @@ class GraphData {
                 { id: "wbtc-base",      name: "WBTC", type: "token" },
                 { id: "wbtc-kava",      name: "WBTC", type: "token" },
                 // Bridged WBTC
-                { id: "wbtc-eth-arbitrum",              name: "WBTC", type: "token" },
-                { id: "wbtc-eth-polygon",               name: "WBTC", type: "token" },
-                { id: "wbtc-eth-optimism",              name: "WBTC", type: "token" },
-                { id: "wbtc-eth-eureka-neutron",        name: "WBTC (Eureka)", type: "token" },
-                { id: "wbtc-eth-axl-neutron",           name: "WBTC (Axelar)", type: "token" },
-                { id: "wbtc-eth-portal-solana",         name: "WBTC.portal", type: "token" },
-                { id: "wbtc-eth-axl-osmo",              name: "WBTC.eth.axl", type: "token" },
-                { id: "wbtc-eth-eureka-osmo",           name: "WBTC.eth.atom", type: "token" },
-                { id: "wbtc-eth-portal",                name: "WBTC", type: "issuer" },
-                { id: "wbtc-eth-stargate-soneium",      name: "WBTC", type: "token" },
-                { id: "wbtc-eth-stargate-berachain",    name: "WBTC", type: "token" },
-                { id: "wbtc-eth-bob-bob",               name: "WBTC (old)", type: "token" },
-                { id: "wbtc-eth-stargate-bob",          name: "WBTC", type: "token" },
-                { id: "wbtc-eth-linea-linea",           name: "WBTC", type: "token" },
+                { id: "wbtc-arbitrum",          name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-arbitrum
+                { id: "wbtc-polygon",           name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-polygon
+                { id: "wbtc-optimism",          name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-optimism
+                { id: "wbtc-eureka-neutron",    name: "WBTC (Eureka)", type: "token" }, // TODO rename to wbtc-eth-eureka-neutron
+                { id: "wbtc-axl-neutron",       name: "WBTC (Axelar)", type: "token" }, // TODO rename to wbtc-eth-axl-neutron
+                { id: "wbtc-portal-solana",     name: "WBTC.portal", type: "token" }, // TODO rename to wbtc-eth-portal-solana
+                { id: "wbtc-eth-axl-osmo",      name: "WBTC.eth.axl", type: "token" },
+                { id: "wbtc-eth-eur-osmo",      name: "WBTC.eth.atom", type: "token" }, // TODO rename to wbtc-eth-eureka-osmo
+                { id: "portal-bridge-wbtc",     name: "WBTC", type: "issuer" }, // TODO rename to wbtc-eth-portal
+                { id: "wbtc-soneium",           name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-stargate-soneium
+                { id: "wbtc-berachain",         name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-stargate-berachain
+                { id: "wbtc-bob-old",           name: "WBTC (old)", type: "token" }, // TODO rename to wbtc-eth-bob-bob
+                { id: "wbtc-bob",               name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-stargate-bob
+                { id: "wbtc-linea",             name: "WBTC", type: "token" }, // TODO rename to wbtc-eth-linea-linea
 
                 // cbBTC
                 { id: "coinbase",       name: "Coinbase", type: "issuer" },
-                { id: "cbbtc-eth",      name: "cbBTC", type: "token" },
+                { id: "cbbtc",          name: "cbBTC", type: "token" }, // TODO rename to cbbtc-eth
                 { id: "cbbtc-solana",   name: "cbBTC", type: "token" },
                 { id: "cbbtc-base",     name: "cbBTC", type: "token" },
                 { id: "cbbtc-arbitrum", name: "cbBTC", type: "token" },
 
                 // LBTC
                 { id: "lombard",        name: "Lombard", type: "issuer" },
-                { id: "lbtc-eth",       name: "LBTC", type: "token" },
+                { id: "lbtc",           name: "LBTC", type: "token" }, // TODO rename to lbtc-eth
                 { id: "lbtc-base",      name: "LBTC", type: "token" },
                 { id: "lbtc-bsc",       name: "LBTC", type: "token" },
                 { id: "lbtc-sui",       name: "LBTC", type: "token" },
@@ -287,15 +287,15 @@ class GraphData {
                 { id: "lbtc-katana",    name: "LBTC", type: "token" },
 
                 // tBTC
-                { id: "tbtc-eth",               name: "tBTC", type: "token" },
-                { id: "tbtc-eth-portal-solana", name: "tBTC", type: "token" },
-                { id: "tbtc-eth-base",          name: "tBTC", type: "token" },
-                { id: "tbtc-eth-portal",        name: "tBTC", type: "issuer" },
+                { id: "tbtc",               name: "tBTC", type: "token" }, // TODO rename to tbtc-eth
+                { id: "tbtc-portal-solana", name: "tBTC", type: "token" }, // TODO rename to tbtc-eth-portal-solana
+                { id: "tbtc-base",          name: "tBTC", type: "token" }, // TODO rename to tbtc-eth-base
+                { id: "portal-bridge-tbtc", name: "tBTC", type: "issuer" }, // TODO rename to tbtc-eth-portal
 
                 // Ethereum protocols
-                { id: "aave-eth", name: "AAVE", type: "protocol" },
-                { id: "morpho-eth", name: "Morpho", type: "protocol" },
-                { id: "compound-eth", name: "Compound", type: "protocol" },
+                { id: "aave", name: "AAVE", type: "protocol" }, // TODO rename to aave-eth
+                { id: "morpho", name: "Morpho", type: "protocol" }, // TODO rename to morpho-eth
+                { id: "compound", name: "Compound", type: "protocol" }, // TODO rename to compound-eth
 
                 // Solana protocols
                 { id: "jupiter-perps", name: "Jupiter Perps", type: "protocol" },
@@ -348,26 +348,26 @@ class GraphData {
 
                 // FBTC
                 { id: "function",       name: "Function", type: "issuer" },
-                { id: "fbtc-eth",       name: "FBTC", type: "token" },
+                { id: "fbtc",           name: "FBTC", type: "token" }, // TODO rename to fbtc-eth
                 { id: "fbtc-mantle",    name: "FBTC", type: "token" },
 
                 // nBTC
                 { id: "nomic", name: "Nomic", type: "issuer" },
-                { id: "nbtc-osmosis", name: "nBTC", type: "token" },
+                { id: "nbtc", name: "nBTC", type: "token" }, // TODO rename to nbtc-osmosis
 
                 // Babylon
                 { id: "babylon", name: "Babylon", type: "issuer" },
 
                 // Alloyed BTC on Osmosis
-                { id: "allbtc-osmosis-issuer", name: "allBTC", type: "issuer" },
-                { id: "allbtc-osmosis", name: "allBTC", type: "token" },
+                { id: "allbtc-issuer", name: "allBTC", type: "issuer" }, // TODO rename to allbtc-osmosis-issuer
+                { id: "allbtc", name: "allBTC", type: "token" }, // TODO rename to allbtc-osmosis
 
                 // Token bridges
-                { id: "eureka-wbtc-eth", name: "Eureka", type: "issuer" },
-                { id: "axelar-wbtc-eth", name: "Axelar", type: "issuer" },
-                { id: "stargate-wbtc-eth", name: "Stargate (LayerZero)", type: "issuer" },
+                { id: "eureka", name: "Eureka", type: "issuer" }, // TODO rename to eureka-wbtc-eth
+                { id: "axelar", name: "Axelar", type: "issuer" }, // TODO rename to axelar-wbtc-eth
+                { id: "stargate", name: "Stargate (LayerZero)", type: "issuer" }, // TODO rename to stargate-wbtc-eth
                 { id: "bob-bridge", name: "BOB Bridge (?)", type: "issuer" },
-                { id: "linea-bridge-wbtc-eth", name: "Linea Bridge", type: "issuer" },
+                { id: "linea-bridge", name: "Linea Bridge", type: "issuer" }, // TODO rename to linea-bridge-wbtc-eth
 
                 // BTC bridges
                 { id: "int3face", name: "Int3Face (BitFrost)", type: "issuer" },
@@ -381,18 +381,18 @@ class GraphData {
 
                 // BTC.b
                 { id: "binance", name: "Binance", type: "issuer" },
-                { id: "btcb-bsc", name: "BTCB", type: "token" },
+                { id: "btcb", name: "BTCB", type: "token" }, // TODO rename to btcb-bsc
 
                 // BTC.b
-                { id: "btc.b-avalanche", name: "BTC.b", type: "token" },
+                { id: "btc.b", name: "BTC.b", type: "token" }, // TODO rename to btc.b-avalanche
 
                 { id: "btc-int3-osmosis", name: "BTC.in3", type: "token" },
                 { id: "btc-int3-neutron", name: "BTC.in3", type: "token" },
 
 
-                { id: "rbtc-rootstock", name: "RBTC", type: "token" },
+                { id: "rbtc", name: "RBTC", type: "token" }, // TODO rename to rbtc-rootstock
 
-                { id: "ubtc-hyperliquid", name: "UBTC", type: "token" },
+                { id: "ubtc", name: "UBTC", type: "token" }, // TODO rename to ubtc-hyperliquid
             ],
             links: [
                 // Central connections
@@ -406,12 +406,12 @@ class GraphData {
                 { source: "btc", target: "internet-computer" },
                 { source: "btc", target: "solvbtc" },
                 { source: "btc", target: "kraken" },
-                { source: "btc", target: "btc.b-avalanche", text: true },
+                { source: "btc", target: "btc.b", text: true },
                 { source: "btc", target: "unit" },
                 
                 // Bridge to wrapped tokens
                 { source: "babylon", target: "lombard", text: true },
-                { source: "lombard", target: "lbtc-eth", text: true },
+                { source: "lombard", target: "lbtc", text: true },
                 { source: "lombard", target: "lbtc-base", text: true },
                 { source: "lombard", target: "lbtc-bsc", text: true },
                 { source: "lombard", target: "lbtc-sui" },
@@ -423,93 +423,93 @@ class GraphData {
                 { source: "bitgo", target: "wbtc-solana", text: true },
                 { source: "bitgo", target: "wbtc-base", text: true },
                 { source: "bitgo", target: "wbtc-kava", text: true },
-                { source: "wbtc-eth", target: "wbtc-eth-arbitrum", text: true },
-                { source: "wbtc-eth", target: "wbtc-eth-polygon", text: true },
-                { source: "wbtc-eth", target: "wbtc-eth-optimism", text: true },
+                { source: "wbtc-eth", target: "wbtc-arbitrum", text: true },
+                { source: "wbtc-eth", target: "wbtc-polygon", text: true },
+                { source: "wbtc-eth", target: "wbtc-optimism", text: true },
                 
                 // FBTC
-                { source: "function", target: "fbtc-eth", text: true },
+                { source: "function", target: "fbtc", text: true },
                 { source: "function", target: "fbtc-mantle", text: true },
                 
-                { source: "coinbase", target: "cbbtc-eth", text: true },
+                { source: "coinbase", target: "cbbtc", text: true },
                 { source: "coinbase", target: "cbbtc-solana", text: true },
                 { source: "coinbase", target: "cbbtc-base", text: true },
                 { source: "cbbtc-solana", target: "kamino", text: true },
                 { source: "coinbase", target: "cbbtc-arbitrum", text: true },
                 
-                { source: "wbtc-eth", target: "axelar-wbtc-eth", text: true },
+                { source: "wbtc-eth", target: "axelar", text: true },
                 
                 // SolvBTC backing
                 { source: "wbtc-eth", target: "solvbtc", text: true },
-                { source: "tbtc-eth", target: "solvbtc", text: true },
-                { source: "cbbtc-eth", target: "solvbtc", text: true },
-                { source: "fbtc-eth", target: "solvbtc", text: true },
-                { source: "btcb-bsc", target: "solvbtc", text: true },
-                { source: "wbtc-eth-arbitrum", target: "solvbtc", text: true },
-                { source: "btc.b-avalanche", target: "solvbtc", text: true },
+                { source: "tbtc", target: "solvbtc", text: true },
+                { source: "cbbtc", target: "solvbtc", text: true },
+                { source: "fbtc", target: "solvbtc", text: true },
+                { source: "btcb", target: "solvbtc", text: true },
+                { source: "wbtc-arbitrum", target: "solvbtc", text: true },
+                { source: "btc.b", target: "solvbtc", text: true },
                 { source: "fbtc-mantle", target: "solvbtc", text: true },
-                { source: "wbtc-eth-stargate-bob", target: "solvbtc", text: true },
-                { source: "tbtc-eth-base", target: "solvbtc", text: true },
+                { source: "wbtc-bob", target: "solvbtc", text: true },
+                { source: "tbtc-base", target: "solvbtc", text: true },
                 { source: "cbbtc-base", target: "solvbtc", text: true },
-                { source: "wbtc-eth-linea-linea", target: "solvbtc", text: true },
-                { source: "wbtc-eth-stargate-soneium", target: "solvbtc", text: true },
+                { source: "wbtc-linea", target: "solvbtc", text: true },
+                { source: "wbtc-soneium", target: "solvbtc", text: true },
                 { source: "kbtc-ink", target: "solvbtc", text: true },
-                { source: "ubtc-hyperliquid", target: "solvbtc", text: true },
-                { source: "wbtc-eth-stargate-berachain", target: "solvbtc", text: true },
+                { source: "ubtc", target: "solvbtc", text: true },
+                { source: "wbtc-berachain", target: "solvbtc", text: true },
                 
                 // Osmosis ecosystem
-                { source: "wbtc-osmosis", target: "allbtc-osmosis-issuer", text: true },
+                { source: "wbtc-osmosis", target: "allbtc-issuer", text: true },
                 { source: "internet-computer", target: "ckbtc-osmosis", text: true },
-                { source: "ckbtc-osmosis", target: "allbtc-osmosis-issuer", text: true },
-                { source: "nbtc-osmosis", target: "allbtc-osmosis-issuer", text: true },
-                { source: "nomic", target: "nbtc-osmosis", text: true },
+                { source: "ckbtc-osmosis", target: "allbtc-issuer", text: true },
+                { source: "nbtc", target: "allbtc-issuer", text: true },
+                { source: "nomic", target: "nbtc", text: true },
                 { source: "btc", target: "nomic" },
-                { source: "allbtc-osmosis-issuer", target: "allbtc-osmosis", text: true },
+                { source: "allbtc-issuer", target: "allbtc", text: true },
                 
                 // Axelar bridge
-                { source: "axelar-wbtc-eth", target: "wbtc-eth-axl-osmo", text: true },
-                { source: "wbtc-eth-axl-osmo", target: "allbtc-osmosis-issuer", text: true },
+                { source: "axelar", target: "wbtc-eth-axl-osmo", text: true },
+                { source: "wbtc-eth-axl-osmo", target: "allbtc-issuer", text: true },
 
-                { source: "eureka-wbtc-eth", target: "wbtc-eth-eureka-osmo", text: true },
-                { source: "wbtc-eth-eureka-osmo", target: "allbtc-osmosis-issuer", text: true },
+                { source: "eureka", target: "wbtc-eth-eur-osmo", text: true },
+                { source: "wbtc-eth-eur-osmo", target: "allbtc-issuer", text: true },
                 
                 // Weighted connections (with specific values)
-                { source: "btc", target: "tbtc-eth", text: true },
+                { source: "btc", target: "tbtc", text: true },
                 
                 // Portal Bridge routes
-                { source: "wbtc-eth", target: "wbtc-eth-portal", text: true },
-                { source: "wbtc-eth-portal", target: "wbtc-eth-portal-solana", text: true },
+                { source: "wbtc-eth", target: "portal-bridge-wbtc", text: true },
+                { source: "portal-bridge-wbtc", target: "wbtc-portal-solana", text: true },
                 
                 // DeFi Protocol connections from WBTC-ETH
-                { source: "wbtc-eth", target: "aave-eth", text: true },
-                { source: "wbtc-eth", target: "morpho-eth", text: true },
-                { source: "wbtc-eth", target: "compound-eth", text: true },
+                { source: "wbtc-eth", target: "aave", text: true },
+                { source: "wbtc-eth", target: "morpho", text: true },
+                { source: "wbtc-eth", target: "compound", text: true },
                 
-                { source: "tbtc-eth", target: "aave-eth", text: true },
-                { source: "tbtc-eth", target: "tbtc-eth-portal", text: true },
-                { source: "tbtc-eth-portal", target: "tbtc-eth-portal-solana", text: true },
-                { source: "tbtc-eth-portal", target: "tbtc-eth-base", text: true },
+                { source: "tbtc", target: "aave", text: true },
+                { source: "tbtc", target: "portal-bridge-tbtc", text: true },
+                { source: "portal-bridge-tbtc", target: "tbtc-portal-solana", text: true },
+                { source: "portal-bridge-tbtc", target: "tbtc-base", text: true },
                 { source: "internet-computer", target: "ckbtc-icp", text: true },
-                { source: "cbbtc-eth", target: "aave-eth", text: true },
-                { source: "cbbtc-eth", target: "morpho-eth", text: true },
+                { source: "cbbtc", target: "aave", text: true },
+                { source: "cbbtc", target: "morpho", text: true },
 
-                { source: "fbtc-eth", target: "aave-eth", text: true },
-                { source: "lbtc-eth", target: "aave-eth", text: true },
+                { source: "fbtc", target: "aave", text: true },
+                { source: "lbtc", target: "aave", text: true },
                 
                 // Solana ecosystem
-                { source: "wbtc-eth-portal-solana", target: "jupiter-perps", text: true },
-                { source: "wbtc-eth-portal-solana", target: "drift", text: true },
-                { source: "wbtc-eth-portal-solana", target: "orca", text: true },
-                { source: "wbtc-eth-portal-solana", target: "kamino", text: true },
-                { source: "wbtc-eth-portal-solana", target: "marginifi", text: true },
+                { source: "wbtc-portal-solana", target: "jupiter-perps", text: true },
+                { source: "wbtc-portal-solana", target: "drift", text: true },
+                { source: "wbtc-portal-solana", target: "orca", text: true },
+                { source: "wbtc-portal-solana", target: "kamino", text: true },
+                { source: "wbtc-portal-solana", target: "marginifi", text: true },
                 
                 // New routes for Neutron
-                { source: "wbtc-eth", target: "eureka-wbtc-eth" },
-                { source: "eureka-wbtc-eth", target: "wbtc-eth-eureka-neutron" },
-                { source: "axelar-wbtc-eth", target: "wbtc-eth-axl-neutron" },
+                { source: "wbtc-eth", target: "eureka" },
+                { source: "eureka", target: "wbtc-eureka-neutron" },
+                { source: "axelar", target: "wbtc-axl-neutron" },
 
                 { source: "btc", target: "binance" },
-                { source: "binance", target: "btcb-bsc", text: true },
+                { source: "binance", target: "btcb", text: true },
                 { source: "babylon", target: "xsolvbtc" },
                 
                 // Kraken kBTC connections
@@ -559,25 +559,25 @@ class GraphData {
                 { source: "btc-plus", target: "btc-plus-bera", text: true },
                 { source: "btc-plus", target: "btc-plus-hyperevm", text: true },
 
-                { source: "stargate-wbtc-eth", target: "wbtc-eth-stargate-bob", text: true },
-                { source: "wbtc-eth", target: "stargate-wbtc-eth", text: true },
+                { source: "stargate", target: "wbtc-bob", text: true },
+                { source: "wbtc-eth", target: "stargate", text: true },
                 { source: "wbtc-eth", target: "bob-bridge" },
-                { source: "bob-bridge", target: "wbtc-eth-bob-bob", text: true },
-                { source: "linea-bridge-wbtc-eth", target: "wbtc-eth-linea-linea", text: true },
-                { source: "wbtc-eth", target: "linea-bridge-wbtc-eth", text: true },
+                { source: "bob-bridge", target: "wbtc-bob-old", text: true },
+                { source: "linea-bridge", target: "wbtc-linea", text: true },
+                { source: "wbtc-eth", target: "linea-bridge", text: true },
 
                 { source: "btc", target: "int3face" },
                 { source: "int3face", target: "btc-int3-osmosis", text: true },
                 { source: "int3face", target: "btc-int3-neutron", text: true },
-                { source: "btc-int3-osmosis", target: "allbtc-osmosis-issuer", text: true },
+                { source: "btc-int3-osmosis", target: "allbtc-issuer", text: true },
 
-                { source: "powpeg", target: "rbtc-rootstock", text: true },
-                { source: "rbtc-rootstock", target: "solvbtc", text: true },
+                { source: "powpeg", target: "rbtc", text: true },
+                { source: "rbtc", target: "solvbtc", text: true },
                 { source: "btc", target: "powpeg" },
-                { source: "stargate-wbtc-eth", target: "wbtc-eth-stargate-soneium", text: true },
-                { source: "stargate-wbtc-eth", target: "wbtc-eth-stargate-berachain", text: true },
+                { source: "stargate", target: "wbtc-soneium", text: true },
+                { source: "stargate", target: "wbtc-berachain", text: true },
 
-                { source: "unit", target: "ubtc-hyperliquid", text: true },
+                { source: "unit", target: "ubtc", text: true },
             ]
         };
     }

@@ -51,27 +51,27 @@
     "x": -44,
     "y": 828
   },
-  "wbtc-arbitrum": {
+  "wbtc-eth-arbitrum": {
     "x": 699,
     "y": 242
   },
-  "wbtc-polygon": {
+  "wbtc-eth-polygon": {
     "x": -191,
     "y": -777
   },
-  "wbtc-optimism": {
+  "wbtc-eth-optimism": {
     "x": -332,
     "y": -687
   },
-  "wbtc-eureka-neutron": {
+  "wbtc-eth-eureka-neutron": {
     "x": -792,
     "y": 1022
   },
-  "wbtc-axl-neutron": {
+  "wbtc-eth-axl-neutron": {
     "x": -779,
     "y": 1114
   },
-  "wbtc-portal-solana": {
+  "wbtc-eth-portal-solana": {
     "x": -347,
     "y": -229
   },
@@ -79,19 +79,19 @@
     "x": -496,
     "y": 1367
   },
-  "wbtc-eth-eur-osmo": {
+  "wbtc-eth-eureka-osmo": {
     "x": -389,
     "y": 1371
   },
-  "portal-bridge-wbtc": {
+  "wbtc-eth-portal": {
     "x": -202,
     "y": -294
   },
-  "wbtc-soneium": {
+  "wbtc-eth-stargate-soneium": {
     "x": 1325,
     "y": -886
   },
-  "wbtc-berachain": {
+  "wbtc-eth-stargate-berachain": {
     "x": 2165,
     "y": -746
   },
@@ -99,7 +99,7 @@
     "x": 241,
     "y": 443
   },
-  "cbbtc": {
+  "cbbtc-eth": {
     "x": 194,
     "y": -179
   },
@@ -119,7 +119,7 @@
     "x": 34,
     "y": 502
   },
-  "lbtc": {
+  "lbtc-eth": {
     "x": 104,
     "y": -453
   },
@@ -143,7 +143,7 @@
     "x": -242,
     "y": 475
   },
-  "tbtc": {
+  "tbtc-eth": {
     "x": 433,
     "y": -229
   },
@@ -159,15 +159,15 @@
     "x": -206,
     "y": -201
   },
-  "aave": {
+  "aave-eth": {
     "x": 147,
     "y": -948
   },
-  "morpho": {
+  "morpho-eth": {
     "x": 439,
     "y": -345
   },
-  "compound": {
+  "compound-eth": {
     "x": 217,
     "y": -502
   },
@@ -343,7 +343,7 @@
     "x": 666,
     "y": 791
   },
-  "fbtc": {
+  "fbtc-eth": {
     "x": 561,
     "y": -265
   },
@@ -355,7 +355,7 @@
     "x": -2,
     "y": 1258
   },
-  "nbtc": {
+  "nbtc-osmosis": {
     "x": -35,
     "y": 1378
   },
@@ -363,23 +363,23 @@
     "x": 234,
     "y": 687
   },
-  "allbtc-issuer": {
+  "allbtc-osmosis-issuer": {
     "x": -155,
     "y": 1523
   },
-  "allbtc": {
+  "allbtc-osmosis": {
     "x": -317,
     "y": 1620
   },
-  "eureka": {
+  "eureka-wbtc-eth": {
     "x": -752,
     "y": 850
   },
-  "axelar": {
+  "axelar-wbtc-eth": {
     "x": -673,
     "y": 1096
   },
-  "stargate": {
+  "stargate-wbtc-eth": {
     "x": 787,
     "y": -791
   },
@@ -415,19 +415,19 @@
     "x": 556,
     "y": 704
   },
-  "btcb": {
+  "btcb-bsc": {
     "x": 789,
     "y": 692
   },
-  "btc.b": {
+  "btc.b-avalanche": {
     "x": 2446,
     "y": 1559
   },
-  "wbtc-bob-old": {
+  "wbtc-eth-bob-bob": {
     "x": 1080,
     "y": -697
   },
-  "wbtc-bob": {
+  "wbtc-eth-stargate-bob": {
     "x": 1147,
     "y": -717
   },
@@ -439,19 +439,19 @@
     "x": -789,
     "y": 1201
   },
-  "linea-bridge": {
+  "linea-bridge-wbtc-eth": {
     "x": 746,
     "y": -1004
   },
-  "wbtc-linea": {
+  "wbtc-eth-linea-linea": {
     "x": 1780,
     "y": -978
   },
-  "rbtc": {
+  "rbtc-rootstock": {
     "x": 2554,
     "y": 841
   },
-  "ubtc": {
+  "ubtc-hyperliquid": {
     "x": 1200,
     "y": 632
   }
