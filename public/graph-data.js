@@ -386,8 +386,8 @@ class GraphData {
                 // BTC.b
                 { id: "btc.b-avalanche", name: "BTC.b", type: "token" },
 
-                { id: "btc-int3-osmosis", name: "BTC.in3", type: "token" },
-                { id: "btc-int3-neutron", name: "BTC.in3", type: "token" },
+                { id: "btc-int3-osmosis", name: "BTC.int3", type: "token" },
+                { id: "btc-int3-neutron", name: "BTC.int3", type: "token" },
 
 
                 { id: "rbtc-rootstock", name: "RBTC", type: "token" },

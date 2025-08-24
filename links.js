@@ -160,7 +160,8 @@ const DENOMS = {
     WBTC_ETH_EUR_OSMO: 'ibc/88386AC48152D48B34B082648DF836F975506F0B57DBBFC10A54213B1BF484CB',
     NOMIC_BTC: 'ibc/75345531D87BD90BF108BE7240BD721CB2CB0A1F16D4EBA71B09EC3C43E15C8F',
     CKBTC_OSMOSIS: 'factory/osmo10c4y9csfs8q7mtvfg4p9gd8d0acx0hpc2mte9xqzthd7rd3348tsfhaesm/sICP-icrc-ckBTC',
-    
+    BTC_INT3_OSMOSIS: 'ibc/2F4258D6E1E01B203D6CA83F2C7E4959615053A21EC2C2FC196F7911CAC832EF',
+
     // AllBTC
     ALLBTC_ISSUER: 'factory/osmo1z6r6qdknhgsc0zeracktgpcxf43j6sekq07nw8sxduc9lg0qjjlqfu25e3/alloyed/allBTC',
     
@@ -855,6 +856,16 @@ const LINK_LABEL_HANDLERS = {
     'wbtc-eth-stargate-berachain->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.WBTC_BERACHAIN, ADDRESSES.SOLVBTC_BERACHAIN_WBTC_VAULT, 8, 'bera']
+    },
+
+    'int3face->btc-int3-osmosis': {
+        handler: TokenHandlers.handleCosmosSupply,
+        args: [DENOMS.BTC_INT3_OSMOSIS, 8]
+    },
+
+    'btc-int3-osmosis->allbtc-osmosis-issuer': {
+        handler: TokenHandlers.handleCosmosBalance,
+        args: [DENOMS.BTC_INT3_OSMOSIS, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
     },
 
 };
