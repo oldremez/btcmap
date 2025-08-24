@@ -11,7 +11,8 @@ class DataConsistencyTester {
             descriptions: { passed: 0, failed: 0, total: 0 },
             links: { passed: 0, failed: 0, total: 0 },
             linkTexts: { passed: 0, failed: 0, total: 0 },
-            linkHandlers: { passed: 0, failed: 0, total: 0 }
+            linkHandlers: { passed: 0, failed: 0, total: 0 },
+            linkHandlerExecution: { passed: 0, failed: 0, total: 0, networkErrors: 0 }
         };
     }
 
@@ -183,6 +184,94 @@ class DataConsistencyTester {
         console.log(`✅ Link handlers test: ${this.testResults.linkHandlers.passed}/${this.testResults.linkHandlers.total} passed`);
     }
 
+    // Test 5: Check if all link handlers can actually execute and return data
+    async testLinkHandlerExecution() {
+        console.log('\n🔧 Testing link handler execution...');
+        
+        const linksJsPath = path.join(__dirname, 'links.js');
+        
+        if (!fs.existsSync(linksJsPath)) {
+            this.addError('Links.js file not found for handler execution test');
+            return;
+        }
+
+        try {
+            // Dynamically import the links.js file to access the handlers
+            const linksModule = require('./links.js');
+            
+            // Get the LINK_LABEL_HANDLERS from the module
+            const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
+            const linkHandlers = this.extractLinkHandlers(linksJsContent);
+            
+            this.testResults.linkHandlerExecution = { passed: 0, failed: 0, total: 0, networkErrors: 0 };
+            this.testResults.linkHandlerExecution.total = linkHandlers.length;
+            
+            if (this.verbose) {
+                console.log(`Found ${linkHandlers.length} handlers to test`);
+            }
+            
+            // Temporarily suppress console.error to avoid network error spam
+            const originalConsoleError = console.error;
+            if (!this.verbose) {
+                console.error = () => {}; // Suppress errors in non-verbose mode
+            }
+            
+            try {
+                // Test each handler by trying to execute it
+                for (const handlerKey of linkHandlers) {
+                    try {
+                        // Try to get the link label using the getLinkLabel function
+                        const result = await linksModule.getLinkLabel(...handlerKey.split('->'));
+                        
+                        if (result !== null && result !== undefined) {
+                            // Check if the result indicates an error or loading state
+                            if (result === 'Error' || result === 'Loading...' || result === 'Loading' || result.includes('Error') || result.includes('Loading')) {
+                                this.testResults.linkHandlerExecution.failed++;
+                                this.addError(`Link handler '${handlerKey}' returned error/loading state: ${result}`);
+                            } else {
+                                this.testResults.linkHandlerExecution.passed++;
+                                if (this.verbose) {
+                                    console.log(`  ✅ ${handlerKey} -> executed successfully (${typeof result})`);
+                                }
+                            }
+                        } else {
+                            this.testResults.linkHandlerExecution.failed++;
+                            this.addError(`Link handler '${handlerKey}' returned null/undefined`);
+                        }
+                    } catch (error) {
+                        // Check if it's a network error (common for RPC endpoints)
+                        if (error.code === 'ENOTFOUND' || error.message.includes('fetch') || error.message.includes('network') || error.message.includes('invalid json')) {
+                            this.testResults.linkHandlerExecution.networkErrors++;
+                            if (this.verbose) {
+                                console.log(`  ⚠️ ${handlerKey} -> network error (${error.message})`);
+                            }
+                            // Network errors should count as failures since they indicate the handler can't work
+                            this.testResults.linkHandlerExecution.failed++;
+                        } else {
+                            this.testResults.linkHandlerExecution.failed++;
+                            this.addError(`Link handler '${handlerKey}' failed to execute: ${error.message}`);
+                        }
+                    }
+                }
+            } finally {
+                // Restore console.error
+                console.error = originalConsoleError;
+            }
+            
+            const networkErrorCount = this.testResults.linkHandlerExecution.networkErrors;
+            const successCount = this.testResults.linkHandlerExecution.passed;
+            const failureCount = this.testResults.linkHandlerExecution.failed;
+            
+            console.log(`✅ Link handler execution test: ${successCount}/${this.testResults.linkHandlerExecution.total} passed`);
+            if (networkErrorCount > 0) {
+                console.log(`⚠️ Network errors: ${networkErrorCount} (these don't count as failures)`);
+            }
+            
+        } catch (error) {
+            this.addError(`Failed to test link handlers: ${error.message}`);
+        }
+    }
+
     // Helper methods
     extractAllNodes(graphDataContent) {
         const nodes = new Set();
@@ -279,13 +368,14 @@ class DataConsistencyTester {
         console.log(`⚠️ ${message}`);
     }
 
-    runAllTests() {
+    async runAllTests() {
         console.log('🚀 Starting data consistency tests...\n');
         
         this.testDescriptions();
         this.testLinks();
         this.testLinkTexts();
         this.testLinkHandlers();
+        await this.testLinkHandlerExecution(); // Wait for async test to complete
         
         this.printSummary();
     }
@@ -331,7 +421,12 @@ if (require.main === module) {
     const verbose = args.includes('--verbose') || args.includes('-v');
     
     const tester = new DataConsistencyTester({ verbose });
-    tester.runAllTests();
+    
+    // Handle async execution
+    tester.runAllTests().catch(error => {
+        console.error('❌ Test execution failed:', error);
+        process.exit(1);
+    });
 }
 
 module.exports = DataConsistencyTester;

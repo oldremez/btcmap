@@ -27,6 +27,12 @@ The test suite performs four main consistency checks:
 - **What it checks**: Every handler should serve a link that actually needs dynamic text
 - **Common issues**: Orphaned handlers or missing `text: true` properties
 
+### 5. Link Handler Execution ✅
+- **Purpose**: Validates that all link handlers can actually execute and return valid data
+- **What it checks**: Each handler can be called successfully and returns valid results (not error/loading states)
+- **Common issues**: Network errors, invalid RPC endpoints, or handler implementation bugs
+- **Note**: Handlers that return "Error" or "Loading..." are considered failures since they indicate the handler can't provide real data
+
 ## How to Run
 
 ### Option 1: Using npm scripts (recommended)
@@ -89,21 +95,30 @@ When running with `--verbose` flag, you get:
 ⚙️ Testing link handlers consistency...
 ✅ Link handlers test: 106/121 passed
 
+🔧 Testing link handler execution...
+❌ Link handler 'lombard->lbtc-sui' returned error/loading state: Loading...
+❌ Link handler 'lombard->lbtc-sonic' returned error/loading state: Loading...
+❌ Link handler 'lombard->lbtc-katana' returned error/loading state: Loading...
+✅ Link handler execution test: 118/121 passed
+
 📊 Test Summary
 ================
-Total tests: 452
-Passed: 420
-Failed: 32
+Total tests: 576
+Passed: 570
+Failed: 6
 
-❌ Errors (32):
-  1. Description file 'bob-frame.html' has no corresponding node in graph-data.js
-  2. Link with text:true 'wbtc-eth->wbtc-eth-polygon' has no corresponding handler in links.js
-  ...
+❌ Errors (6):
+  1. Link with text:true 'int3face->btc-int3-osmosis' has no corresponding handler in links.js
+  2. Link with text:true 'int3face->btc-int3-neutron' has no corresponding handler in links.js
+  3. Link with text:true 'btc-int3-osmosis->allbtc-osmosis-issuer' has no corresponding handler in links.js
+  4. Link handler 'lombard->lbtc-sui' returned error/loading state: Loading...
+  5. Link handler 'lombard->lbtc-sonic' returned error/loading state: Loading...
+  6. Link handler 'lombard->lbtc-katana' returned error/loading state: Loading...
 
 💡 Recommendations:
-  1. Check if frame descriptions should be removed or have corresponding nodes
-  2. Ensure all links with text:true have corresponding handlers in links.js
-  3. Verify that all handlers correspond to links with text:true
+  1. Ensure all links with text:true have corresponding handlers in links.js
+  2. Verify that all handlers in links.js correspond to links with text:true in graph-data.js
+  3. Check network connectivity for RPC endpoints that are failing
 ```
 
 ### Verbose Mode
