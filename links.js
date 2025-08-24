@@ -474,37 +474,37 @@ const LINK_LABEL_HANDLERS = {
         args: [DENOMS.CKBTC_OSMOSIS, 8]
     },
     
-    'nomic->nbtc': {
+    'nomic->nbtc-osmosis': {
         handler: TokenHandlers.handleCosmosSupply,
         args: [DENOMS.NOMIC_BTC, 14]
     },
     
-    'nbtc->allbtc-issuer': {
+    'nbtc-osmosis->allbtc-osmosis-issuer': {
         handler: TokenHandlers.handleCosmosBalance,
         args: [DENOMS.NOMIC_BTC, ADDRESSES.ALLBTC_ISSUER_OSMO, 14]
     },
     
-    'wbtc-osmosis->allbtc-issuer': {
+    'wbtc-osmosis->allbtc-osmosis-issuer': {
         handler: TokenHandlers.handleCosmosBalance,
         args: [DENOMS.WBTC_OSMOSIS, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
     },
     
-    'ckbtc-osmosis->allbtc-issuer': {
+    'ckbtc-osmosis->allbtc-osmosis-issuer': {
         handler: TokenHandlers.handleCosmosBalance,
         args: [DENOMS.CKBTC_OSMOSIS, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
     },
     
-    'wbtc-eth-axl-osmo->allbtc-issuer': {
+    'wbtc-eth-axl-osmo->allbtc-osmosis-issuer': {
         handler: TokenHandlers.handleCosmosBalance,
         args: [DENOMS.WBTC_ETH_AXL_OSMO, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
     },
     
-    'wbtc-eth-eur-osmo->allbtc-issuer': {
+    'wbtc-eth-eureka-osmo->allbtc-osmosis-issuer': {
         handler: TokenHandlers.handleCosmosBalance,
         args: [DENOMS.WBTC_ETH_EUR_OSMO, ADDRESSES.ALLBTC_ISSUER_OSMO, 8]
     },
     
-    'allbtc-issuer->allbtc': {
+    'allbtc-osmosis-issuer->allbtc-osmosis': {
         handler: TokenHandlers.handleCosmosSupply,
         args: [DENOMS.ALLBTC_ISSUER, 8]
     },
@@ -519,17 +519,17 @@ const LINK_LABEL_HANDLERS = {
         args: [ADDRESSES.WBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_WBTC_VAULT, 8, 'ethereum']
     },
 
-    'tbtc->solvbtc': {
+    'tbtc-eth->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.TBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_TBTC_VAULT, 18, 'ethereum']
     },
 
-    'fbtc->solvbtc': {
+    'fbtc-eth->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.FBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_FBTC_VAULT, 8, 'ethereum']
     },
 
-    'cbbtc->solvbtc': {
+    'cbbtc-eth->solvbtc': {
         handler: TokenHandlers.handleERC20Balance,
         args: [ADDRESSES.CBTC_ETHEREUM, ADDRESSES.SOLVBTC_ETH_CBBTC_VAULT, 8, 'ethereum']
     },
