@@ -95,6 +95,18 @@
     "x": 2165,
     "y": -746
   },
+  "wbtc-eth-bob-bob": {
+    "x": 1080,
+    "y": -697
+  },
+  "wbtc-eth-stargate-bob": {
+    "x": 1147,
+    "y": -717
+  },
+  "wbtc-eth-linea-linea": {
+    "x": 1780,
+    "y": -978
+  },
   "coinbase": {
     "x": 241,
     "y": 443
@@ -147,17 +159,17 @@
     "x": 433,
     "y": -229
   },
-  "tbtc-portal-solana": {
-    "x": -338,
-    "y": -133
+  "tbtc-eth-portal-solana": {
+    "x": -346,
+    "y": -158
   },
-  "tbtc-base": {
-    "x": 724,
-    "y": -65
+  "tbtc-eth-base": {
+    "x": 737,
+    "y": -83
   },
-  "portal-bridge-tbtc": {
-    "x": -206,
-    "y": -201
+  "tbtc-eth-portal": {
+    "x": -199,
+    "y": -223
   },
   "aave-eth": {
     "x": 147,
@@ -195,149 +207,149 @@
     "x": 1559,
     "y": -256
   },
-  "xsolvbtc": {
-    "x": 1688,
-    "y": -237
-  },
-  "btc-plus": {
-    "x": 1617,
-    "y": -140
-  },
   "solvbtc-bsc": {
     "x": 737,
     "y": 587
-  },
-  "xsolvbtc-bsc": {
-    "x": 833,
-    "y": 717
-  },
-  "btc-plus-bsc": {
-    "x": 905,
-    "y": 709
   },
   "solvbtc-arbitrum": {
     "x": 743,
     "y": 171
   },
-  "xsolvbtc-arbitrum": {
-    "x": 773,
-    "y": 243
-  },
-  "btc-plus-arbitrum": {
-    "x": 755,
-    "y": 296
-  },
   "solvbtc-avalanche": {
     "x": 2466,
     "y": 1462
-  },
-  "xsolvbtc-avalanche": {
-    "x": 2544,
-    "y": 1437
-  },
-  "btc-plus-avalanche": {
-    "x": 2315,
-    "y": 1457
   },
   "solvbtc-mantle": {
     "x": 1544,
     "y": 723
   },
-  "xsolvbtc-mantle": {
-    "x": 1598,
-    "y": 725
-  },
   "solvbtc-bob": {
     "x": 1123,
     "y": -659
-  },
-  "xsolvbtc-bob": {
-    "x": 1201,
-    "y": -718
-  },
-  "btc-plus-bob": {
-    "x": 1065,
-    "y": -627
   },
   "solvbtc-base": {
     "x": 767,
     "y": 39
   },
-  "xsolvbtc-base": {
-    "x": 786,
-    "y": -44
-  },
-  "btc-plus-base": {
-    "x": 792,
-    "y": 96
-  },
   "solvbtc-linea": {
     "x": 1874,
     "y": -962
-  },
-  "xsolvbtc-linea": {
-    "x": 1991,
-    "y": -963
   },
   "solvbtc-rootstock": {
     "x": 2554,
     "y": 770
   },
-  "xsolvbtc-rootstock": {
-    "x": 2552,
-    "y": 706
-  },
   "solvbtc-soneium": {
     "x": 1413,
     "y": -884
-  },
-  "xsolvbtc-soneium": {
-    "x": 1482,
-    "y": -892
   },
   "solvbtc-ink": {
     "x": 1789,
     "y": 922
   },
-  "xsolvbtc-ink": {
-    "x": 1873,
-    "y": 934
-  },
   "solvbtc-bera": {
     "x": 2272,
     "y": -737
-  },
-  "xsolvbtc-bera": {
-    "x": 2334,
-    "y": -732
-  },
-  "btc-plus-bera": {
-    "x": 2424,
-    "y": -731
   },
   "solvbtc-hyperevm": {
     "x": 1252,
     "y": 638
   },
+  "solvbtc-eth": {
+    "x": 639,
+    "y": -445
+  },
+  "xsolvbtc": {
+    "x": 1688,
+    "y": -237
+  },
+  "xsolvbtc-bsc": {
+    "x": 833,
+    "y": 717
+  },
+  "xsolvbtc-arbitrum": {
+    "x": 773,
+    "y": 243
+  },
+  "xsolvbtc-avalanche": {
+    "x": 2544,
+    "y": 1437
+  },
+  "xsolvbtc-mantle": {
+    "x": 1598,
+    "y": 725
+  },
+  "xsolvbtc-bob": {
+    "x": 1201,
+    "y": -718
+  },
+  "xsolvbtc-base": {
+    "x": 786,
+    "y": -44
+  },
+  "xsolvbtc-linea": {
+    "x": 1991,
+    "y": -963
+  },
+  "xsolvbtc-rootstock": {
+    "x": 2552,
+    "y": 706
+  },
+  "xsolvbtc-soneium": {
+    "x": 1482,
+    "y": -892
+  },
   "xsolvbtc-hyperevm": {
     "x": 1300,
     "y": 652
+  },
+  "xsolvbtc-ink": {
+    "x": 1873,
+    "y": 934
+  },
+  "xsolvbtc-bera": {
+    "x": 2334,
+    "y": -732
+  },
+  "xsolvbtc-merlin": {
+    "x": 1997,
+    "y": -189
+  },
+  "btc-plus": {
+    "x": 1617,
+    "y": -140
+  },
+  "btc-plus-bsc": {
+    "x": 905,
+    "y": 709
+  },
+  "btc-plus-arbitrum": {
+    "x": 755,
+    "y": 296
+  },
+  "btc-plus-avalanche": {
+    "x": 2315,
+    "y": 1457
+  },
+  "btc-plus-bob": {
+    "x": 1065,
+    "y": -627
+  },
+  "btc-plus-base": {
+    "x": 792,
+    "y": 96
+  },
+  "btc-plus-bera": {
+    "x": 2424,
+    "y": -731
   },
   "btc-plus-hyperevm": {
     "x": 1362,
     "y": 658
   },
-  "solvbtc-eth": {
-    "x": 639,
-    "y": -445
-  },
   "btc-plus-eth": {
     "x": 638,
     "y": -357
-  },
-  "xsolvbtc-merlin": {
-    "x": 1997,
-    "y": -189
   },
   "function": {
     "x": 666,
@@ -365,7 +377,7 @@
   },
   "allbtc-osmosis-issuer": {
     "x": -155,
-    "y": 1523
+    "y": 1522
   },
   "allbtc-osmosis": {
     "x": -317,
@@ -386,6 +398,10 @@
   "bob-bridge": {
     "x": 803,
     "y": -700
+  },
+  "linea-bridge-wbtc-eth": {
+    "x": 746,
+    "y": -1004
   },
   "int3face": {
     "x": -113,
@@ -423,14 +439,6 @@
     "x": 2446,
     "y": 1559
   },
-  "wbtc-eth-bob-bob": {
-    "x": 1080,
-    "y": -697
-  },
-  "wbtc-eth-stargate-bob": {
-    "x": 1147,
-    "y": -717
-  },
   "btc-int3-osmosis": {
     "x": -143,
     "y": 1363
@@ -438,14 +446,6 @@
   "btc-int3-neutron": {
     "x": -789,
     "y": 1201
-  },
-  "linea-bridge-wbtc-eth": {
-    "x": 746,
-    "y": -1004
-  },
-  "wbtc-eth-linea-linea": {
-    "x": 1780,
-    "y": -978
   },
   "rbtc-rootstock": {
     "x": 2554,
