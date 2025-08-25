@@ -918,5 +918,6 @@ async function getLinkLabel(sourceId, targetId) {
 }
 
 module.exports = {
-    getLinkLabel
+    getLinkLabel,
+    LINK_LABEL_HANDLERS
 };

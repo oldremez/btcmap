@@ -3,6 +3,8 @@ const path = require('path');
 
 // Import the GraphData class to access the graph data directly
 const { GraphData } = require('./public/graph-data.js');
+// Import the link handlers directly instead of parsing
+const { LINK_LABEL_HANDLERS } = require('./links.js');
 
 // Test suite for data consistency
 class DataConsistencyTester {
@@ -99,17 +101,8 @@ class DataConsistencyTester {
     testLinkTexts() {
         console.log('\n📝 Testing link text consistency...');
         
-        const linksJsPath = path.join(__dirname, 'links.js');
-        
-        if (!fs.existsSync(linksJsPath)) {
-            this.addError('Links.js file not found for link text test');
-            return;
-        }
-
-        const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
-        
         const linksWithText = this.extractLinksWithText();
-        const linkHandlers = this.extractLinkHandlers(linksJsContent);
+        const linkHandlers = this.extractLinkHandlers();
         
         this.testResults.linkTexts.total = linksWithText.length;
         
@@ -137,17 +130,8 @@ class DataConsistencyTester {
     testLinkHandlers() {
         console.log('\n⚙️ Testing link handlers consistency...');
         
-        const linksJsPath = path.join(__dirname, 'links.js');
-        
-        if (!fs.existsSync(linksJsPath)) {
-            this.addError('Links.js file not found for link handlers test');
-            return;
-        }
-
-        const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
-        
         const linksWithText = this.extractLinksWithText();
-        const linkHandlers = this.extractLinkHandlers(linksJsContent);
+        const linkHandlers = this.extractLinkHandlers();
         
         this.testResults.linkHandlers.total = linkHandlers.length;
         
@@ -175,20 +159,12 @@ class DataConsistencyTester {
     async testLinkHandlerExecution() {
         console.log('\n🔧 Testing link handler execution...');
         
-        const linksJsPath = path.join(__dirname, 'links.js');
-        
-        if (!fs.existsSync(linksJsPath)) {
-            this.addError('Links.js file not found for handler execution test');
-            return;
-        }
-
         try {
             // Dynamically import the links.js file to access the handlers
             const linksModule = require('./links.js');
             
-            // Get the link handlers from the links.js content
-            const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
-            const linkHandlers = this.extractLinkHandlers(linksJsContent);
+            // Get the link handlers directly
+            const linkHandlers = this.extractLinkHandlers();
             
             this.testResults.linkHandlerExecution = { passed: 0, failed: 0, total: 0, networkErrors: 0 };
             this.testResults.linkHandlerExecution.total = linkHandlers.length;
@@ -302,19 +278,9 @@ class DataConsistencyTester {
         return links;
     }
 
-    extractLinkHandlers(linksJsContent) {
-        const handlers = [];
-        // More comprehensive regex to catch all handler definitions
-        const handlerMatches = linksJsContent.match(/'([^']+->[^']+)':\s*\{/g);
-        
-        if (handlerMatches) {
-            handlerMatches.forEach(match => {
-                const handler = match.match(/'([^']+)'/)[1];
-                handlers.push(handler);
-            });
-        }
-        
-        return handlers;
+    extractLinkHandlers() {
+        // Use the imported LINK_LABEL_HANDLERS object directly
+        return Object.keys(LINK_LABEL_HANDLERS);
     }
 
     addError(message) {
