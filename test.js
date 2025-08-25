@@ -216,6 +216,9 @@ class DataConsistencyTester {
             
             if (this.verbose) {
                 console.log(`Found ${linkHandlers.length} handlers to test`);
+                console.log('Running tests in parallel for better performance...');
+            } else {
+                console.log(`Testing ${linkHandlers.length} handlers in parallel...`);
             }
             
             // Temporarily suppress console.error to avoid network error spam
@@ -225,8 +228,15 @@ class DataConsistencyTester {
             }
             
             try {
-                // Test each handler by trying to execute it
-                for (const handlerKey of linkHandlers) {
+                // Create an array of promises for all handler tests with staggered start times
+                // to avoid overwhelming RPC endpoints while maintaining parallel execution
+                const handlerPromises = linkHandlers.map(async (handlerKey, index) => {
+                    // Add a small staggered delay to avoid overwhelming RPC endpoints
+                    const delay = index * 50; // 50ms delay between each handler start
+                    if (delay > 0) {
+                        await new Promise(resolve => setTimeout(resolve, delay));
+                    }
+                    
                     try {
                         // Try to get the link label using the getLinkLabel function
                         const result = await linksModule.getLinkLabel(...handlerKey.split('->'));
@@ -234,33 +244,64 @@ class DataConsistencyTester {
                         if (result !== null && result !== undefined) {
                             // Check if the result indicates an error state
                             if (result === 'Error' || result.includes('Error')) {
-                                this.testResults.linkHandlerExecution.failed++;
-                                this.addError(`Link handler '${handlerKey}' returned error state: ${result}`);
+                                return { handlerKey, success: false, result, error: null, type: 'error_state' };
                             } else {
-                                this.testResults.linkHandlerExecution.passed++;
-                                if (this.verbose) {
-                                    console.log(`  ✅ ${handlerKey} -> executed successfully (${typeof result})`);
-                                }
+                                return { handlerKey, success: true, result, error: null, type: 'success' };
                             }
                         } else {
-                            this.testResults.linkHandlerExecution.failed++;
-                            this.addError(`Link handler '${handlerKey}' returned null/undefined`);
+                            return { handlerKey, success: false, result, error: null, type: 'null_result' };
                         }
                     } catch (error) {
                         // Check if it's a network error (common for RPC endpoints)
                         if (error.code === 'ENOTFOUND' || error.message.includes('fetch') || error.message.includes('network') || error.message.includes('invalid json')) {
-                            this.testResults.linkHandlerExecution.networkErrors++;
-                            if (this.verbose) {
-                                console.log(`  ⚠️ ${handlerKey} -> network error (${error.message})`);
-                            }
-                            // Network errors should count as failures since they indicate the handler can't work
-                            this.testResults.linkHandlerExecution.failed++;
+                            return { handlerKey, success: false, result: null, error, type: 'network_error' };
                         } else {
-                            this.testResults.linkHandlerExecution.failed++;
-                            this.addError(`Link handler '${handlerKey}' failed to execute: ${error.message}`);
+                            return { handlerKey, success: false, result: null, error, type: 'execution_error' };
                         }
                     }
+                });
+                
+                // Execute all handlers in parallel
+                const results = await Promise.allSettled(handlerPromises);
+                
+                // Process the results
+                for (const result of results) {
+                    if (result.status === 'fulfilled') {
+                        const { handlerKey, success, result: handlerResult, error, type } = result.value;
+                        
+                        if (success) {
+                            this.testResults.linkHandlerExecution.passed++;
+                            if (this.verbose) {
+                                console.log(`  ✅ ${handlerKey} -> executed successfully (${typeof handlerResult})`);
+                            }
+                        } else {
+                            this.testResults.linkHandlerExecution.failed++;
+                            
+                            switch (type) {
+                                case 'error_state':
+                                    this.addError(`Link handler '${handlerKey}' returned error state: ${handlerResult}`);
+                                    break;
+                                case 'null_result':
+                                    this.addError(`Link handler '${handlerKey}' returned null/undefined`);
+                                    break;
+                                case 'network_error':
+                                    this.testResults.linkHandlerExecution.networkErrors++;
+                                    if (this.verbose) {
+                                        console.log(`  ⚠️ ${handlerKey} -> network error (${error.message})`);
+                                    }
+                                    break;
+                                case 'execution_error':
+                                    this.addError(`Link handler '${handlerKey}' failed to execute: ${error.message}`);
+                                    break;
+                            }
+                        }
+                    } else {
+                        // This shouldn't happen with our current implementation, but handle it just in case
+                        this.testResults.linkHandlerExecution.failed++;
+                        this.addError(`Link handler test failed with unexpected error: ${result.reason}`);
+                    }
                 }
+                
             } finally {
                 // Restore console.error
                 console.error = originalConsoleError;
