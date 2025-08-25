@@ -81,8 +81,8 @@ const TokenHandlers = {
         'arbitrum': 'https://arb1.arbitrum.io/rpc',
         'polygon': 'https://polygon-rpc.com',
         'optimism': 'https://mainnet.optimism.io',
-        'sonic': 'https://rpc.sonic.game',
-        'katana': 'https://rpc.katana.roninchain.com',
+        'sonic': 'https://sonic.drpc.org',
+        'katana': 'https://rpc.katana.network',
         'kava': 'https://evm.kava.io',
         'avalanche': 'https://api.avax.network/ext/bc/C/rpc',
         'mantle': 'https://rpc.mantle.xyz',
@@ -112,7 +112,7 @@ const TokenHandlers = {
     // Sui token supply handler
     async handleSuiSupply(coinType) {
         try {
-            const response = await fetch('https://sui-mainnet.blockvision.org', {
+            const response = await fetch('https://sui-rpc.publicnode.com', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
