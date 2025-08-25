@@ -17,7 +17,8 @@ class DataConsistencyTester {
             links: { passed: 0, failed: 0, total: 0 },
             linkTexts: { passed: 0, failed: 0, total: 0 },
             linkHandlers: { passed: 0, failed: 0, total: 0 },
-            linkHandlerExecution: { passed: 0, failed: 0, total: 0, networkErrors: 0 }
+            linkHandlerExecution: { passed: 0, failed: 0, total: 0, networkErrors: 0 },
+            nodeDescriptions: { passed: 0, failed: 0, total: 0 }
         };
         
         // Get the graph data once during initialization
@@ -95,6 +96,50 @@ class DataConsistencyTester {
         }
         
         console.log(`✅ Links test: ${this.testResults.links.passed}/${this.testResults.links.total} passed`);
+    }
+
+    // Test 2.5: Check if all nodes and frames have corresponding description files
+    testNodeDescriptions() {
+        console.log('\n📚 Testing node descriptions coverage...');
+        
+        const descriptionsDir = path.join(__dirname, 'public', 'descriptions');
+        
+        if (!fs.existsSync(descriptionsDir)) {
+            this.addError('Descriptions directory not found');
+            return;
+        }
+        
+        // Get all nodes from the graph data
+        const allNodes = this.extractAllNodes();
+        
+        // Get all description files
+        const descriptionFiles = fs.readdirSync(descriptionsDir)
+            .filter(file => file.endsWith('.html'))
+            .map(file => file.replace('.html', ''));
+        
+        // Create a set for faster lookup
+        const descriptionSet = new Set(descriptionFiles);
+        
+        this.testResults.nodeDescriptions = { passed: 0, failed: 0, total: 0 };
+        this.testResults.nodeDescriptions.total = allNodes.length;
+        
+        if (this.verbose) {
+            console.log(`Found ${allNodes.length} nodes to check for descriptions`);
+        }
+        
+        for (const node of allNodes) {
+            if (descriptionSet.has(node)) {
+                this.testResults.nodeDescriptions.passed++;
+                if (this.verbose) {
+                    console.log(`  ✅ ${node} -> description found`);
+                }
+            } else {
+                this.testResults.nodeDescriptions.failed++;
+                this.addError(`Node '${node}' has no corresponding description file`);
+            }
+        }
+        
+        console.log(`✅ Node descriptions test: ${this.testResults.nodeDescriptions.passed}/${this.testResults.nodeDescriptions.total} passed`);
     }
 
     // Test 3: Check if all links in links.js correspond to existing links with text:true
@@ -298,6 +343,7 @@ class DataConsistencyTester {
         
         this.testDescriptions();
         this.testLinks();
+        this.testNodeDescriptions(); // Added this line
         this.testLinkTexts();
         this.testLinkHandlers();
         await this.testLinkHandlerExecution(); // Wait for async test to complete
