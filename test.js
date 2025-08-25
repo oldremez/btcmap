@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+// Import the GraphData class to access the graph data directly
+const { GraphData } = require('./public/graph-data.js');
+
 // Test suite for data consistency
 class DataConsistencyTester {
     constructor(options = {}) {
@@ -14,6 +17,9 @@ class DataConsistencyTester {
             linkHandlers: { passed: 0, failed: 0, total: 0 },
             linkHandlerExecution: { passed: 0, failed: 0, total: 0, networkErrors: 0 }
         };
+        
+        // Get the graph data once during initialization
+        this.graphData = GraphData.getSampleGraph();
     }
 
     // Test 1: Check if all descriptions have corresponding nodes/frames
@@ -21,24 +27,17 @@ class DataConsistencyTester {
         console.log('\n🔍 Testing descriptions consistency...');
         
         const descriptionsDir = path.join(__dirname, 'public', 'descriptions');
-        const graphDataPath = path.join(__dirname, 'public', 'graph-data.js');
         
         if (!fs.existsSync(descriptionsDir)) {
             this.addError('Descriptions directory not found');
             return;
         }
         
-        if (!fs.existsSync(graphDataPath)) {
-            this.addError('Graph data file not found');
-            return;
-        }
-
-        // Read graph data to extract all node IDs
-        const graphDataContent = fs.readFileSync(graphDataPath, 'utf8');
-        const allNodes = this.extractAllNodes(graphDataContent);
+        // Extract all node IDs from the graph data
+        const allNodes = this.extractAllNodes();
         
         if (this.verbose) {
-            console.log(`Found ${allNodes.length} nodes in graph-data.js`);
+            console.log(`Found ${allNodes.length} nodes in graph data`);
         }
         
         // Get all description files
@@ -56,7 +55,7 @@ class DataConsistencyTester {
                 }
             } else {
                 this.testResults.descriptions.failed++;
-                this.addError(`Description file '${descFile}.html' has no corresponding node in graph-data.js`);
+                this.addError(`Description file '${descFile}.html' has no corresponding node in graph data`);
             }
         }
         
@@ -67,16 +66,8 @@ class DataConsistencyTester {
     testLinks() {
         console.log('\n🔗 Testing links consistency...');
         
-        const graphDataPath = path.join(__dirname, 'public', 'graph-data.js');
-        
-        if (!fs.existsSync(graphDataPath)) {
-            this.addError('Graph data file not found');
-            return;
-        }
-
-        const graphDataContent = fs.readFileSync(graphDataPath, 'utf8');
-        const allNodes = this.extractAllNodes(graphDataContent);
-        const links = this.extractLinks(graphDataContent);
+        const allNodes = this.extractAllNodes();
+        const links = this.graphData.links || [];
         
         this.testResults.links.total = links.length;
         
@@ -109,17 +100,15 @@ class DataConsistencyTester {
         console.log('\n📝 Testing link text consistency...');
         
         const linksJsPath = path.join(__dirname, 'links.js');
-        const graphDataPath = path.join(__dirname, 'public', 'graph-data.js');
         
-        if (!fs.existsSync(linksJsPath) || !fs.existsSync(graphDataPath)) {
-            this.addError('Required files not found for link text test');
+        if (!fs.existsSync(linksJsPath)) {
+            this.addError('Links.js file not found for link text test');
             return;
         }
 
         const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
-        const graphDataContent = fs.readFileSync(graphDataPath, 'utf8');
         
-        const linksWithText = this.extractLinksWithText(graphDataContent);
+        const linksWithText = this.extractLinksWithText();
         const linkHandlers = this.extractLinkHandlers(linksJsContent);
         
         this.testResults.linkTexts.total = linksWithText.length;
@@ -149,17 +138,15 @@ class DataConsistencyTester {
         console.log('\n⚙️ Testing link handlers consistency...');
         
         const linksJsPath = path.join(__dirname, 'links.js');
-        const graphDataPath = path.join(__dirname, 'public', 'graph-data.js');
         
-        if (!fs.existsSync(linksJsPath) || !fs.existsSync(graphDataPath)) {
-            this.addError('Required files not found for link handlers test');
+        if (!fs.existsSync(linksJsPath)) {
+            this.addError('Links.js file not found for link handlers test');
             return;
         }
 
         const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
-        const graphDataContent = fs.readFileSync(graphDataPath, 'utf8');
         
-        const linksWithText = this.extractLinksWithText(graphDataContent);
+        const linksWithText = this.extractLinksWithText();
         const linkHandlers = this.extractLinkHandlers(linksJsContent);
         
         this.testResults.linkHandlers.total = linkHandlers.length;
@@ -177,7 +164,7 @@ class DataConsistencyTester {
                 }
             } else {
                 this.testResults.linkHandlers.failed++;
-                this.addError(`Link handler '${handler}' has no corresponding link with text:true in graph-data.js`);
+                this.addError(`Link handler '${handler}' has no corresponding link with text:true in graph data`);
             }
         }
         
@@ -199,7 +186,7 @@ class DataConsistencyTester {
             // Dynamically import the links.js file to access the handlers
             const linksModule = require('./links.js');
             
-            // Get the LINK_LABEL_HANDLERS from the module
+            // Get the link handlers from the links.js content
             const linksJsContent = fs.readFileSync(linksJsPath, 'utf8');
             const linkHandlers = this.extractLinkHandlers(linksJsContent);
             
@@ -272,69 +259,41 @@ class DataConsistencyTester {
         }
     }
 
-    // Helper methods
-    extractAllNodes(graphDataContent) {
+    // Helper methods - now using the imported graph data instead of regex parsing
+    extractAllNodes() {
         const nodes = new Set();
         
         // Extract nodes from frames
-        const frameMatches = graphDataContent.match(/nodes:\s*\[([^\]]+)\]/g);
-        if (frameMatches) {
-            frameMatches.forEach(match => {
-                const nodeList = match.match(/\[([^\]]+)\]/)[1];
-                const nodeNames = nodeList.split(',').map(n => n.trim().replace(/"/g, ''));
-                nodeNames.forEach(node => nodes.add(node));
+        if (this.graphData.frames) {
+            this.graphData.frames.forEach(frame => {
+                if (frame.nodes && Array.isArray(frame.nodes)) {
+                    frame.nodes.forEach(node => nodes.add(node));
+                }
+                // Also add frame IDs
+                nodes.add(frame.id);
             });
         }
         
-        // Extract standalone nodes (not in frames)
-        const standaloneMatches = graphDataContent.match(/id:\s*"([^"]+)"/g);
-        if (standaloneMatches) {
-            standaloneMatches.forEach(match => {
-                const nodeId = match.match(/"([^"]+)"/)[1];
-                // Include both frame IDs and node IDs
-                nodes.add(nodeId);
+        // Extract standalone nodes that are referenced in links but not in frames
+        if (this.graphData.links) {
+            this.graphData.links.forEach(link => {
+                nodes.add(link.source);
+                nodes.add(link.target);
             });
         }
         
         return Array.from(nodes);
     }
 
-    extractLinks(graphDataContent) {
+    extractLinksWithText() {
         const links = [];
-        // More comprehensive regex to catch all link patterns
-        const linkMatches = graphDataContent.match(/\{\s*source:\s*"([^"]+)",\s*target:\s*"([^"]+)"[^}]*\}/g);
         
-        if (linkMatches) {
-            linkMatches.forEach(match => {
-                const sourceMatch = match.match(/source:\s*"([^"]+)"/);
-                const targetMatch = match.match(/target:\s*"([^"]+)"/);
-                
-                if (sourceMatch && targetMatch) {
+        if (this.graphData.links) {
+            this.graphData.links.forEach(link => {
+                if (link.text === true) {
                     links.push({
-                        source: sourceMatch[1],
-                        target: targetMatch[1]
-                    });
-                }
-            });
-        }
-        
-        return links;
-    }
-
-    extractLinksWithText(graphDataContent) {
-        const links = [];
-        // More comprehensive regex to catch all links with text:true
-        const linkMatches = graphDataContent.match(/\{\s*source:\s*"([^"]+)",\s*target:\s*"([^"]+)"[^}]*text:\s*true[^}]*\}/g);
-        
-        if (linkMatches) {
-            linkMatches.forEach(match => {
-                const sourceMatch = match.match(/source:\s*"([^"]+)"/);
-                const targetMatch = match.match(/target:\s*"([^"]+)"/);
-                
-                if (sourceMatch && targetMatch) {
-                    links.push({
-                        source: sourceMatch[1],
-                        target: targetMatch[1]
+                        source: link.source,
+                        target: link.target
                     });
                 }
             });

@@ -582,3 +582,5 @@ class GraphData {
         };
     }
 }
+
+module.exports = { GraphData };
