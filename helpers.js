@@ -76,7 +76,7 @@ const TokenHandlers = {
     // Chain RPC URL mapping
     chainRpcUrls: {
         'ethereum': 'https://eth.llamarpc.com',
-        'base': 'https://mainnet.base.org',
+        'base': 'https://base.drpc.org',
         'bsc': 'https://bsc-dataseed1.binance.org',
         'arbitrum': 'https://arb1.arbitrum.io/rpc',
         'polygon': 'https://polygon-rpc.com',
