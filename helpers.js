@@ -69,7 +69,8 @@ const formatNumber = (number) => {
     if (number === null || number === undefined || isNaN(number)) {
         return 'Error';
     }
-    return Number(number).toFixed(2);
+    const formatted = Number(number).toFixed(2);
+    return formatted.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 };
 
 const TokenHandlers = {
