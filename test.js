@@ -232,10 +232,10 @@ class DataConsistencyTester {
                         const result = await linksModule.getLinkLabel(...handlerKey.split('->'));
                         
                         if (result !== null && result !== undefined) {
-                            // Check if the result indicates an error or loading state
-                            if (result === 'Error' || result === 'Loading...' || result === 'Loading' || result.includes('Error') || result.includes('Loading')) {
+                            // Check if the result indicates an error state
+                            if (result === 'Error' || result.includes('Error')) {
                                 this.testResults.linkHandlerExecution.failed++;
-                                this.addError(`Link handler '${handlerKey}' returned error/loading state: ${result}`);
+                                this.addError(`Link handler '${handlerKey}' returned error state: ${result}`);
                             } else {
                                 this.testResults.linkHandlerExecution.passed++;
                                 if (this.verbose) {

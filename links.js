@@ -904,17 +904,25 @@ async function getLinkLabel(sourceId, targetId) {
         return null;
     }
     
-    // Query the handler and cache the result
-    const { handler, args } = handlerConfig;
-    const label = await handler.apply(TokenHandlers, args);
-    
-    // Cache the result with timestamp
-    linkLabelCache[key] = {
-        label: label,
-        timestamp: now
-    };
-    
-    return label;
+    try {
+        // Query the handler
+        const { handler, args } = handlerConfig;
+        const label = await handler.apply(TokenHandlers, args);
+        
+        // Only cache successful results (not "Error" responses)
+        if (label !== 'Error' && !label.includes('Error')) {
+            // Cache the result with timestamp
+            linkLabelCache[key] = {
+                label: label,
+                timestamp: now
+            };
+        }
+        
+        return label;
+    } catch (error) {
+        console.error(`Error executing handler for ${key}:`, error);
+        return 'Error';
+    }
 }
 
 module.exports = {

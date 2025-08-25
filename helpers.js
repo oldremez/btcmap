@@ -24,10 +24,10 @@ const BlockchainUtils = {
             if (data.result) {
                 return parseInt(data.result, 16);
             }
-            return null;
+            throw new Error('Invalid response from RPC endpoint');
         } catch (error) {
             console.error('Error fetching ERC20 supply:', error);
-            return null;
+            throw new Error(`Failed to fetch ERC20 supply: ${error.message}`);
         }
     },
 
@@ -55,10 +55,10 @@ const BlockchainUtils = {
             if (data.result) {
                 return parseInt(data.result, 16);
             }
-            return null;
+            throw new Error('Invalid response from RPC endpoint');
         } catch (error) {
             console.error('Error fetching ERC20 balance:', error);
-            return null;
+            throw new Error(`Failed to fetch ERC20 balance: ${error.message}`);
         }
     }
 };
@@ -100,13 +100,15 @@ const TokenHandlers = {
 
     // Generic ERC20 token supply handler
     async handleERC20Supply(contractAddress, decimals = 8, chainName = 'ethereum') {
-        const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
-        const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress, rpcUrl);
-        if (supply !== null) {
+        try {
+            const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
+            const supply = await BlockchainUtils.getERC20TotalSupply(contractAddress, rpcUrl);
             const tokenSupply = supply / Math.pow(10, decimals);
             return formatNumber(tokenSupply);
+        } catch (error) {
+            console.error('Error in handleERC20Supply:', error);
+            throw error;
         }
-        return 'Loading...';
     },
 
     // Sui token supply handler
@@ -132,10 +134,10 @@ const TokenHandlers = {
                     return formatNumber(tokenSupply);
                 }
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Sui RPC endpoint');
         } catch (error) {
             console.error('Error fetching Sui token supply:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch Sui token supply: ${error.message}`);
         }
     },
 
@@ -160,10 +162,10 @@ const TokenHandlers = {
                 const tokenSupply = supply / Math.pow(10, decimals);
                 return formatNumber(tokenSupply);
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Solana RPC endpoint');
         } catch (error) {
             console.error(`Error fetching ${tokenMint} supply:`, error);
-            return 'Error';
+            throw new Error(`Failed to fetch Solana token supply: ${error.message}`);
         }
     },
 
@@ -180,10 +182,10 @@ const TokenHandlers = {
                     return formatNumber(tokenSupply);
                 }
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Cosmos LCD endpoint');
         } catch (error) {
             console.error(`Error fetching ${denom} supply:`, error);
-            return 'Error';
+            throw new Error(`Failed to fetch Cosmos token supply: ${error.message}`);
         }
     },
 
@@ -200,10 +202,10 @@ const TokenHandlers = {
                     return formatNumber(tokenBalance);
                 }
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Cosmos LCD endpoint');
         } catch (error) {
             console.error(`Error fetching ${denom} balance for ${address}:`, error);
-            return 'Error';
+            throw new Error(`Failed to fetch Cosmos token balance: ${error.message}`);
         }
     },
 
@@ -228,22 +230,24 @@ const TokenHandlers = {
                 const tokenBalance = balance / Math.pow(10, decimals);
                 return formatNumber(tokenBalance);
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Solana RPC endpoint');
         } catch (error) {
             console.error(`Error fetching ${tokenAccount} balance:`, error);
-            return 'Error';
+            throw new Error(`Failed to fetch Solana token balance: ${error.message}`);
         }
     },
 
     // Generic ERC20 token balance handler
     async handleERC20Balance(contractAddress, walletAddress, decimals = 18, chainName = 'ethereum') {
-        const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
-        const balance = await BlockchainUtils.getERC20Balance(contractAddress, walletAddress, rpcUrl);
-        if (balance !== null) {
+        try {
+            const rpcUrl = this.chainRpcUrls[chainName] || this.chainRpcUrls['ethereum'];
+            const balance = await BlockchainUtils.getERC20Balance(contractAddress, walletAddress, rpcUrl);
             const tokenBalance = balance / Math.pow(10, decimals);
             return formatNumber(tokenBalance);
+        } catch (error) {
+            console.error('Error in handleERC20Balance:', error);
+            throw error;
         }
-        return 'Loading...';
     },
 
     // Bitcoin supply handler
@@ -258,10 +262,10 @@ const TokenHandlers = {
                 const approximateSupply = Math.round(btcMarketCap / btcPrice);
                 return formatNumber(approximateSupply);
             }
-            return '~19.5M+';
+            throw new Error('Invalid response from CoinGecko API');
         } catch (error) {
             console.error('Error fetching Bitcoin supply:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch Bitcoin supply: ${error.message}`);
         }
     },
 
@@ -277,12 +281,12 @@ const TokenHandlers = {
                     const totalTvlBTC = totalTvlSats / Math.pow(10, 8); // Convert from satoshis to BTC
                     return formatNumber(totalTvlBTC);
                 }
-                return '0.00';
+                throw new Error('Invalid response structure from Babylon API');
             }
-            return 'Error';
+            throw new Error(`HTTP error from Babylon API: ${response.status}`);
         } catch (error) {
             console.error('Error fetching Babylon staking data:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch Babylon staking data: ${error.message}`);
         }
     },
 
@@ -297,12 +301,12 @@ const TokenHandlers = {
                 if (!isNaN(reserves)) {
                     return formatNumber(reserves);
                 }
-                return 'Error';
+                throw new Error('Invalid numeric response from Lombard API');
             }
-            return 'Error';
+            throw new Error(`HTTP error from Lombard API: ${response.status}`);
         } catch (error) {
             console.error('Error fetching Lombard reserves:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch Lombard reserves: ${error.message}`);
         }
     },
 
@@ -319,12 +323,12 @@ const TokenHandlers = {
                         return formatNumber(supply);
                     }
                 }
-                return 'Error';
+                throw new Error('Invalid response structure from Rootstock API');
             }
-            return 'Error';
+            throw new Error(`HTTP error from Rootstock API: ${response.status}`);
         } catch (error) {
             console.error('Error fetching rBTC supply:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch rBTC supply: ${error.message}`);
         }
     },
 
@@ -365,7 +369,7 @@ const TokenHandlers = {
             return formatNumber(totalBalance);
         } catch (error) {
             console.error('Error fetching multiple WBTC balances:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch multiple WBTC balances: ${error.message}`);
         }
     },
 
@@ -382,10 +386,10 @@ const TokenHandlers = {
                     return formatNumber(tokenSupply);
                 }
             }
-            return 'Loading...';
+            throw new Error('Invalid response from Internet Computer API');
         } catch (error) {
             console.error('Error fetching ckBTC supply:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch ckBTC supply: ${error.message}`);
         }
     },
 
@@ -398,17 +402,9 @@ const TokenHandlers = {
             
             // Get total supply
             const totalSupply = await BlockchainUtils.getERC20TotalSupply(contractAddress, this.chainRpcUrls['hyperevm']);
-            if (totalSupply === null) {
-                return 'Loading...';
-            }
             
             // Get balance of excluded address
             const excludedBalance = await BlockchainUtils.getERC20Balance(contractAddress, excludedAddress, this.chainRpcUrls['hyperevm']);
-            if (excludedBalance === null) {
-                // If we can't get the excluded balance, just return total supply
-                const tokenSupply = totalSupply / Math.pow(10, decimals);
-                return formatNumber(tokenSupply);
-            }
             
             // Calculate circulating supply (total supply minus excluded balance)
             const circulatingSupply = totalSupply - excludedBalance;
@@ -417,7 +413,7 @@ const TokenHandlers = {
             return formatNumber(tokenCirculatingSupply);
         } catch (error) {
             console.error('Error fetching UBTC supply:', error);
-            return 'Error';
+            throw new Error(`Failed to fetch UBTC supply: ${error.message}`);
         }
     }
 };
